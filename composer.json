@@ -1,5 +1,6 @@
 {
     "require": {
-        "beberlei/assert": "*"
+        "v2e4lisp/real-assert": "*",
+        "v2e4lisp/cecho": "*"
     }
 }
