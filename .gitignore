@@ -1,0 +1,5 @@
+vendor/
+tmp*
+sample*
+*.lock
+
