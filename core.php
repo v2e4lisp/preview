@@ -1,0 +1,152 @@
+<?php
+
+require_once './real_assert.php';
+require_once './result.php';
+require_once './world.php';
+require_once './configuration.php';
+
+class TestRunner {
+    protected $start_points = array();
+
+    public function __construct($start_points) {
+        $this->start_points = $start_points;
+    }
+
+    public function run() {
+        $results = array();
+        foreach($this->start_points as $point) {
+            $results[] = $point->result;
+        }
+
+        Configuration::$reporter->before_all($results);
+        foreach($this->start_points as $point) {
+            $point->run();
+        }
+        Configuration::$reporter->after_all($results);
+
+        return $results;
+    }
+}
+
+class TestBase {
+    public $parent = null;
+
+    public $skipped = false;
+
+    public $done = false;
+
+    public $title;
+
+    public $result;
+
+    protected $fn;
+
+    public function __construct($title, $fn) {
+        $this->title = $title;
+        $this->fn = $fn;
+    }
+
+    public function skip() {
+        $this->skipped = true;
+    }
+
+    public function finish() {
+        $this->done = true;
+    }
+}
+
+class TestCase extends TestBase {
+    public $error = false;
+
+    public function __construct($title, $fn) {
+        parent::__construct($title, $fn);
+        $this->result = new TestCaseResult($this);
+    }
+
+    public function set_parent($suite) {
+        $this->parent = $suite;
+        $suite->cases[] = $this;
+    }
+
+    public function run() {
+        if ($this->done or $this->skipped) {
+            return;
+        }
+
+        Configuration::$reporter->before_case($this->result);
+        try {
+            $this->parent->run_before();
+            $this->fn->__invoke();
+            $this->parent->run_after();
+        } catch (Exception $e) {
+            foreach(Configuration::$assertion_errors as $klass) {
+                if ($e instanceof $klass) {
+                    $this->error = $e;
+                }
+            }
+
+            if (!$this->error) {
+                throw $e;
+            }
+        }
+        $this->finish();
+        Configuration::$reporter->after_case($this->result);
+    }
+}
+
+class TestSuite extends TestBase {
+    public $before_hooks = array();
+
+    public $after_hooks = array();
+
+    public $suites = array();
+
+    public $cases = array();
+
+    public function __construct($title, $fn) {
+        parent::__construct($title, $fn);
+        $this->result = new TestSuiteResult($this);
+    }
+
+    public function set_parent($suite) {
+        // if empty($suite), that's a start point of the TEST-WORLD.
+        if (!empty($suite)) {
+            $suite->suites[] = $this;
+            $this->parent = $suite;
+        }
+    }
+
+    public function setup() {
+        $this->fn->__invoke();
+        shuffle($this->cases);
+        shuffle($this->suites);
+    }
+
+    public function run() {
+        if ($this->done or $this->skipped) {
+            return;
+        }
+
+        Configuration::$reporter->before_suite($this->result);
+        foreach ($this->cases as $case) {
+            $case->run();
+        }
+        foreach ($this->suites as $suite) {
+            $suite->run();
+        }
+        $this->finish();
+        Configuration::$reporter->after_suite($this->result);
+    }
+
+    public function run_before() {
+        foreach ($this->before_hooks as $before) {
+            $before->__invoke();
+        }
+    }
+
+    public function run_after() {
+        foreach ($this->after_hooks as $after) {
+            $after->__invoke();
+        }
+    }
+}
