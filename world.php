@@ -1,4 +1,6 @@
 <?php
+require 'runner.php';
+
 class World {
     public static $reporter = null;
 
@@ -26,6 +28,6 @@ class World {
     }
 
     public static function run() {
-        return (new TestRunner(self::$start_points))->run();
+        return (new Runner(self::$start_points))->run();
     }
 }
