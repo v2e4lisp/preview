@@ -59,10 +59,9 @@ class TestCase extends TestBase {
         }
 
         Configuration::$reporter->before_case($this->result);
+        $this->parent->run_before();
         try {
-            $this->parent->run_before();
             $this->fn->__invoke();
-            $this->parent->run_after();
         } catch (Exception $e) {
             foreach(Configuration::$assertion_errors as $klass) {
                 if ($e instanceof $klass) {
@@ -74,6 +73,7 @@ class TestCase extends TestBase {
                 throw $e;
             }
         }
+        $this->parent->run_after();
         $this->finish();
         Configuration::$reporter->after_case($this->result);
     }
