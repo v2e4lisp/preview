@@ -1,6 +1,8 @@
 {
     "require": {
+        "v2e4lisp/mocha-php-core": "*",
+        "v2e4lisp/mocha-php-default-reporter": "*",
+        "v2e4lisp/mocha-php-command": "*"
         "v2e4lisp/real-assert": "*",
-        "v2e4lisp/cecho": "*"
     }
 }

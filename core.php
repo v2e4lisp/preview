@@ -1,16 +1,14 @@
 <?php
 
-// require_once './real_assert.php';
 require_once './result.php';
 require_once './configuration.php';
-
 
 class TestBase {
     public $parent = null;
 
     public $skipped = false;
 
-    public $done = false;
+    public $finished = false;
 
     public $title;
 
@@ -28,7 +26,7 @@ class TestBase {
     }
 
     public function finish() {
-        $this->done = true;
+        $this->finished = true;
     }
 }
 
@@ -46,7 +44,7 @@ class TestCase extends TestBase {
     }
 
     public function run() {
-        if ($this->done or $this->skipped) {
+        if ($this->finished or $this->skipped) {
             return;
         }
 
@@ -100,7 +98,7 @@ class TestSuite extends TestBase {
     }
 
     public function run() {
-        if ($this->done or $this->skipped) {
+        if ($this->finished or $this->skipped) {
             return;
         }
 

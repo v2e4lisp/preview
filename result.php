@@ -1,4 +1,5 @@
 <?php
+
 class TestResultBase {
     protected $test;
 
@@ -18,8 +19,8 @@ class TestResultBase {
         return $this->test->skipped;
     }
 
-    public function done() {
-        return $this->test->done;
+    public function finished() {
+        return $this->test->finished;
     }
 }
 
@@ -30,19 +31,35 @@ class TestCaseResult extends TestResultBase {
 }
 
 class TestSuiteResult extends TestResultBase {
+    private $_cases = null;
+
+    private $_suites = null;
+
     public function cases() {
+        if (isset($this->_suites)) {
+            return $this->_cases;
+        }
+
         $cases = array();
         foreach($this->test->cases as $case) {
             $cases[] = $case->result;
         }
+
+        $this->_cases = $cases;
         return $cases;
     }
 
     public function suites() {
+        if (isset($this->_suites)) {
+            return $this->_suites;
+        }
+
         $suites = array();
         foreach($this->test->suites as $suite) {
             $suites[] = $suite->result;
         }
+
+        $this->_suites = $suites;
         return $suites;
     }
 }

@@ -5,7 +5,7 @@ class Configuration {
     public static $reporter = null;
 
     public static function set_reporter($reporter) {
-        self::$reporter = $reporter;
+        self::$reporter = new $reporter;
     }
 
     public static function set_assertion_errors($errors) {

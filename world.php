@@ -28,6 +28,7 @@ class World {
     }
 
     public static function run() {
-        return (new Runner(self::$start_points))->run();
+        $runner = new Runner(self::$start_points);
+        return $runner->run();
     }
 }
