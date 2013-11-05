@@ -106,6 +106,10 @@ class TestSuite extends TestBase {
     }
 
     public function setup() {
+        if ($this->pending()) {
+            return;
+        }
+
         $this->fn->__invoke();
         shuffle($this->cases);
         shuffle($this->suites);

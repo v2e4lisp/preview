@@ -13,6 +13,10 @@ describe("Array", function () {
         $sample = array(1,2,3);
     });
 
+    describe("array_reverse");
+
+    describe("shuffle");
+
     describe("array_pop", function () use ($sample) {
         it("should remove the last item.", function () use ($sample) {
             realAssert(array_pop($sample) == 3);
