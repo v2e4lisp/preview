@@ -72,7 +72,11 @@ class TestCase extends TestBase {
 class TestSuite extends TestBase {
     public $before_hooks = array();
 
+    public $before_each_hooks = array();
+
     public $after_hooks = array();
+
+    public $after_each_hooks = array();
 
     public $suites = array();
 
@@ -114,13 +118,29 @@ class TestSuite extends TestBase {
     }
 
     public function run_before() {
+        if ($this->parent) {
+            $this->parent->run_before();
+        }
+
         foreach ($this->before_hooks as $before) {
+            $before->__invoke();
+        }
+
+        foreach ($this->before_each_hooks as $before) {
             $before->__invoke();
         }
     }
 
     public function run_after() {
+        if ($this->parent) {
+            $this->parent->run_after();
+        }
+
         foreach ($this->after_hooks as $after) {
+            $after->__invoke();
+        }
+
+        foreach ($this->after_each_hooks as $after) {
             $after->__invoke();
         }
     }

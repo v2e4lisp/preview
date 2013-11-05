@@ -1,6 +1,7 @@
 <?php
 // require_once 'color.php';
 require_once 'base.php';
+require_once './cecho.php';
 
 class DefaultReporter extends ReporterBase {
     private $error_cases = array();
@@ -28,11 +29,14 @@ class DefaultReporter extends ReporterBase {
 
             $titles = array_reverse($titles);
 
-            foreach($titles as $title) {
-                cecho($title, 'grey');
+            foreach($titles as $indent => $title) {
+                cecho(str_repeat("    ", $indent));
+                cecho($title, 'dark_gray');
                 cecho();
             }
             cecho($org->error()->getMessage(), 'red');
+            cecho();
+            cecho($org->error()->getTraceAsString());
         }
     }
 }

@@ -1,6 +1,5 @@
 vendor/
 tmp*
-sample*
 *.lock
 color.php
 assert.php

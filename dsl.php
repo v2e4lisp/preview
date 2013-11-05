@@ -28,3 +28,11 @@ function before($fn) {
 function after($fn) {
     World::current()->after_hooks[] = $fn;
 }
+
+function beforeEach($fn) {
+    World::current()->before_each_hooks[] = $fn;
+}
+
+function afterEach($fn) {
+    World::current()->before_after_hooks[] = $fn;
+}
