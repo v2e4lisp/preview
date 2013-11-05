@@ -2,7 +2,7 @@
 require_once './world.php';
 require_once './core.php';
 
-function describe($title, $fn) {
+function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
     $desc->set_parent(World::current());
     World::push($desc);
@@ -11,11 +11,11 @@ function describe($title, $fn) {
     return $desc;
 }
 
-function context($title, $fn) {
+function context($title, $fn=null) {
     return describe($title, $fn);
 }
 
-function it($title, $fn) {
+function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
     $case->set_parent(World::current());
     return $case;

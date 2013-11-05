@@ -22,6 +22,14 @@ class TestResultBase {
     public function finished() {
         return $this->test->finished;
     }
+
+    public function pending() {
+        return $this->test->pending();
+    }
+
+    public function runable() {
+        return $this->test->runable();
+    }
 }
 
 class TestCaseResult extends TestResultBase {

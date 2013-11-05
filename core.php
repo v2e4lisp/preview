@@ -28,6 +28,16 @@ class TestBase {
     public function finish() {
         $this->finished = true;
     }
+
+    public function pending() {
+        return !(isset($this->fn));
+    }
+
+    public function runable() {
+        return !$this->finished and
+            !$this->skipped and
+            !$this->pending();
+    }
 }
 
 class TestCase extends TestBase {
@@ -44,7 +54,7 @@ class TestCase extends TestBase {
     }
 
     public function run() {
-        if ($this->finished or $this->skipped) {
+        if (!$this->runable()) {
             return;
         }
 
@@ -102,7 +112,7 @@ class TestSuite extends TestBase {
     }
 
     public function run() {
-        if ($this->finished or $this->skipped) {
+        if (!$this->runable()) {
             return;
         }
 
