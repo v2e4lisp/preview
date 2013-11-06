@@ -1,14 +1,19 @@
 <?php
 
 class Configuration {
-    public static $assertion_errors = array(Exception);
+    public static $assertion_errors = array("Exception");
     public static $reporter = null;
 
-    public static function set_reporter($reporter) {
-        self::$reporter = new $reporter;
+    public static function setReporter($reporter) {
+        self::$reporter = $reporter;
     }
 
-    public static function set_assertion_errors($errors) {
+    public static function setAssertionErrors($errors=null) {
+        if (empty($errors)) {
+            self::$assertion_errors = array();
+            return;
+        }
+
         if (!is_array($errors)) {
             $errors = array($errors);
         }

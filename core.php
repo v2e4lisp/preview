@@ -60,6 +60,25 @@ class TestCase extends TestBase {
 
         Configuration::$reporter->before_case($this->result);
         $this->parent->run_before();
+
+        if (empty(Configuration::$assertion_errors)) {
+            $this->run_with_false();
+        } else {
+            $this->run_with_exception();
+        }
+
+        $this->parent->run_after();
+        $this->finish();
+        Configuration::$reporter->after_case($this->result);
+    }
+
+    private function run_with_false() {
+        if (!$this->fn->__invoke()) {
+            $this->error = new Exception("failed");
+        }
+    }
+
+    private function run_with_exception() {
         try {
             $this->fn->__invoke();
         } catch (Exception $e) {
@@ -73,9 +92,6 @@ class TestCase extends TestBase {
                 throw $e;
             }
         }
-        $this->parent->run_after();
-        $this->finish();
-        Configuration::$reporter->after_case($this->result);
     }
 }
 
