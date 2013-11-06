@@ -148,12 +148,15 @@ class TestSuite extends TestBase {
     }
 
     public function run_before() {
-        if ($this->parent) {
-            $this->parent->run_before();
-        }
-
+        $this->run_before_each();
         foreach ($this->before_hooks as $before) {
             $before->__invoke();
+        }
+    }
+
+    public function run_before_each() {
+        if ($this->parent) {
+            $this->parent->run_before_each();
         }
 
         foreach ($this->before_each_hooks as $before) {
@@ -162,12 +165,15 @@ class TestSuite extends TestBase {
     }
 
     public function run_after() {
-        if ($this->parent) {
-            $this->parent->run_after();
-        }
-
+        $this->run_after_each();
         foreach ($this->after_hooks as $after) {
             $after->__invoke();
+        }
+    }
+
+    public function run_after_each() {
+        if ($this->parent) {
+            $this->parent->run_after_hooks();
         }
 
         foreach ($this->after_each_hooks as $after) {
