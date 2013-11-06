@@ -8,7 +8,11 @@ class TestResultBase {
     }
 
     public function parent() {
-        return $this->test->parent->result;
+        if ($this->test->parent) {
+            return $this->test->parent->result;
+        }
+
+        return null;
     }
 
     public function title() {
