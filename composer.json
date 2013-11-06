@@ -1,8 +1,18 @@
 {
-    "require": {
-        "v2e4lisp/mocha-php-core": "*",
-        "v2e4lisp/mocha-php-default-reporter": "*",
-        "v2e4lisp/mocha-php-command": "*"
-        "v2e4lisp/real-assert": "*",
-    }
+    "name": "v2e4lisp/mocha-php-core",
+    "description": "mocha.js like test framework",
+    "homepage": "https://github.com/v2e4lisp/mocha-php-core",
+    "keywords": ["test", "tdd", "bdd", "mocha.js", "rspec"]
+    "authors": [
+        {
+            "name": "Wenjun Yan",
+            "email": "mylastnameisyan@gmail.com",
+            "homepage": "https://github.com/v2e4lisp",
+            "role": "Developer"
+        }
+    ]
+    "autoload": {
+        "files": ["dsl.php"]
+    },
+    "license": "MIT"
 }
