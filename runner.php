@@ -5,6 +5,7 @@ class Runner {
 
     public function __construct($start_points) {
         $this->start_points = $start_points;
+        shuffle($this->start_points);
     }
 
     public function run() {
