@@ -1,7 +1,7 @@
 <?php
 
-require_once './result.php';
-require_once './configuration.php';
+require_once 'result.php';
+require_once 'configuration.php';
 
 class TestBase {
     public $parent = null;

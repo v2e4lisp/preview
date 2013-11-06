@@ -1,4 +1,5 @@
 <?php
+
 require 'runner.php';
 
 class World {

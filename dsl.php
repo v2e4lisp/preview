@@ -1,6 +1,7 @@
 <?php
-require_once './world.php';
-require_once './core.php';
+
+require_once 'world.php';
+require_once 'core.php';
 
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
