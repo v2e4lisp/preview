@@ -12,7 +12,8 @@
         }
     ],
     "autoload": {
-        "files": ["dsl.php", "configuration.php"]
+        "files": ["dsl.php"],
+        "classmap": ["configuration.php"]
     },
     "license": "MIT"
 }
