@@ -1,5 +1,7 @@
 <?php
 
+namespace Mocha;
+
 class Configuration {
     public static $assertion_errors = array("Exception");
     public static $reporter = null;
