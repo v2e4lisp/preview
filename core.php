@@ -189,7 +189,7 @@ class TestSuite extends TestBase {
 
     public function run_after_each() {
         if ($this->parent) {
-            $this->parent->run_after_hooks();
+            $this->parent->run_after_each();
         }
 
         foreach ($this->after_each_hooks as $after) {
