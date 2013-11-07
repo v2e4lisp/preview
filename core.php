@@ -59,7 +59,7 @@ class TestCase extends TestBase {
         }
 
         Configuration::$reporter->before_case($this->result);
-        $this->parent->run_before();
+        $this->parent->run_before_each();
 
         if (empty(Configuration::$assertion_errors)) {
             $this->run_with_false();
@@ -67,7 +67,7 @@ class TestCase extends TestBase {
             $this->run_with_exception();
         }
 
-        $this->parent->run_after();
+        $this->parent->run_after_each();
         $this->finish();
         Configuration::$reporter->after_case($this->result);
     }
@@ -137,6 +137,10 @@ class TestSuite extends TestBase {
         }
 
         Configuration::$reporter->before_suite($this->result);
+        if ($this->parent) {
+            $this->parent->run_before();
+        }
+
         foreach ($this->cases as $case) {
             $case->run();
         }
@@ -144,11 +148,18 @@ class TestSuite extends TestBase {
             $suite->run();
         }
         $this->finish();
+
+        if ($this->parent) {
+            $this->parent->run_after();
+        }
         Configuration::$reporter->after_suite($this->result);
     }
 
     public function run_before() {
-        $this->run_before_each();
+        if ($this->parent) {
+            $this->parent->run_before();
+        }
+
         foreach ($this->before_hooks as $before) {
             $before->__invoke();
         }
@@ -165,7 +176,10 @@ class TestSuite extends TestBase {
     }
 
     public function run_after() {
-        $this->run_after_each();
+        if ($this->parent) {
+            $this->parent->run_after();
+        }
+
         foreach ($this->after_hooks as $after) {
             $after->__invoke();
         }
