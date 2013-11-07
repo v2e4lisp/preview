@@ -2,6 +2,8 @@
 
 require_once 'configuration.php';
 
+use Mocha\Configuration as Configuration;
+
 class Runner {
     protected $start_points = array();
 

@@ -3,6 +3,8 @@
 require_once 'result.php';
 require_once 'configuration.php';
 
+use Mocha\Configuration as Configuration;
+
 class TestBase {
     public $parent = null;
 
