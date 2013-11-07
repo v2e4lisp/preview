@@ -1,5 +1,7 @@
 <?php
 
+require_once 'configuration.php';
+
 class Runner {
     protected $start_points = array();
 

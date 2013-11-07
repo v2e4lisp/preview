@@ -1,6 +1,6 @@
 <?php
 
-require 'runner.php';
+require_once 'runner.php';
 
 class World {
     public static $reporter = null;
