@@ -5,8 +5,6 @@ namespace Mocha;
 require_once 'runner.php';
 
 class World {
-    public static $reporter = null;
-
     public static $start_points = array();
 
     public static $testsuite_chain = array();
