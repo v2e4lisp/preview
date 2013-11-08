@@ -1,5 +1,7 @@
 <?php
 
+namespace Mocha;
+
 require_once 'runner.php';
 
 class World {

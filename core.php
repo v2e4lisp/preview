@@ -12,6 +12,8 @@ class TestBase {
 
     public $finished = false;
 
+    public $pending = false;
+
     public $title;
 
     public $result;
@@ -21,6 +23,7 @@ class TestBase {
     public function __construct($title, $fn) {
         $this->title = $title;
         $this->fn = $fn;
+        $this->pending = isset($fn);
     }
 
     public function skip() {
@@ -31,14 +34,10 @@ class TestBase {
         $this->finished = true;
     }
 
-    public function pending() {
-        return !(isset($this->fn));
-    }
-
     public function runable() {
         return !$this->finished and
             !$this->skipped and
-            !$this->pending();
+            !$this->pending;
     }
 }
 
@@ -124,7 +123,7 @@ class TestSuite extends TestBase {
     }
 
     public function setup() {
-        if ($this->pending()) {
+        if ($this->pending) {
             return;
         }
 
