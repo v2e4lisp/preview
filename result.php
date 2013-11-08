@@ -1,5 +1,7 @@
 <?php
 
+namespace Mocha;
+
 class TestResultBase {
     protected $test;
 

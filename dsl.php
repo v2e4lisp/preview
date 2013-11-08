@@ -4,6 +4,8 @@ require_once 'world.php';
 require_once 'core.php';
 
 use Mocha\World as World;
+use Mocha\TestSuite as TestSuite;
+use Mocha\TestCase as TestCase;
 
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
