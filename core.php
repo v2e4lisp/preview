@@ -75,14 +75,14 @@ class TestCase extends TestBase {
 
     private function run_with_false() {
         if (!$this->fn->__invoke()) {
-            $this->error = new Exception("failed");
+            $this->error = new \Exception("failed");
         }
     }
 
     private function run_with_exception() {
         try {
             $this->fn->__invoke();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             foreach(Configuration::$assertion_errors as $klass) {
                 if ($e instanceof $klass) {
                     $this->error = $e;
