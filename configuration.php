@@ -3,7 +3,7 @@
 namespace Mocha;
 
 class Configuration {
-    public static $assertion_errors = array("Exception");
+    public static $assertion_errors = array("\\Exception");
     public static $reporter = null;
 
     public static function setReporter($reporter) {
