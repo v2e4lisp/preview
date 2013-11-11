@@ -23,7 +23,7 @@ class TestBase {
     public function __construct($title, $fn) {
         $this->title = $title;
         $this->fn = $fn;
-        $this->pending = isset($fn);
+        $this->pending = !isset($fn);
     }
 
     public function skip() {
