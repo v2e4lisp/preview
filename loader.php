@@ -14,8 +14,8 @@ class Loader {
         }
     }
 
-    protected static function load_file($path) {
-        if (!file_exists($path) or !endswith($path, self::$postfix)) {
+    public static function load_file($path) {
+        if (!file_exists($path) or !self::endswith($path, self::$postfix)) {
             return false;
         }
 
@@ -29,12 +29,14 @@ class Loader {
         }
 
         foreach (scandir($path) as $p) {
-            self::load("{$path}/{$p}");
-        };
+            if ($p[0] != ".") {
+                self::load("{$path}/{$p}");
+            }
+        }
     }
 
 
-    private function endswith($haystack, $needle) {
+    private static function endswith($haystack, $needle) {
         return $needle === "" ||
             substr($haystack, -strlen($needle)) === $needle;
     }
