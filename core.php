@@ -138,10 +138,7 @@ class TestSuite extends TestBase {
         }
 
         Configuration::$reporter->before_suite($this->result);
-        if ($this->parent) {
-            $this->parent->run_before();
-        }
-
+        $this->run_before();
         foreach ($this->cases as $case) {
             $case->run();
         }
@@ -149,18 +146,11 @@ class TestSuite extends TestBase {
             $suite->run();
         }
         $this->finish();
-
-        if ($this->parent) {
-            $this->parent->run_after();
-        }
+        $this->run_after();
         Configuration::$reporter->after_suite($this->result);
     }
 
     public function run_before() {
-        if ($this->parent) {
-            $this->parent->run_before();
-        }
-
         foreach ($this->before_hooks as $before) {
             $before->__invoke();
         }
@@ -177,10 +167,6 @@ class TestSuite extends TestBase {
     }
 
     public function run_after() {
-        if ($this->parent) {
-            $this->parent->run_after();
-        }
-
         foreach ($this->after_hooks as $after) {
             $after->__invoke();
         }

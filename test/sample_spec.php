@@ -6,7 +6,6 @@ describe("Array functions", function() {
     it("array_pop", function () {
         $user = "wenjun.yan";
         ithrow($user);
-        //throw new ErrorException("eerror", "x", 0, __FILE__, __LINE__);
     });
 
     describe("pending suite one");

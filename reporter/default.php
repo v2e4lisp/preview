@@ -24,7 +24,8 @@ class DefaultReporter extends ReporterBase {
             cecho();
             $this->print_indent();
             cecho($case->title(), "red");
-            print_r($case->error()->getMessage());
+            // print_r($case->error()->getMessage());
+            echo $case->error()->getTraceAsString();
         } else {
             $this->cases += 1;
             cecho();
