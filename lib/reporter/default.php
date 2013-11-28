@@ -43,7 +43,7 @@ class DefaultReporter extends ReporterBase {
     public function after_all($results) {
         echo "\n\n";
         foreach ($this->traces as $t) {
-            cecho($t."\n", "dark_gray");
+            cecho($t."\n\n", "dark_gray");
         }
         echo "\n\n\n";
         cecho("        passed: ", "green");

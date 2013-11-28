@@ -1,11 +1,10 @@
 <?php
 
-function ithrow() {
-    $back = debug_backtrace();
-    $message = '';
-    foreach ($back as $t) {
-        $message .= "\n{$t['file']}: line {$t['line']}";
+function should_be_ok($expr) {
+    if (!$expr) {
+        throw new Exception;
     }
-    $message = "random chat";
-    throw new Exception($message);
+}
+
+function should_throw($fn) {
 }
