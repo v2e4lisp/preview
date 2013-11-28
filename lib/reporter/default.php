@@ -1,17 +1,12 @@
 <?php
 
-require_once 'base.php';
+namespace Mocha;
 
-function cecho ($message=null, $color=null) {
-    if (empty($message)) {
-        echo "\n";
-    } else {
-        echo $message;
-    }
-}
+require_once 'base.php';
 
 class DefaultReporter extends ReporterBase {
     private $error_cases = 0;
+    private $traces = array();
     private $cases = 0;
     private $level = 0;
     private $indent = "  ";
@@ -24,8 +19,7 @@ class DefaultReporter extends ReporterBase {
             cecho();
             $this->print_indent();
             cecho($case->title(), "red");
-            // print_r($case->error()->getMessage());
-            echo $case->error()->getTraceAsString();
+            $this->traces[] = $case->error()->getTraceAsString();
         } else {
             $this->cases += 1;
             cecho();
@@ -47,6 +41,10 @@ class DefaultReporter extends ReporterBase {
     }
 
     public function after_all($results) {
+        echo "\n\n";
+        foreach ($this->traces as $t) {
+            cecho($t."\n", "dark_gray");
+        }
         echo "\n\n\n";
         cecho("        passed: ", "green");
         echo ($this->cases - $this->error_cases);

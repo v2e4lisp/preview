@@ -1,12 +1,17 @@
 <?php
 
-require_once 'reporter/default.php';
-require_once 'configuration.php';
-require_once 'world.php';
-require_once 'dsl.php';
-require_once 'loader.php';
+namespace Mocha;
 
-Mocha\Configuration::setReporter(new DefaultReporter);
+require_once './vendor/autoload.php';
+require_once 'lib/reporter/default.php';
+require_once 'lib/configuration.php';
+require_once 'lib/world.php';
+require_once 'lib/dsl/bdd.php';
+require_once 'lib/loader.php';
+
+Configuration::setReporter(new DefaultReporter);
 // Mocha\Configuration::setAssertionErrors();
-Mocha\Loader::load("./test");
-Mocha\World::run();
+foreach ($argv as $arg) {
+    Loader::load($arg);
+}
+World::run();

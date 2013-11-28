@@ -1,7 +1,9 @@
 <?php
 
-require_once 'world.php';
-require_once 'core.php';
+namespace Mocha\BDD;
+
+require_once __DIR__.'/../world.php';
+require_once __DIR__.'/../core.php';
 
 use \Mocha\World;
 use \Mocha\TestSuite;
