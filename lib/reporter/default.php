@@ -19,9 +19,9 @@ class DefaultReporter extends ReporterBase {
                 implode($this->title_list, " ")." ".$case->title(),
                 $case->error()->getTraceAsString(),
             );
-            cecho(".", "red");
+            \cecho(".", "red");
         } else {
-            cecho(".", "green");
+            \cecho(".", "green");
         }
     }
 
@@ -41,7 +41,7 @@ class DefaultReporter extends ReporterBase {
         $this->print_summary();
 
         foreach ($this->traces as $t) {
-            cecho("  ".$t[0]."\n", "red");
+            \cecho("  ".$t[0]."\n", "red");
             echo $t[1]."\n\n";
             // echo $this->trace_message($t[1])."\n";
         }
@@ -49,9 +49,9 @@ class DefaultReporter extends ReporterBase {
 
     protected function print_summary() {
         echo "\n\n";
-        cecho("        passed: ", "green");
+        \cecho("        passed: ", "green");
         echo ($this->cases - $this->error_cases);
-        cecho("  failed: ", "red");
+        \cecho("  failed: ", "red");
         echo $this->error_cases;
         echo "\n\n";
     }
