@@ -20,7 +20,7 @@
         "classmap": ["lib"]
     },
 
-    "bin": ["cli.php"],
+    "bin": ["preview"],
 
     "license": "MIT"
 }
