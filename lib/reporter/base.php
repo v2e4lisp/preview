@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 class ReporterBase {
     public function before_case($case) {

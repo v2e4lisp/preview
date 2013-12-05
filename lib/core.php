@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 require_once 'result.php';
 require_once 'configuration.php';
@@ -18,12 +18,26 @@ class TestBase {
 
     public $result;
 
+    public $filename = null;
+
+    public $startline = null;
+
+    public $endline = null;
+
     protected $fn;
 
     public function __construct($title, $fn) {
         $this->title = $title;
         $this->fn = $fn;
         $this->pending = !isset($fn);
+
+        if ($this->fn) {
+            $ref = new \ReflectionFunction($this->fn);
+            $this->filename = $ref->getFileName();
+            $this->startline = $ref->getStartLine();
+            $this->endline = $ref->getEndLine();
+        }
+
     }
 
     public function skip() {

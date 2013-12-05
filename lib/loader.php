@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 class Loader {
     public static $postfix = "_spec.php";

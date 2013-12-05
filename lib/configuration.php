@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 class Configuration {
     public static $assertion_errors = array("\\Exception");

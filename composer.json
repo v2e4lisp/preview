@@ -1,5 +1,26 @@
 {
+    "name": "v2e4lisp/preview",
+    "description": "mocha.js like bdd test framework",
+    "homepage": "https://github.com/v2e4lisp/preview",
+    "keywords": ["test", "tdd", "bdd", "mocha.js", "rspec"],
+    "authors": [
+        {
+            "name": "Wenjun Yan",
+            "email": "mylastnameisyan@gmail.com",
+            "homepage": "https://github.com/v2e4lisp",
+            "role": "Developer"
+        }
+    ],
+
     "require": {
         "v2e4lisp/cecho": "dev-master"
-    }
+    },
+
+    "autoload": {
+        "classmap": ["lib"]
+    },
+
+    "bin": ["cli.php"],
+
+    "license": "MIT"
 }

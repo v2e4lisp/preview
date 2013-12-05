@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 require_once 'runner.php';
 

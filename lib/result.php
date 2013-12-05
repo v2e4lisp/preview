@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocha;
+namespace Preview;
 
 class TestResultBase {
     protected $test;
@@ -17,6 +17,18 @@ class TestResultBase {
         return null;
     }
 
+    public function filename() {
+        return $this->test->filename;
+    }
+
+    public function startline() {
+        return $this->test->startline;
+    }
+
+    public function endline() {
+        return $this->test->endline;
+    }
+
     public function title() {
         return $this->test->title;
     }
@@ -30,7 +42,7 @@ class TestResultBase {
     }
 
     public function pending() {
-        return $this->test->pending();
+        return $this->test->pending;
     }
 
     public function runable() {
@@ -45,12 +57,12 @@ class TestCaseResult extends TestResultBase {
 }
 
 class TestSuiteResult extends TestResultBase {
-    private $_cases = null;
+    protected $_cases = null;
 
-    private $_suites = null;
+    protected $_suites = null;
 
     public function cases() {
-        if (isset($this->_suites)) {
+        if (isset($this->_cases)) {
             return $this->_cases;
         }
 

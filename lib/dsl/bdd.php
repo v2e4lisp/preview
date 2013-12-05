@@ -1,13 +1,13 @@
 <?php
 
-namespace Mocha\BDD;
+namespace Preview\DSL\BDD;
 
 require_once __DIR__.'/../world.php';
 require_once __DIR__.'/../core.php';
 
-use \Mocha\World;
-use \Mocha\TestSuite;
-use \Mocha\TestCase;
+use \Preview\World;
+use \Preview\TestSuite;
+use \Preview\TestCase;
 
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
