@@ -2,7 +2,7 @@
 
 namespace Preview;
 
-require_once './vendor/autoload.php';
+// require_once './vendor/autoload.php';
 require_once 'lib/reporter/default.php';
 require_once 'lib/configuration.php';
 require_once 'lib/world.php';
