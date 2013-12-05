@@ -3,6 +3,9 @@
 namespace Preview;
 
 require_once 'base.php';
+require_once 'util.php';
+
+use Preview\Reporter\Util;
 
 class DefaultReporter extends ReporterBase {
     private $error_cases = 0;
@@ -19,9 +22,9 @@ class DefaultReporter extends ReporterBase {
                 implode($this->title_list, " ")." ".$case->title(),
                 $case->error()->getTraceAsString(),
             );
-            \cecho(".", "red");
+            echo Util::color(".", "red");
         } else {
-            \cecho(".", "green");
+            echo Util::color(".", "green");
         }
     }
 
@@ -34,26 +37,26 @@ class DefaultReporter extends ReporterBase {
     }
 
     public function before_all($results) {
-        echo "\n\n    ";
+        echo Util::br(2)."    ";
     }
 
     public function after_all($results) {
         $this->print_summary();
 
         foreach ($this->traces as $t) {
-            \cecho("  ".$t[0]."\n", "red");
+            echo Util::color("  ".$t[0].Util::br(), "red");
             echo $t[1]."\n\n";
-            // echo $this->trace_message($t[1])."\n";
+            // echo $this->trace_message($t[1]).Util::br();
         }
     }
 
     protected function print_summary() {
-        echo "\n\n";
-        \cecho("        passed: ", "green");
+        echo Util::br(2);
+        echo Util::color("        passed: ", "green");
         echo ($this->cases - $this->error_cases);
-        \cecho("  failed: ", "red");
+        echo Util::color("  failed: ", "red");
         echo $this->error_cases;
-        echo "\n\n";
+        echo Util::br(2);
     }
 
     /**
@@ -61,10 +64,10 @@ class DefaultReporter extends ReporterBase {
      */
     protected function trace_message($trace) {
         $message = "";
-        $msg_list = explode("\n", $trace);
+        $msg_list = explode(Util::br(), $trace);
         foreach($msg_list as $msg) {
             if (!$this->from_mocha_file($msg)) {
-                $message .= $msg."\n";
+                $message .= $msg.Util::br();
             }
         }
         return $message;
