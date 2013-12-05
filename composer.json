@@ -13,7 +13,7 @@
     ],
 
     "require": {
-        "v2e4lisp/cecho": "v1.*"
+        "v2e4lisp/cecho": "v1.1.1"
     },
 
     "autoload": {
