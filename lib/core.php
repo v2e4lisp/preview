@@ -3,7 +3,7 @@
  * Core classes
  *
  * @package Preview
- * @author wenjunyan
+ * @author Wenjun Yan
  */
 
 namespace Preview;

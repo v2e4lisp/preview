@@ -1,12 +1,34 @@
 <?php
+/**
+ * Loader class to load test files
+ *
+ * @package Preview
+ * @author Wenjun Yan
+ * @email mylastnameisyan@gmail.com
+ */
 
 namespace Preview;
 
 class Loader {
-    public static $postfix = "_spec.php";
+    /**
+     * Postfix of test filename
+     *
+     * @var $postfix = "_spec.php"
+     */
+    private static $postfix = "_spec.php";
 
+    /**
+     * Load test file(s) or dir(s) by path
+     *
+     * @param string $path
+     * @retrun null
+     */
     public static function load($path) {
         $path = realpath($path);
+        if (!(file_exists($path))) {
+            throw new Exception("No such file or dir found : {$path}");
+        }
+
         if (is_dir($path)) {
             self::load_dir($path);
         } else {
@@ -14,20 +36,27 @@ class Loader {
         }
     }
 
-    public static function load_file($path) {
-        if (!file_exists($path) or !self::endswith($path, self::$postfix)) {
+    /**
+     * Load test a file by file path
+     *
+     * @param string $path
+     * @retrun null
+     */
+    private static function load_file($path) {
+        if (!self::endswith($path, self::$postfix)) {
             return false;
         }
 
         require_once $path;
-        return true;
     }
 
-    protected static function load_dir($path) {
-        if (!file_exists($path)) {
-            return false;
-        }
-
+    /**
+     * Recursively load all test files in a dir.
+     *
+     * @param string $path
+     * @retrun null
+     */
+    private static function load_dir($path) {
         foreach (scandir($path) as $p) {
             if ($p[0] != ".") {
                 self::load("{$path}/{$p}");
@@ -35,7 +64,13 @@ class Loader {
         }
     }
 
-
+    /**
+     * Check if a string is end with another string
+     *
+     * @param string $haystack string to check
+     * @param string $needle substring
+     * @retrun bool
+     */
     private static function endswith($haystack, $needle) {
         return $needle === "" ||
             substr($haystack, -strlen($needle)) === $needle;
