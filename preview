@@ -9,8 +9,8 @@ require_once 'lib/world.php';
 require_once 'lib/dsl/bdd.php';
 require_once 'lib/loader.php';
 
-Configuration::setReporter(new DefaultReporter);
-// Preview\Configuration::setAssertionErrors();
+Configuration::set_reporter(new DefaultReporter);
+// Preview\Configuration::set_assertion_error();
 foreach ($argv as $arg) {
     Loader::load($arg);
 }

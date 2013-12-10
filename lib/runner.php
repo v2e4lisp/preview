@@ -18,11 +18,11 @@ class Runner {
             $results[] = $point->result;
         }
 
-        Configuration::$reporter->before_all($results);
+        Configuration::reporter()->before_all($results);
         foreach($this->start_points as $point) {
             $point->run();
         }
-        Configuration::$reporter->after_all($results);
+        Configuration::reporter()->after_all($results);
 
         return $results;
     }

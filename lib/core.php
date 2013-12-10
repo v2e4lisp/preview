@@ -179,13 +179,13 @@ class TestCase extends TestBase {
             return;
         }
 
-        Configuration::$reporter->before_case($this->result);
+        Configuration::reporter()->before_case($this->result);
         $this->parent->run_before_each();
 
         try {
             $this->fn->__invoke();
         } catch (\Exception $e) {
-            foreach(Configuration::$assertion_errors as $klass) {
+            foreach(Configuration::assertion_error() as $klass) {
                 if ($e instanceof $klass) {
                     $this->error = $e;
                 }
@@ -198,7 +198,7 @@ class TestCase extends TestBase {
 
         $this->parent->run_after_each();
         $this->finish();
-        Configuration::$reporter->after_case($this->result);
+        Configuration::reporter()->after_case($this->result);
     }
 }
 
@@ -301,7 +301,7 @@ class TestSuite extends TestBase {
             return;
         }
 
-        Configuration::$reporter->before_suite($this->result);
+        Configuration::reporter()->before_suite($this->result);
         $this->run_before();
         foreach ($this->cases as $case) {
             $case->run();
@@ -311,7 +311,7 @@ class TestSuite extends TestBase {
         }
         $this->finish();
         $this->run_after();
-        Configuration::$reporter->after_suite($this->result);
+        Configuration::reporter()->after_suite($this->result);
     }
 
     /**

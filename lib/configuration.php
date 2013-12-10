@@ -1,24 +1,69 @@
 <?php
+/**
+ * Configuration for preview
+ *
+ * @package Preview
+ * @author Wenjun Yan
+ * @email mylastnameisyan@gmail.com
+ */
 
 namespace Preview;
 
 class Configuration {
-    public static $assertion_errors = array("\\Exception");
-    public static $reporter = null;
+    /**
+     * Exception types which will be catched as a test failure error message.
+     *
+     * @var array $assertion_errors Default is array("\\Exception")
+     */
+    protected static $assertion_errors = array("\\Exception");
 
-    public static function setReporter($reporter) {
+    /**
+     * Reporter object.
+     *
+     * @var object $reporter
+     */
+    protected static $reporter = null;
+
+    /**
+     * Set reporter
+     *
+     * @param object $reporter
+     * @retrun null
+     */
+    public static function set_reporter($reporter) {
         self::$reporter = $reporter;
     }
 
-    public static function setAssertionErrors($errors=null) {
-        if (empty($errors)) {
-            self::$assertion_errors = array();
-            return;
-        }
-
+    /**
+     * Set error case exceptions
+     *
+     * @param array|string $param Exception type(s)
+     * @retrun null
+     */
+    public static function set_assertion_error($errors=array()) {
         if (!is_array($errors)) {
             $errors = array($errors);
         }
         self::$assertion_errors = $errors;
+    }
+
+    /**
+     * Get the reporter.
+     *
+     * @param null
+     * @retrun object
+     */
+    public static function reporter() {
+        return static::$reporter;
+    }
+
+    /**
+     * Get error case exception type(s)
+     *
+     * @param string $param
+     * @retrun null
+     */
+    public static function assertion_error() {
+        return static::$assertion_errors;
     }
 }
