@@ -10,7 +10,9 @@ function ok($expr, $msg="") {
 describe("Array functions", function() {
     describe("array_pop", function () {
         context("nonempty array", function () {
+            sleep(1);
             it("should return the last element", function () {
+                sleep(1);
                 $arr = array(1,2,3,4);
                 ok(array_pop($arr) == 4);
             });

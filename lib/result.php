@@ -129,6 +129,16 @@ class TestResultBase {
     public function runable() {
         return $this->test->runable();
     }
+
+    /**
+     * Get running time.
+     *
+     * @param null
+     * @retrun null
+     */
+    public function time() {
+        return $this->test->time();
+    }
 }
 
 

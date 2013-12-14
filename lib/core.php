@@ -9,6 +9,7 @@
 namespace Preview;
 
 require_once 'result.php';
+require_once 'timer.php';
 require_once 'configuration.php';
 
 /**
@@ -100,6 +101,7 @@ class TestBase {
         $this->title = $title;
         $this->fn = $fn;
         $this->pending = !isset($fn);
+        $this->timer = new Timer;
 
         if ($this->fn) {
             $ref = new \ReflectionFunction($this->fn);
@@ -122,6 +124,10 @@ class TestBase {
         if ($this->parent) {
             $this->parent->set_error($error);
         }
+    }
+
+    public function time() {
+        return $this->timer->span();
     }
 
     /**
@@ -193,7 +199,7 @@ class TestCase extends TestBase {
         if (!$this->runable()) {
             return;
         }
-
+        $this->timer->start();
         Configuration::reporter()->before_case($this->result);
         $this->parent->run_before_each();
 
@@ -215,6 +221,7 @@ class TestCase extends TestBase {
         $this->parent->run_after_each();
         $this->finish();
         Configuration::reporter()->after_case($this->result);
+        $this->timer->stop();
     }
 }
 
@@ -317,6 +324,7 @@ class TestSuite extends TestBase {
             return;
         }
 
+        $this->timer->start();
         Configuration::reporter()->before_suite($this->result);
         $this->run_before();
         foreach ($this->cases as $case) {
@@ -328,6 +336,7 @@ class TestSuite extends TestBase {
         $this->finish();
         $this->run_after();
         Configuration::reporter()->after_suite($this->result);
+        $this->timer->stop();
     }
 
     /**

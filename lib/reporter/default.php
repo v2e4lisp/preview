@@ -41,7 +41,7 @@ class DefaultReporter extends ReporterBase {
     }
 
     public function after_all($results) {
-        $this->print_summary();
+        $this->print_summary($this->timespan($results));
 
         foreach ($this->traces as $t) {
             echo Util::color("  ".$t[0].Util::br(), "red");
@@ -50,13 +50,23 @@ class DefaultReporter extends ReporterBase {
         }
     }
 
-    protected function print_summary() {
+    protected function print_summary($time) {
         echo Util::br(2);
         echo Util::color("        passed: ", "green");
         echo ($this->cases - $this->error_cases);
         echo Util::color("  failed: ", "red");
         echo $this->error_cases;
+        echo Util::br();
+        echo Util::color("        running time: ". $time. " seconds", "dark_gray");
         echo Util::br(2);
+    }
+
+    public function timespan($results) {
+        $time = 0;
+        foreach($results as $result) {
+            $time += $result->time();
+        }
+        return $time;
     }
 
     /**
