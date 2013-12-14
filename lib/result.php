@@ -49,14 +49,6 @@ class TestResultBase {
         return $this->test->error;
     }
 
-    public function passed() {
-        return empty($this->error);
-    }
-
-    public function failed() {
-        return !empty($this->error);
-    }
-
     /**
      * Get test filename
      *
@@ -90,7 +82,7 @@ class TestResultBase {
     }
 
     /**
-     * Get title of the test.
+     * Get the test's title
      *
      * @param null
      * @return string
@@ -100,7 +92,27 @@ class TestResultBase {
     }
 
     /**
-     * Check test is skipped.
+     * Check if the test is passed
+     *
+     * @param null
+     * @return bool
+     */
+    public function passed() {
+        return empty($this->test->error);
+    }
+
+    /**
+     * Check if the test is failed
+     *
+     * @param null
+     * @return bool
+     */
+    public function failed() {
+        return !empty($this->test->error);
+    }
+
+    /**
+     * Check if the test is skipped.
      *
      * @param null
      * @return bool
@@ -110,7 +122,7 @@ class TestResultBase {
     }
 
     /**
-     * Check test is finished.
+     * Check if the test is finished.
      *
      * @param null
      * @return bool
@@ -120,7 +132,7 @@ class TestResultBase {
     }
 
     /**
-     * Check test is pending.
+     * Check if the test is pending.
      *
      * @param null
      * @return bool
@@ -130,20 +142,21 @@ class TestResultBase {
     }
 
     /**
-     * Check test is pending.
+     * Check if the test is runnable.
+     * Test is runnable if test is neither finished, skipped nor pending.
      *
      * @param null
      * @return bool
      */
-    public function runable() {
-        return $this->test->runable();
+    public function runnable() {
+        return $this->test->runnable();
     }
 
     /**
      * Get running time.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function time() {
         return $this->test->time();

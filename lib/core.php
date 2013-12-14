@@ -159,7 +159,7 @@ class TestBase {
      * @param string $param
      * @return null
      */
-    public function runable() {
+    public function runnable() {
         return !$this->finished and
             !$this->skipped and
             !$this->pending;
