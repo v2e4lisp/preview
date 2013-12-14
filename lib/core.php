@@ -198,7 +198,7 @@ class TestCase extends TestBase {
      * @return null
      */
     public function run() {
-        if (!$this->runable()) {
+        if (!$this->runnable()) {
             return;
         }
         $this->timer->start();
@@ -338,7 +338,7 @@ class TestSuite extends TestBase {
      * @return null
      */
     public function run() {
-        if (!$this->runable()) {
+        if (!$this->runnable()) {
             return;
         }
 
