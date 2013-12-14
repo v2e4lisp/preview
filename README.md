@@ -5,7 +5,7 @@ BDD test for php.
 Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 
 # TODO
-- [ ] comment base reporter and dsl
+- [x] comment base reporter and dsl
 - [x] add error status for test suite
 - [ ] add exit status
 - [ ] add timer

@@ -50,18 +50,42 @@ function it($title, $fn=null) {
     return $case;
 }
 
+/**
+ * Current test suite first run this hook before any test cases/suites.
+ *
+ * @param function $fn
+ * @retrun null
+ */
 function before($fn) {
     World::current()->before_hooks[] = $fn;
 }
 
+/**
+ * Current test suite run this hook after all test cases/suites.
+ *
+ * @param function $fn
+ * @retrun null
+ */
 function after($fn) {
     World::current()->after_hooks[] = $fn;
 }
 
+/**
+ * A hook to be called before running each test case in current test suite.
+ *
+ * @param function $fn
+ * @retrun null
+ */
 function before_each($fn) {
     World::current()->before_each_hooks[] = $fn;
 }
 
+/**
+ * A hook to be called after running each test case in current test suite.
+ *
+ * @param string $param
+ * @retrun null
+ */
 function after_each($fn) {
     World::current()->before_after_hooks[] = $fn;
 }
