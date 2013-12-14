@@ -2,7 +2,6 @@
 
 namespace Preview;
 
-// require_once './vendor/autoload.php';
 require_once 'lib/reporter/default.php';
 require_once 'lib/configuration.php';
 require_once 'lib/world.php';
@@ -14,4 +13,12 @@ Configuration::set_reporter(new DefaultReporter);
 foreach ($argv as $arg) {
     Loader::load($arg);
 }
-World::run();
+
+$results = World::run();
+
+foreach($results as $result) {
+    if ($result->error()) {
+        exit(1);
+    }
+}
+exit(0);

@@ -7,7 +7,7 @@ Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 # TODO
 - [x] comment base reporter and dsl
 - [x] add error status for test suite
-- [ ] add exit status
+- [x] add exit status
 - [ ] add timer
 - [ ] test
 - [ ] update readme. some sample code.
