@@ -24,6 +24,15 @@ class TestBase {
     public $parent = null;
 
     /**
+     * Whether this test case/suite passed or failed
+     * false if passed otherwise holds an exception object.
+     * for test suite it will hold the first error object.
+     *
+     * @var object|false $error
+     */
+    public $error = null;
+
+    /**
      * A test state flag. Skipped test won't run.
      *
      * @var bool $skipped
@@ -100,6 +109,21 @@ class TestBase {
         }
     }
 
+    public function run() {}
+
+    public function set_parent ($suite) {}
+
+    public function set_error($error) {
+        if ($this->error) {
+            return false;
+        }
+        $this->error = $error;
+
+        if ($this->parent) {
+            $this->parent->set_error($error);
+        }
+    }
+
     /**
      * Skip this test.
      *
@@ -138,14 +162,6 @@ class TestBase {
  * Test Case class
  */
 class TestCase extends TestBase {
-    /**
-     * Whether this test case passed or failed
-     * false if passed otherwise holds an exception object.
-     *
-     * @var object|false $error
-     */
-    public $error = false;
-
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestCaseResult($this);
@@ -186,7 +202,8 @@ class TestCase extends TestBase {
         } catch (\Exception $e) {
             foreach(Configuration::assertion_error() as $klass) {
                 if ($e instanceof $klass) {
-                    $this->error = $e;
+                    $this->set_error($e);
+                    break;
                 }
             }
 
@@ -255,7 +272,7 @@ class TestSuite extends TestBase {
     }
 
     /**
-     * set parent parent test suite.
+     * set parent test suite.
      *
      * @param object|null $suite: parent test suite
      * @return null

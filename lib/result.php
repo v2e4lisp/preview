@@ -38,6 +38,17 @@ class TestResultBase {
     }
 
     /**
+     * Get exception object from the test case/suite.
+     * Return null if this test case is passed.
+     *
+     * @param null
+     * @return object|null
+     */
+    public function error() {
+        return $this->test->error;
+    }
+
+    /**
      * Get test filename
      *
      * @param null
@@ -124,18 +135,7 @@ class TestResultBase {
 /**
  * TestCaseResult class
  */
-class TestCaseResult extends TestResultBase {
-    /**
-     * Get exception object from the test case.
-     * Return null if this test case is passed.
-     *
-     * @param null
-     * @return object|null
-     */
-    public function error() {
-        return $this->test->error;
-    }
-}
+class TestCaseResult extends TestResultBase {}
 
 /**
  * TestSuiteResult class
