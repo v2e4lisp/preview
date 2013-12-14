@@ -137,7 +137,9 @@ class TestBase {
      * @return null
      */
     public function skip() {
-        $this->skipped = true;
+        if ($this->fn) {
+            $this->skipped = true;
+        }
     }
 
     /**
@@ -276,6 +278,22 @@ class TestSuite extends TestBase {
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestSuiteResult($this);
+    }
+
+    /**
+     * Skip this test. recursively mark all its children to be skipped.
+     *
+     * @param null
+     * @retrun null
+     */
+    public function skip() {
+        parent::skip();
+        foreach ($this->suites as $suite) {
+            $suite->skip();
+        }
+        foreach ($this->cases as $case) {
+            $case->skip();
+        }
     }
 
     /**
