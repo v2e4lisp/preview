@@ -27,7 +27,7 @@ class TestResultBase {
      * Get parent test result object
      *
      * @param null
-     * @retrun object|null
+     * @return object|null
      */
     public function parent() {
         if ($this->test->parent) {
@@ -41,7 +41,7 @@ class TestResultBase {
      * Get test filename
      *
      * @param null
-     * @retrun string
+     * @return string
      */
     public function filename() {
         return $this->test->filename;
@@ -52,7 +52,7 @@ class TestResultBase {
      * If the test is pending return null.
      *
      * @param null
-     * @retrun int|null
+     * @return int|null
      */
     public function startline() {
         return $this->test->startline;
@@ -63,7 +63,7 @@ class TestResultBase {
      * If the test is pending return null.
      *
      * @param null
-     * @retrun int|null
+     * @return int|null
      */
     public function endline() {
         return $this->test->endline;
@@ -73,7 +73,7 @@ class TestResultBase {
      * Get title of the test.
      *
      * @param null
-     * @retrun string
+     * @return string
      */
     public function title() {
         return $this->test->title;
@@ -83,7 +83,7 @@ class TestResultBase {
      * Check test is skipped.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function skipped() {
         return $this->test->skipped;
@@ -93,7 +93,7 @@ class TestResultBase {
      * Check test is finished.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function finished() {
         return $this->test->finished;
@@ -103,7 +103,7 @@ class TestResultBase {
      * Check test is pending.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function pending() {
         return $this->test->pending;
@@ -113,7 +113,7 @@ class TestResultBase {
      * Check test is pending.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function runable() {
         return $this->test->runable();
@@ -130,7 +130,7 @@ class TestCaseResult extends TestResultBase {
      * Return null if this test case is passed.
      *
      * @param null
-     * @retrun object|null
+     * @return object|null
      */
     public function error() {
         return $this->test->error;
@@ -161,7 +161,7 @@ class TestSuiteResult extends TestResultBase {
      * Get results of children test cases
      *
      * @param null
-     * @retrun array
+     * @return array
      */
     public function cases() {
         if (isset($this->_cases)) {
@@ -181,7 +181,7 @@ class TestSuiteResult extends TestResultBase {
      * Get results of children test suites
      *
      * @param null
-     * @retrun array
+     * @return array
      */
     public function suites() {
         if (isset($this->_suites)) {

@@ -30,7 +30,7 @@ class World {
      * Get current test suite
      *
      * @param null
-     * @retrun object|null
+     * @return object|null
      */
     public static function current() {
         if (empty(self::$testsuite_chain)) {
@@ -43,7 +43,7 @@ class World {
      * Push test suite to $testsuite_chain.
      *
      * @param object $testsuite
-     * @retrun null
+     * @return null
      */
     public static function push($testsuite) {
         if (empty(self::$testsuite_chain)) {
@@ -57,7 +57,7 @@ class World {
      * Pop out a test suite from $testsuite_chain
      *
      * @param null
-     * @retrun object|null
+     * @return object|null
      */
     public static function pop() {
         return array_pop(self::$testsuite_chain);
@@ -68,7 +68,7 @@ class World {
      * the result of start point test suites will return
      *
      * @param null
-     * @retrun array
+     * @return array
      */
     public static function run() {
         $runner = new Runner(self::$start_points);

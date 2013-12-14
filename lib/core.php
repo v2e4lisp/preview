@@ -38,7 +38,7 @@ class TestBase {
     public $finished = false;
 
     /**
-     * A test state flag. Not yet implemented.
+     * A test state flag. test not yet implemented.
      *
      * @var bool $pending
      */
@@ -81,7 +81,7 @@ class TestBase {
 
     /**
      * A lambda contains contenst of the test.
-     * if not set it means the test is pending.
+     * If not set it means the test is pending.
      *
      * @var function|null $fn
      */
@@ -98,14 +98,13 @@ class TestBase {
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
         }
-
     }
 
     /**
      * Skip this test.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function skip() {
         $this->skipped = true;
@@ -115,7 +114,7 @@ class TestBase {
      * Mark this test finished.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function finish() {
         $this->finished = true;
@@ -126,7 +125,7 @@ class TestBase {
      * Test is runnable if test is neither finished, skipped nor pending.
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     public function runable() {
         return !$this->finished and
@@ -156,7 +155,7 @@ class TestCase extends TestBase {
      * Set parent test suite object
      *
      * @param object $suite: TestSuite object
-     * @retrun null
+     * @return null
      */
     public function set_parent($suite) {
         $this->parent = $suite;
@@ -165,14 +164,14 @@ class TestCase extends TestBase {
 
     /**
      * Run the test.
-     * first call Reporter's before_case method
-     * then run all the registered before hooks
-     * after that invoke $fn which contains test statements.
-     * then all the after hooks
-     * finally call Reporter's after_case method
+     * 1. Call Reporter's before_case method
+     * 2. Run all the registered before hooks
+     * 3. Invoke $fn which contains test statements.
+     * 4. All the after hooks
+     * 5. Call Reporter's after_case method
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run() {
         if (!$this->runable()) {
@@ -237,14 +236,14 @@ class TestSuite extends TestBase {
     public $after_each_hooks = array();
 
     /**
-     * children TestSuite objects
+     * children test suite objects
      *
      * @var array $suites
      */
     public $suites = array();
 
     /**
-     * children TestCase objects
+     * children test case objects
      *
      * @var array $cases
      */
@@ -259,7 +258,7 @@ class TestSuite extends TestBase {
      * set parent parent test suite.
      *
      * @param object|null $suite: parent test suite
-     * @retrun null
+     * @return null
      */
     public function set_parent($suite) {
         // if empty($suite), that's a start point of the TEST-WORLD.
@@ -273,7 +272,7 @@ class TestSuite extends TestBase {
      * Invoke $fn and randomize children cases and suites.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function setup() {
         if ($this->pending) {
@@ -294,7 +293,7 @@ class TestSuite extends TestBase {
      * 5. Call Reporters's after_suite method.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run() {
         if (!$this->runable()) {
@@ -318,7 +317,7 @@ class TestSuite extends TestBase {
      * Run before hooks.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run_before() {
         foreach ($this->before_hooks as $before) {
@@ -331,7 +330,7 @@ class TestSuite extends TestBase {
      * This method should be called only by its children test cases.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run_before_each() {
         if ($this->parent) {
@@ -347,7 +346,7 @@ class TestSuite extends TestBase {
      * run after hooks
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run_after() {
         foreach ($this->after_hooks as $after) {
@@ -360,7 +359,7 @@ class TestSuite extends TestBase {
      * This method should be called only by its children test cases.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run_after_each() {
         if ($this->parent) {

@@ -28,7 +28,7 @@ class Configuration {
      * Set reporter
      *
      * @param object $reporter
-     * @retrun null
+     * @return null
      */
     public static function set_reporter($reporter) {
         self::$reporter = $reporter;
@@ -38,7 +38,7 @@ class Configuration {
      * Set error case exceptions
      *
      * @param array|string $param Exception type(s)
-     * @retrun null
+     * @return null
      */
     public static function set_assertion_error($errors=array()) {
         if (!is_array($errors)) {
@@ -51,7 +51,7 @@ class Configuration {
      * Get the reporter.
      *
      * @param null
-     * @retrun object
+     * @return object
      */
     public static function reporter() {
         return static::$reporter;
@@ -61,7 +61,7 @@ class Configuration {
      * Get error case exception type(s)
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     public static function assertion_error() {
         return static::$assertion_errors;

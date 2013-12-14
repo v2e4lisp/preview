@@ -14,7 +14,7 @@ use \Preview\TestCase;
  *
  * @param string $title A string to describe this test suite.
  * @param function $fn Default is null(which means pending).
- * @retrun object TestSuite object
+ * @return object TestSuite object
  */
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
@@ -31,7 +31,7 @@ function describe($title, $fn=null) {
  * @param string $title A string to describe a certain situation,
  *                      typically starts with 'when'.
  * @param function $fn Default is null(which means pending).
- * @retrun object TestSuite object.
+ * @return object TestSuite object.
  */
 function context($title, $fn=null) {
     return describe($title, $fn);
@@ -42,7 +42,7 @@ function context($title, $fn=null) {
  *
  * @param string $title A string to describe this test case.
  * @param function $fn Default is null(which means pending).
- * @retrun object TestCase object.
+ * @return object TestCase object.
  */
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);

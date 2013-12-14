@@ -21,7 +21,7 @@ class Loader {
      * Load test file(s) or dir(s) by path
      *
      * @param string $path
-     * @retrun null
+     * @return null
      */
     public static function load($path) {
         $path = realpath($path);
@@ -40,7 +40,7 @@ class Loader {
      * Load test a file by file path
      *
      * @param string $path
-     * @retrun null
+     * @return null
      */
     private static function load_file($path) {
         if (!self::endswith($path, self::$postfix)) {
@@ -54,7 +54,7 @@ class Loader {
      * Recursively load all test files in a dir.
      *
      * @param string $path
-     * @retrun null
+     * @return null
      */
     private static function load_dir($path) {
         foreach (scandir($path) as $p) {
@@ -69,7 +69,7 @@ class Loader {
      *
      * @param string $haystack string to check
      * @param string $needle substring
-     * @retrun bool
+     * @return bool
      */
     private static function endswith($haystack, $needle) {
         return $needle === "" ||
