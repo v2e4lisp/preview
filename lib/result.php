@@ -4,6 +4,7 @@
  *
  * @package Preview
  * @author Wenjun Yan
+ * @email mylastnameisyan@gmail.com
  */
 
 namespace Preview;
@@ -46,6 +47,14 @@ class TestResultBase {
      */
     public function error() {
         return $this->test->error;
+    }
+
+    public function passed() {
+        return empty($this->error);
+    }
+
+    public function failed() {
+        return !empty($this->error);
     }
 
     /**
