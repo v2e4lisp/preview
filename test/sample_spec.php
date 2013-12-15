@@ -1,11 +1,7 @@
 <?php
 namespace Preview\DSL\BDD;
 
-function ok($expr, $msg="") {
-    if (!$expr) {
-        throw new \Exception($msg);
-    }
-}
+require_once 'ok.php';
 
 describe("Array functions", function() {
     describe("array_pop", function () {
