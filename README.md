@@ -9,10 +9,10 @@ Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 - [x] add error status for test suite
 - [x] add exit status
 - [x] add timer
-- [ ] test
+- [.] test
 - [ ] update readme. some sample code.
 - [ ] add simple dsl (qunit like dsl)
-- [ ] make timer and reporter as hooker.
+- [ ] bind closure(maybe add a scope object?)
 - [ ] more reporters.
 
 
