@@ -1,13 +1,17 @@
 <?php
+/**
+ * bdd style dsl
+ *
+ * @package Preview
+ * @author Wenjun Yan
+ * @email mylastnameisyan@gmail.com
+ */
 
 namespace Preview\DSL\BDD;
 
-require_once __DIR__.'/../world.php';
-require_once __DIR__.'/../core.php';
-
 use \Preview\World;
-use \Preview\TestSuite;
-use \Preview\TestCase;
+use \Preview\Core\TestSuite;
+use \Preview\Core\TestCase;
 
 /**
  * Start a test suite.

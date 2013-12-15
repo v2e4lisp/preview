@@ -1,16 +1,31 @@
 #!/usr/bin/env php
 <?php
 
-namespace Preview;
+$files = array(
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../../autoload.php'
+);
 
-require_once 'lib/reporter/default.php';
-require_once 'lib/configuration.php';
-require_once 'lib/world.php';
-require_once 'lib/dsl/bdd.php';
-require_once 'lib/loader.php';
+foreach ($files as $f) {
+    if (file_exists($f)) {
+        require_once $f;
+        define("PREVIEW_INSTALLED", true);
+        break;
+    }
+}
 
-Configuration::set_reporter(new DefaultReporter);
+if (!defined("PREVIEW_INSTALLED")) {
+    die("Preview is not correctly installed");
+}
+
+use \Preview\Configuration;
+use \Preview\Loader;
+use \Preview\World;
+use \Preview\Reporter\Spec as SpecReporter;
+
+Configuration::set_reporter(new SpecReporter);
 // Preview\Configuration::set_assertion_error();
+
 foreach ($argv as $arg) {
     Loader::load($arg);
 }

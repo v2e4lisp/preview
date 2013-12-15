@@ -2,16 +2,13 @@
 
 namespace Preview\Reporter;
 
-/*
- * echo color string to terminal.
- *
+/**
  * orignal code:
  * http://www.if-not-true-then-false.com/2010/php-class-for-coloring-php-command-line-cli-scripts-output-php-output-colorizing-using-bash-shell-colors/
  *
- * MIT
  */
 
-class CColor {
+class Util {
     private static $foreground_colors = array(
         'black'        => '0;30',
         'dark_gray'    => '1;30',
@@ -42,35 +39,19 @@ class CColor {
         'light_gray'   => '47',
     );
 
-    // Returns colored string
-    public static function str($string, $foreground_color = null,
-                               $background_color = null) {
-        $colored_string = "";
-
-        // Check if given foreground color found
-        if (isset(self::$foreground_colors[$foreground_color])) {
-            $colored_string .= "\033[".
-                self::$foreground_colors[$foreground_color]. "m";
-        }
-        // Check if given background color found
-        if (isset(self::$background_colors[$background_color])) {
-            $colored_string .= "\033[".
-                self::$background_colors[$background_color] . "m";
-        }
-
-        // Add string and end coloring
-        $colored_string .=  $string . "\033[0m";
-
-        return $colored_string;
-    }
-}
-
-class Util {
     public static function br($n=1) {
         return str_repeat(PHP_EOL, $n);
     }
 
-    public static function color($str, $fg=null, $bg=null) {
-        return CColor::str($str, $fg, $bg);
+    public static function color($string, $fg = null, $bg = null) {
+        $colored = "";
+        if (isset(self::$foreground_colors[$fg])) {
+            $colored .= "\033[". self::$foreground_colors[$fg]. "m";
+        }
+        if (isset(self::$background_colors[$bg])) {
+            $colored .= "\033[". self::$background_colors[$bg] . "m";
+        }
+        $colored .=  $string . "\033[0m";
+        return $colored;
     }
 }

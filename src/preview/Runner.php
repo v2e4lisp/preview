@@ -9,8 +9,6 @@
 
 namespace Preview;
 
-require_once 'configuration.php';
-
 class Runner {
     /**
      * Top-level test suites

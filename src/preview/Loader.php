@@ -26,7 +26,7 @@ class Loader {
     public static function load($path) {
         $path = realpath($path);
         if (!(file_exists($path))) {
-            throw new Exception("No such file or dir found : {$path}");
+            throw new \Exception("No such file or dir found : {$path}");
         }
 
         if (is_dir($path)) {

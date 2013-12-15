@@ -1,13 +1,8 @@
 <?php
 
-namespace Preview;
+namespace Preview\Reporter;
 
-require_once 'base.php';
-require_once 'util.php';
-
-use Preview\Reporter\Util;
-
-class DefaultReporter extends ReporterBase {
+class Spec extends Base {
     private $error_cases = 0;
     private $traces = array();
     private $title_list = array();
@@ -45,7 +40,7 @@ class DefaultReporter extends ReporterBase {
 
         foreach ($this->traces as $t) {
             echo Util::color("  ".$t[0].Util::br(), "red");
-            echo $t[1]."\n\n";
+            echo $t[1].Util::br(2);
             // echo $this->trace_message($t[1]).Util::br();
         }
     }

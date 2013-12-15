@@ -13,7 +13,13 @@
     ],
 
     "autoload": {
-        "classmap": ["lib"]
+        "psr-0": {
+            "Preview": "src/"
+        },
+
+        "files": [
+            "src/preview/dsl/bdd.php"
+        ]
     },
 
     "bin": ["preview"],

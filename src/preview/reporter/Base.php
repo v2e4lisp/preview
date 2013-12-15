@@ -1,15 +1,15 @@
 <?php
 /**
- * ReporterBase class
+ * reporter base class
  *
  * @package Preview
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
 
-namespace Preview;
+namespace Preview\Reporter;
 
-class ReporterBase {
+class Base {
     /**
      * A hook to be called before each test case
      *

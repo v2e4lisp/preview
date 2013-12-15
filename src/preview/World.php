@@ -9,8 +9,6 @@
 
 namespace Preview;
 
-require_once 'runner.php';
-
 class World {
     /**
      * Array of test suite objects without parent
