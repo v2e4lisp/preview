@@ -12,7 +12,7 @@ Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 - [.] test
 - [ ] update readme. some sample code.
 - [ ] add simple dsl (qunit like dsl)
-- [ ] bind closure(maybe add a scope object?)
+- [x] bind closure(maybe add a scope object?) => use stdClass as context object.
 - [ ] more reporters.
 
 

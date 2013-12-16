@@ -158,13 +158,13 @@ class TestSuite extends TestBase {
      * @param null
      * @return null
      */
-    public function run_before_each() {
+    public function run_before_each($context) {
         if ($this->parent) {
-            $this->parent->run_before_each();
+            $this->parent->run_before_each($context);
         }
 
         foreach ($this->before_each_hooks as $before) {
-            $before->__invoke();
+            $fn = $before->bindTo($context, $context)->__invoke();
         }
     }
 
@@ -187,13 +187,13 @@ class TestSuite extends TestBase {
      * @param null
      * @return null
      */
-    public function run_after_each() {
+    public function run_after_each($context) {
         if ($this->parent) {
-            $this->parent->run_after_each();
+            $this->parent->run_after_each($context);
         }
 
         foreach ($this->after_each_hooks as $after) {
-            $after->__invoke();
+            $after->bindTo($context, $context)->__invoke();
         }
     }
 }

@@ -13,9 +13,12 @@ use \Preview\Configuration;
 use \Preview\Result\TestCase as TestCaseResult;
 
 class TestCase extends TestBase {
+    protected $context = null;
+
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestCaseResult($this);
+        $this->context = new \stdClass;
     }
 
     /**
@@ -46,10 +49,10 @@ class TestCase extends TestBase {
         }
         $this->timer->start();
         Configuration::reporter()->before_case($this->result);
-        $this->parent->run_before_each();
+        $this->parent->run_before_each($this->context);
 
         try {
-            $this->fn->__invoke();
+            $this->fn->bindTo($this->context, $this->context)->__invoke();
         } catch (\Exception $e) {
             foreach(Configuration::assertion_error() as $klass) {
                 if ($e instanceof $klass) {
@@ -63,7 +66,7 @@ class TestCase extends TestBase {
             }
         }
 
-        $this->parent->run_after_each();
+        $this->parent->run_after_each($this->context);
         $this->finish();
         Configuration::reporter()->after_case($this->result);
         $this->timer->stop();

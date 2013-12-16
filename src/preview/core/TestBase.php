@@ -104,6 +104,7 @@ class TestBase {
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
+            $this->fn = $ref->getClosure();
         }
     }
 
