@@ -1,7 +1,8 @@
 <?php
 /**
- * test case result class
+ * Test case result class
  *
+ * @package Preview
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */

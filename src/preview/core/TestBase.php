@@ -108,13 +108,31 @@ class TestBase {
         }
     }
 
+    /**
+     * run test
+     *
+     * @param null
+     * @retrun null
+     */
     public function run() {}
 
-    public function set_parent ($suite) {}
+    /**
+     * set parent suite
+     *
+     * @param object $suite parent testsuite.
+     * @retrun null
+     */
+    public function set_parent($suite) {}
 
+    /**
+     * set error object for failed test.
+     *
+     * @param object $error
+     * @retrun null
+     */
     public function set_error($error) {
         if ($this->error) {
-            return false;
+            return;
         }
         $this->error = $error;
 
@@ -123,6 +141,12 @@ class TestBase {
         }
     }
 
+    /**
+     * Running time of this test case/suite;
+     *
+     * @param null
+     * @retrun float seconds
+     */
     public function time() {
         return $this->timer->span();
     }

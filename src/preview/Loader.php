@@ -11,7 +11,7 @@ namespace Preview;
 
 class Loader {
     /**
-     * Postfix of test filename
+     * Suffix of test filename
      *
      * @var $postfix = "_spec.php"
      */

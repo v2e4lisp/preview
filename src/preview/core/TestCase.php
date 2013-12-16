@@ -13,6 +13,11 @@ use \Preview\Configuration;
 use \Preview\Result\TestCase as TestCaseResult;
 
 class TestCase extends TestBase {
+    /**
+     * context to this test and all related hooks.
+     *
+     * @var object|null $context
+     */
     protected $context = null;
 
     public function __construct($title, $fn) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * test suite result class
+ * Sest suite result class
  *
  * @package Preview
  * @author Wenjun Yan
