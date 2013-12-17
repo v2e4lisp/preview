@@ -95,16 +95,15 @@ class TestBase {
 
     public function __construct($title, $fn) {
         $this->title = $title;
-        $this->fn = $fn;
         $this->pending = !isset($fn);
         $this->timer = new Timer;
 
-        if ($this->fn) {
-            $ref = new \ReflectionFunction($this->fn);
+        if ($fn) {
+            $ref = new \ReflectionFunction($fn);
+            $this->fn = $ref->getClosure();
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
-            $this->fn = $ref->getClosure();
         }
     }
 
