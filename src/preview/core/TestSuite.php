@@ -164,7 +164,7 @@ class TestSuite extends TestBase {
         }
 
         foreach ($this->before_each_hooks as $before) {
-            $fn = $before->bindTo($context, $context)->__invoke();
+            $before->bindTo($context, $context)->__invoke();
         }
     }
 
