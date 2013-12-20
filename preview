@@ -27,7 +27,7 @@ Configuration::set_reporter(new SpecReporter);
 // Preview\Configuration::set_assertion_error();
 
 foreach ($argv as $arg) {
-    Loader::load($arg);
+    (new Loader)->load($arg);
 }
 
 $results = World::run();

@@ -38,9 +38,5 @@ suite("array_push");
 test("add one element to array", function () {
     $target = array(1,2,3,4);
     array_push($target, 5);
-    ok(count($this->arr) == 5);
+    ok(count($target) == 5);
 });
-
-
-
-

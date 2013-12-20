@@ -97,10 +97,10 @@ class TestBase {
         $this->title = $title;
         $this->pending = !isset($fn);
         $this->timer = new Timer;
+        $this->fn = $fn;
 
         if ($fn) {
             $ref = new \ReflectionFunction($fn);
-            $this->fn = $ref->getClosure();
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();

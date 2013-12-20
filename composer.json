@@ -18,7 +18,8 @@
         },
 
         "files": [
-            "src/preview/dsl/bdd.php"
+            "src/preview/dsl/bdd.php",
+            "src/preview/dsl/qunit.php"
         ]
     },
 

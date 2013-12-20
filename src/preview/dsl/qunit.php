@@ -20,7 +20,7 @@ use \Preview\Core\TestCase;
  * @retrun object testsuite object.
  */
 function suite($title) {
-    $desc = new TestSuite($title, function() {});
+    $desc = new TestSuite($title,function(){});
     World::pop();
     World::push($desc);
     return $desc;
@@ -34,11 +34,10 @@ function suite($title) {
  * @retrun object testcase object
  */
 function test($title, $fn=null) {
-    if (is_callable($title)) {
+    if (empty($fn) and $title instanceof \Closure) {
         $fn = $title;
         $title = "";
     }
-
     $case = new TestCase($title, $fn);
     $case->set_parent(World::current());
     return $case;

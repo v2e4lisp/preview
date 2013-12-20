@@ -13,9 +13,9 @@ class Loader {
     /**
      * Suffix of test filename
      *
-     * @var $postfix = "_spec.php"
+     * @var $suffix = "_spec.php"
      */
-    private static $postfix = "_spec.php";
+    private $suffix = "_spec.php";
 
     /**
      * Load test file(s) or dir(s) by path
@@ -23,16 +23,16 @@ class Loader {
      * @param string $path
      * @return null
      */
-    public static function load($path) {
+    public function load($path) {
         $path = realpath($path);
         if (!(file_exists($path))) {
             throw new \Exception("No such file or dir found : {$path}");
         }
 
         if (is_dir($path)) {
-            self::load_dir($path);
+            $this->load_dir($path);
         } else {
-            self::load_file($path);
+            $this->load_file($path);
         }
     }
 
@@ -42,8 +42,8 @@ class Loader {
      * @param string $path
      * @return null
      */
-    private static function load_file($path) {
-        if (!self::endswith($path, self::$postfix)) {
+    private function load_file($path) {
+        if ($this->is_spec_file($path)) {
             return false;
         }
 
@@ -56,10 +56,10 @@ class Loader {
      * @param string $path
      * @return null
      */
-    private static function load_dir($path) {
+    private function load_dir($path) {
         foreach (scandir($path) as $p) {
             if ($p[0] != ".") {
-                self::load("{$path}/{$p}");
+                $this->load("{$path}/{$p}");
             }
         }
     }
@@ -71,8 +71,12 @@ class Loader {
      * @param string $needle substring
      * @return bool
      */
-    private static function endswith($haystack, $needle) {
+    private function endswith($haystack, $needle) {
         return $needle === "" ||
             substr($haystack, -strlen($needle)) === $needle;
+    }
+
+    private function is_spec_file($file) {
+        return !$this->endswith($file, $this->suffix);
     }
 }
