@@ -11,8 +11,9 @@ Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 - [x] add timer
 - [.] test
 - [ ] update readme. some sample code.
-- [ ] add simple dsl (qunit like dsl)
+- [x] add simple dsl (qunit like dsl)
 - [x] bind closure(maybe add a scope object?) => use stdClass as context object.
 - [ ] more reporters.
+- [ ] add tag or group
 
 
