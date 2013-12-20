@@ -24,6 +24,8 @@ class Configuration {
      */
     protected static $reporter = null;
 
+    public static $test_groups = array("all");
+
     /**
      * Set reporter
      *

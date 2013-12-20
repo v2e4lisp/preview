@@ -86,6 +86,15 @@ class TestBase {
     public $endline = null;
 
     /**
+     * Test groups
+     *
+     * @var array $groups
+     */
+    public $groups = array("all");
+
+    public $in_test_group = null;
+
+    /**
      * A lambda contains contenst of the test.
      * If not set it means the test is pending.
      *
@@ -141,6 +150,26 @@ class TestBase {
     }
 
     /**
+     * set group(s) for this test case/suite
+     *
+     * @param string group names
+     * @retrun object $this
+     */
+    public function group() {
+        $groups = func_get_args();
+        foreach ($groups as $g) {
+            $this->groups[] = $g;
+        }
+        return $this;
+    }
+
+    public function in_group($group) {
+        return in_array($group, $this->groups);
+    }
+
+    public function in_test_group() {}
+
+    /**
      * Running time of this test case/suite;
      *
      * @param null
@@ -154,34 +183,38 @@ class TestBase {
      * Skip this test.
      *
      * @param null
-     * @return null
+     * @return object $this
      */
     public function skip() {
         if ($this->fn) {
             $this->skipped = true;
         }
+        return $this;
     }
 
     /**
      * Mark this test finished.
      *
      * @param null
-     * @return null
+     * @return object $this
      */
     public function finish() {
         $this->finished = true;
+        return $this;
     }
 
     /**
      * Check if test is runnable.
      * Test is runnable if test is neither finished, skipped nor pending.
+     * and in test group.
      *
-     * @param string $param
-     * @return null
+     * @param null
+     * @return bool
      */
     public function runnable() {
         return !$this->finished and
             !$this->skipped and
-            !$this->pending;
+            !$this->pending and
+            $this->in_test_group();
     }
 }
