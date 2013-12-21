@@ -92,6 +92,11 @@ class TestBase {
      */
     public $groups = array("all");
 
+    /**
+     * A test state flag. test in test group(s) specified in configuration.
+     *
+     * @var array|null $in_test_group
+     */
     public $in_test_group = null;
 
     /**
@@ -163,10 +168,22 @@ class TestBase {
         return $this;
     }
 
+    /**
+     * check if test is in a certain group.
+     *
+     * @param string $group
+     * @retrun bool
+     */
     public function in_group($group) {
         return in_array($group, $this->groups);
     }
 
+    /**
+     * check if test is in the test groups
+     *
+     * @param string $param
+     * @retrun null
+     */
     public function in_test_group() {}
 
     /**
@@ -204,7 +221,7 @@ class TestBase {
     }
 
     /**
-     * Check if test is runnable.
+     * Check if the test is runnable.
      * Test is runnable if test is neither finished, skipped nor pending.
      * and in test group.
      *

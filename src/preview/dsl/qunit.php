@@ -20,7 +20,7 @@ use \Preview\Core\TestCase;
  * @retrun object testsuite object.
  */
 function suite($title) {
-    $desc = new TestSuite($title,function(){});
+    $desc = new TestSuite($title, function(){});
     World::pop();
     World::push($desc);
     return $desc;
@@ -50,7 +50,7 @@ function test($title, $fn=null) {
  * @retrun null
  */
 function setup($fn) {
-    World::current()->before_each_hooks[] = $fn;
+    World::current()->before_each($fn);
 }
 
 /**
@@ -60,5 +60,5 @@ function setup($fn) {
  * @retrun null
  */
 function teardown($fn) {
-    World::current()->before_after_hooks[] = $fn;
+    World::current()->before_after($fn);
 }

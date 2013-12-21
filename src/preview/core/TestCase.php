@@ -77,6 +77,12 @@ class TestCase extends TestBase {
         $this->timer->stop();
     }
 
+    /**
+     * check if the test case is in test group
+     *
+     * @param null
+     * @retrun bool
+     */
     public function in_test_group() {
         if (!is_null($this->in_test_group)) {
             return $this->in_test_group;

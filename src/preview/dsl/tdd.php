@@ -1,26 +1,26 @@
 <?php
 /**
- * bdd style dsl
+ * tdd style dsl
  *
  * @package Preview
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
 
-namespace Preview\DSL\BDD;
+namespace Preview\DSL\TDD;
 
 use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 
 /**
- * Start a test suite.
+ * create a test suite.
  *
  * @param string $title A string to describe this test suite.
- * @param function $fn Default is null(which means pending).
+ * @param function $fn Default is null(which means suite is pending).
  * @return object TestSuite object
  */
-function describe($title, $fn=null) {
+function suite($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
     $desc->set_parent(World::current());
     World::push($desc);
@@ -30,27 +30,14 @@ function describe($title, $fn=null) {
 }
 
 /**
- * An alias for describe
- *
- * @param string $title A string to describe a certain situation,
- *                      typically starts with 'when'.
- * @param function $fn Default is null(which means pending).
- * @return object TestSuite object.
- */
-function context($title, $fn=null) {
-    return describe($title, $fn);
-}
-
-/**
- * Start a test case.
+ * create a test case.
  *
  * @param string $title A string to describe this test case.
- * @param function $fn Default is null(which means pending).
+ * @param function $fn Default is null(which means testcase is pending).
  * @return object TestCase object.
  */
-function it($title, $fn=null) {
+function test($title, $fn=null) {
     $case = new TestCase($title, $fn);
-    World::current()->add($case);
     $case->set_parent(World::current());
     return $case;
 }
@@ -61,7 +48,7 @@ function it($title, $fn=null) {
  * @param function $fn
  * @retrun null
  */
-function before($fn) {
+function suite_setup($fn) {
     World::current()->before($fn);
 }
 
@@ -71,7 +58,7 @@ function before($fn) {
  * @param function $fn
  * @retrun null
  */
-function after($fn) {
+function suite_teardown($fn) {
     World::current()->after($fn);
 }
 
@@ -81,7 +68,7 @@ function after($fn) {
  * @param function $fn
  * @retrun null
  */
-function before_each($fn) {
+function setup($fn) {
     World::current()->before_each($fn);
 }
 
@@ -91,6 +78,6 @@ function before_each($fn) {
  * @param string $param
  * @retrun null
  */
-function after_each($fn) {
+function teardown($fn) {
     World::current()->before_after($fn);
 }

@@ -24,7 +24,15 @@ class Configuration {
      */
     protected static $reporter = null;
 
+    /**
+     * Specify the test groups to run.
+     * Default is all which means run all the tests.
+     *
+     * @var array $test_groups
+     */
     public static $test_groups = array("all");
+
+    public static $use_context = true;
 
     /**
      * Set reporter

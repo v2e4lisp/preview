@@ -20,28 +20,28 @@ class TestSuite extends TestBase {
      *
      * @var array $before_hooks
      */
-    public $before_hooks = array();
+    protected $before_hooks = array();
 
     /**
      * before hooks for children test cases
      *
      * @var array $before_each_hooks
      */
-    public $before_each_hooks = array();
+    protected $before_each_hooks = array();
 
     /**
      * after hooks for itself
      *
      * @var array $after_hooks
      */
-    public $after_hooks = array();
+    protected $after_hooks = array();
 
     /**
      * after hooks for children test cases
      *
      * @var array $after_each_hooks
      */
-    public $after_each_hooks = array();
+    protected $after_each_hooks = array();
 
     /**
      * children test suite objects
@@ -90,6 +90,17 @@ class TestSuite extends TestBase {
             $suite->suites[] = $this;
             $this->parent = $suite;
         }
+    }
+
+    /**
+     * Add test child suite/case
+     *
+     * @param object $suite
+     * @retrun object $this
+     */
+    public function add($suite_or_case) {
+        $suite_or_case->set_parent($this);
+        return $this;
     }
 
     /**
@@ -197,6 +208,56 @@ class TestSuite extends TestBase {
         }
     }
 
+    /**
+     * add before hooks.
+     *
+     * @param function $fn
+     * @retrun object $this
+     */
+    public function before($fn) {
+        $this->before_hooks[] = $fn;
+        return $this;
+    }
+
+    /**
+     * add after hooks.
+     *
+     * @param function $fn
+     * @retrun object $this
+     */
+    public function after($fn) {
+        $this->after_hooks[] = $fn;
+        return $this;
+    }
+
+    /**
+     * add before_each hooks.
+     *
+     * @param function $fn
+     * @retrun object $this
+     */
+    public function before_each($fn) {
+        $this->before_each_hooks[] = $fn;
+        return $this;
+    }
+
+    /**
+     * add after_each hooks.
+     *
+     * @param function $fn
+     * @retrun object $this
+     */
+    public function after_each($fn) {
+        $this->after_each_hooks[] = $fn;
+        return $this;
+    }
+
+    /**
+     * check if this test suite is in test group
+     *
+     * @param null
+     * @retrun bool
+     */
     public function in_test_group() {
         if (!is_null($this->in_test_group)) {
             return $this->in_test_group;
