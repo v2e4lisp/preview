@@ -15,5 +15,6 @@ Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 - [x] bind closure(maybe add a scope object?) => use stdClass as context object.
 - [ ] more reporters.
 - [ ] add tag or group
+- [ ] add error state, => [finished, pending, skipped, passed, failed, error]
 
 
