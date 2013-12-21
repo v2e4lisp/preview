@@ -47,7 +47,7 @@ class Configuration {
     /**
      * Set error case exceptions
      *
-     * @param array|string $param Exception type(s)
+     * @param array|string $errors Exception type(s)
      * @return null
      */
     public static function set_assertion_error($errors=array()) {

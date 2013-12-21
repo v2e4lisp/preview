@@ -51,7 +51,6 @@ function context($title, $fn=null) {
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
     World::current()->add($case);
-    $case->set_parent(World::current());
     return $case;
 }
 

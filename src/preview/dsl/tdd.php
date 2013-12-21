@@ -38,7 +38,7 @@ function suite($title, $fn=null) {
  */
 function test($title, $fn=null) {
     $case = new TestCase($title, $fn);
-    $case->set_parent(World::current());
+    World::current()->add($case);
     return $case;
 }
 

@@ -41,36 +41,35 @@ class TestCase extends TestBase {
      * @return null
      */
     public function run() {
-        if (!$this->runnable()) {
-            return;
-        }
-
-        $this->context = (object) array_merge((array) $this->context,
-                                              (array) $this->parent->context);
-
-        $this->timer->start();
         Configuration::reporter()->before_case($this->result);
-        $this->parent->run_before_each($this->context);
 
-        try {
-            $this->invoke_closure_with_context($this->fn, $this->context);
-        } catch (\Exception $e) {
-            foreach(Configuration::assertion_error() as $klass) {
-                if ($e instanceof $klass) {
-                    $this->set_error($e);
-                    break;
+        if ($this->runnable()) {
+            $this->timer->start();
+
+            $this->context = (object) array_merge((array) $this->context,
+                                                  (array) $this->parent->context);
+            $this->parent->run_before_each($this->context);
+            try {
+                $this->invoke_closure_with_context($this->fn, $this->context);
+            } catch (\Exception $e) {
+                foreach(Configuration::assertion_error() as $klass) {
+                    if ($e instanceof $klass) {
+                        $this->set_error($e);
+                        break;
+                    }
+                }
+
+                if (!$this->error) {
+                    throw $e;
                 }
             }
+            $this->parent->run_after_each($this->context);
+            $this->finish();
 
-            if (!$this->error) {
-                throw $e;
-            }
+            $this->timer->stop();
         }
 
-        $this->parent->run_after_each($this->context);
-        $this->finish();
         Configuration::reporter()->after_case($this->result);
-        $this->timer->stop();
     }
 
     /**

@@ -131,28 +131,31 @@ class TestSuite extends TestBase {
      * @return null
      */
     public function run() {
-        if (!$this->runnable()) {
-            return;
-        }
-
-        if ($this->parent) {
-            $this->context = (object) array_merge((array) $this->context,
-                                                  (array) $this->parent->context);
-        }
-
-        $this->timer->start();
         Configuration::reporter()->before_suite($this->result);
-        $this->run_before();
-        foreach ($this->cases as $case) {
-            $case->run();
+
+        if ($this->runnable()) {
+            $this->timer->start();
+
+            if ($this->parent) {
+                $this->context = (object) array_merge(
+                    (array) $this->context,
+                    (array) $this->parent->context);
+            }
+
+            $this->run_before();
+            foreach ($this->cases as $case) {
+                $case->run();
+            }
+            foreach ($this->suites as $suite) {
+                $suite->run();
+            }
+            $this->run_after();
+            $this->finish();
+
+            $this->timer->stop();
         }
-        foreach ($this->suites as $suite) {
-            $suite->run();
-        }
-        $this->finish();
-        $this->run_after();
+
         Configuration::reporter()->after_suite($this->result);
-        $this->timer->stop();
     }
 
     /**
