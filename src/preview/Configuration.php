@@ -32,7 +32,7 @@ class Configuration {
      */
     public static $test_groups = array("all");
 
-    public static $use_context = true;
+    public static $use_implicit_context = true;
 
     /**
      * Set reporter
