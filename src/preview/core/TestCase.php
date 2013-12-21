@@ -13,17 +13,9 @@ use \Preview\Configuration;
 use \Preview\Result\TestCase as TestCaseResult;
 
 class TestCase extends TestBase {
-    /**
-     * context to this test and all related hooks.
-     *
-     * @var object|null $context
-     */
-    protected $context = null;
-
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestCaseResult($this);
-        $this->context = new \stdClass;
     }
 
     /**
@@ -52,12 +44,16 @@ class TestCase extends TestBase {
         if (!$this->runnable()) {
             return;
         }
+
+        $this->context = (object) array_merge((array) $this->context,
+                                              (array) $this->parent->context);
+
         $this->timer->start();
         Configuration::reporter()->before_case($this->result);
         $this->parent->run_before_each($this->context);
 
         try {
-            $this->fn->bindTo($this->context, $this->context)->__invoke();
+            $this->invoke_closure_with_context($this->fn, $this->context);
         } catch (\Exception $e) {
             foreach(Configuration::assertion_error() as $klass) {
                 if ($e instanceof $klass) {

@@ -24,10 +24,19 @@ use \Preview\World;
 use \Preview\Reporter\Spec as SpecReporter;
 
 Configuration::set_reporter(new SpecReporter);
+
+// PHP version < 5.4 , no $this for closure.
+// so we can't use this feature, instead we explicitly pass
+// the context object as an argument to callback.
+if (version_compare(phpversion(), '5.4', '<')) {
+    Configuration::$use_implicit_context = false;
+}
+
 // Preview\Configuration::set_assertion_error();
 
+$loader = new Loader;
 foreach ($argv as $arg) {
-    (new Loader)->load($arg);
+    $loader->load($arg);
 }
 
 $results = World::run();

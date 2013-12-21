@@ -135,6 +135,11 @@ class TestSuite extends TestBase {
             return;
         }
 
+        if ($this->parent) {
+            $this->context = (object) array_merge((array) $this->context,
+                                                  (array) $this->parent->context);
+        }
+
         $this->timer->start();
         Configuration::reporter()->before_suite($this->result);
         $this->run_before();
@@ -158,7 +163,7 @@ class TestSuite extends TestBase {
      */
     public function run_before() {
         foreach ($this->before_hooks as $before) {
-            $before->__invoke();
+            $this->invoke_closure_with_context($before, $this->context);
         }
     }
 
@@ -175,7 +180,7 @@ class TestSuite extends TestBase {
         }
 
         foreach ($this->before_each_hooks as $before) {
-            $before->bindTo($context, $context)->__invoke();
+            $this->invoke_closure_with_context($before, $context);
         }
     }
 
@@ -187,7 +192,7 @@ class TestSuite extends TestBase {
      */
     public function run_after() {
         foreach ($this->after_hooks as $after) {
-            $after->__invoke();
+            $this->invoke_closure_with_context($after, $this->context);
         }
     }
 
@@ -204,7 +209,7 @@ class TestSuite extends TestBase {
         }
 
         foreach ($this->after_each_hooks as $after) {
-            $after->bindTo($context, $context)->__invoke();
+            $this->invoke_closure_with_context($after, $this->context);
         }
     }
 

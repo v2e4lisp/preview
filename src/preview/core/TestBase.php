@@ -1,7 +1,7 @@
 <?php
 /**
  * TestBase class
- * base class for TestCase and TestSuite
+ * Base class for TestCase and TestSuite
  *
  * @package Preview
  * @author Wenjun Yan
@@ -11,6 +11,7 @@
 namespace Preview\Core;
 
 use Preview\Timer;
+use Preview\Configuration;
 
 class TestBase {
     /**
@@ -107,7 +108,16 @@ class TestBase {
      */
     protected $fn;
 
+    /**
+     * context to this test and all related hooks.
+     *
+     * @var object|null $context
+     */
+    protected $context = null;
+
+
     public function __construct($title, $fn) {
+        $this->context = new \stdClass;
         $this->title = $title;
         $this->pending = !isset($fn);
         $this->timer = new Timer;
@@ -233,5 +243,23 @@ class TestBase {
             !$this->skipped and
             !$this->pending and
             $this->in_test_group();
+    }
+
+    /**
+     * Invoke a closure with context(explicitly or implicitly)
+     * if Configuration::$use_implicit_context is set to true,
+     * the closure will be bound to the context object.
+     * Otherwise context will be passed to closure as an argument.
+     *
+     * @param function $fn
+     * @param object context object (new stdClass)
+     * @retrun mixed
+     */
+    protected function invoke_closure_with_context($fn, $context) {
+        if (Configuration::$use_implicit_context) {
+            return $fn->bindTo($context, $context)->__invoke();
+        } else {
+            return $fn->__invoke($context);
+        }
     }
 }
