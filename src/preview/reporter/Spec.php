@@ -7,13 +7,12 @@ class Spec extends Base {
     private $passed_cases = 0;
     private $skipped_cases = 0;
     private $traces = array();
-    private $title_list = array();
 
     public function after_case($case) {
         if($case->failed()) {
             $this->failed_cases += 1;
             $this->traces[] = array(
-                implode($this->title_list, " ")." ".$case->title(),
+                $case->full_title(),
                 $case->error()->getTraceAsString(),
             );
             echo Util::color(". ", "red");
@@ -26,18 +25,12 @@ class Spec extends Base {
         }
     }
 
-    public function before_suite($suite) {
-        $this->title_list[] = $suite->title();
-    }
-
     public function after_suite($suite) {
         if ($suite->skipped()) {
             $num = count($suite->all_cases());
             echo Util::color(str_repeat(". ", $num), "yellow");
             $this->skipped_cases += $num;
         }
-
-        array_pop($this->title_list);
     }
 
     public function before_all($results) {

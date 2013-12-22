@@ -9,4 +9,19 @@
 
 namespace Preview\Result;
 
-class TestCase extends TestBase {}
+class TestCase extends TestBase {
+    public function titles() {
+        $titles = array($this->title());
+        $suite = $this->parent();
+        while($suite) {
+            $titles[] = $suite->title();
+            $suite = $suite->parent();
+        }
+
+        return array_reverse($titles);
+    }
+
+    public function full_title() {
+        return implode($this->titles(), " ");
+    }
+}
