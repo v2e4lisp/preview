@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/v2e4lisp/preview.png?label=ready)](https://waffle.io/v2e4lisp/preview)  
 # Preview
 [![Stories in Ready](https://badge.waffle.io/v2e4lisp/preview.png?label=ready)](http://waffle.io/v2e4lisp/preview)
 
