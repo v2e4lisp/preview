@@ -143,6 +143,17 @@ class TestBase {
     public function set_parent($suite) {}
 
     /**
+     * Add test child suite/case
+     *
+     * @param object $suite
+     * @retrun object $this
+     */
+    public function add($suite_or_case) {
+        $suite_or_case->set_parent($this);
+        return $this;
+    }
+
+    /**
      * set error object for failed test.
      *
      * @param object $error
