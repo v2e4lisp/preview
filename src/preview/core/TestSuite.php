@@ -259,37 +259,4 @@ class TestSuite extends TestBase {
         $this->after_each_hooks[] = $fn;
         return $this;
     }
-
-    /**
-     * check if this test suite is in test group
-     *
-     * @param null
-     * @retrun bool
-     */
-    public function in_test_group() {
-        if (!is_null($this->in_test_group)) {
-            return $this->in_test_group;
-        }
-
-        $groups = Configuration::$test_groups;
-        $this->in_test_group = false;
-
-        foreach ($groups as $group) {
-            if ($this->in_group($group)) {
-                $this->in_test_group = true;
-            }
-        }
-        foreach ($this->suites as $suite) {
-            if ($suite->in_test_group()) {
-                $this->in_test_group = true;
-            }
-        }
-        foreach ($this->cases as $case) {
-            if ($case->in_test_group()) {
-                $this->in_test_group = true;
-            }
-        }
-
-        return $this->in_test_group;
-    }
 }

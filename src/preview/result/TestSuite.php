@@ -14,17 +14,24 @@ class TestSuite extends TestBase {
      * results of Children test cases
      * It's a memoization for $this->cases().
      *
-     * @var array|null $_cases
+     * @var array|null $cases
      */
-    protected $_cases = null;
+    protected $cases = null;
 
     /**
      * Children test suites' results
      * It's a memoization for $this->suites().
      *
-     * @var array|null $_cases
+     * @var array|null $suites
      */
-    protected $_suites = null;
+    protected $suites = null;
+
+    /**
+     * all cases in this test suite (recursively)
+     *
+     * @var array|null $all_cases;
+     */
+    protected $all_cases = null;
 
     /**
      * Get results of children test cases
@@ -42,7 +49,7 @@ class TestSuite extends TestBase {
             $cases[] = $case->result;
         }
 
-        $this->_cases = $cases;
+        $this->cases = $cases;
         return $cases;
     }
 
@@ -62,7 +69,27 @@ class TestSuite extends TestBase {
             $suites[] = $suite->result;
         }
 
-        $this->_suites = $suites;
+        $this->suites = $suites;
         return $suites;
+    }
+
+    /**
+     * Recursively get all cases in this suite
+     *
+     * @param null
+     * @retrun array array of test case result object.
+     */
+    public function all_cases() {
+        if (isset($this->all_cases)) {
+            return $this->all_cases;
+        }
+
+        $this->all_cases = $this->cases();
+        $suites = $this->suites();
+        foreach($suites as $suite) {
+            $this->all_cases = array_merge($this->all_cases, $suite->all_cases());
+        }
+
+        return $this->all_cases;
     }
 }

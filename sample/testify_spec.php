@@ -13,6 +13,9 @@ $suite->before_each(function () {
 $suite->test("array_push", function () {
     array_push($this->arr, 1);
     ok(end($this->arr) == 1);
-})->group("array");
+});
 
-
+$suite->test("array_pop", function () {
+    array_pop($this->arr);
+    ok(end($this->arr) == 3);
+})->group("pop");

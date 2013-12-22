@@ -95,7 +95,7 @@ class TestBase {
      * @return bool
      */
     public function passed() {
-        return empty($this->test->error);
+        return $this->finished() and empty($this->test->error);
     }
 
     /**
@@ -157,15 +157,5 @@ class TestBase {
      */
     public function time() {
         return $this->test->time();
-    }
-
-    /**
-     * Get test groups
-     *
-     * @param null
-     * @retrun array array of group names.
-     */
-    public function groups() {
-        return $this->test->groups;
     }
 }

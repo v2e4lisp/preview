@@ -30,7 +30,7 @@ class Configuration {
      *
      * @var array $test_groups
      */
-    public static $test_groups = array("all");
+    public static $test_groups = array();
 
     public static $use_implicit_context = true;
 

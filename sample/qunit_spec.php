@@ -14,12 +14,13 @@ setup(function() {
 // use the variable set in the setup function
 test("return last element", function () {
     ok(array_pop($this->arr) == 2);
-});
+})->skip();
 
 // skip this case
 test("return null for empty string", function () {
-    ok(empty(array_pop(array())));
-})->skip();
+    $empty_array = array();
+    ok(is_null(array_pop($empty_array)));
+});
 
 
 // test case without description;

@@ -87,20 +87,6 @@ class TestBase {
     public $endline = null;
 
     /**
-     * Test groups
-     *
-     * @var array $groups
-     */
-    public $groups = array("all");
-
-    /**
-     * A test state flag. test in test group(s) specified in configuration.
-     *
-     * @var array|null $in_test_group
-     */
-    public $in_test_group = null;
-
-    /**
      * A lambda contains contenst of the test.
      * If not set it means the test is pending.
      *
@@ -115,6 +101,12 @@ class TestBase {
      */
     protected $context = null;
 
+    /**
+     * groups it belongs to
+     *
+     * @var array $groups
+     */
+    protected $groups = array();
 
     public function __construct($title, $fn) {
         $this->context = new \stdClass;
@@ -165,17 +157,32 @@ class TestBase {
     }
 
     /**
-     * set group(s) for this test case/suite
+     * add this test to group(s).
      *
      * @param string group names
      * @retrun object $this
      */
     public function group() {
         $groups = func_get_args();
-        foreach ($groups as $g) {
-            $this->groups[] = $g;
+        foreach ($groups as $group) {
+            $this->groups[] = $group;
         }
         return $this;
+    }
+
+    /**
+     * check if the test is in test group
+     *
+     * @param null
+     * @retrun bool
+     */
+    public function in_test_group() {
+        foreach (Configuration::$test_groups as $group) {
+            if ($this->in_group($group)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -187,14 +194,6 @@ class TestBase {
     public function in_group($group) {
         return in_array($group, $this->groups);
     }
-
-    /**
-     * check if test is in the test groups
-     *
-     * @param string $param
-     * @retrun null
-     */
-    public function in_test_group() {}
 
     /**
      * Running time of this test case/suite;
@@ -233,7 +232,6 @@ class TestBase {
     /**
      * Check if the test is runnable.
      * Test is runnable if test is neither finished, skipped nor pending.
-     * and in test group.
      *
      * @param null
      * @return bool
@@ -241,8 +239,7 @@ class TestBase {
     public function runnable() {
         return !$this->finished and
             !$this->skipped and
-            !$this->pending and
-            $this->in_test_group();
+            !$this->pending;
     }
 
     /**

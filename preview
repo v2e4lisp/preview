@@ -32,7 +32,8 @@ if (version_compare(phpversion(), '5.4', '<')) {
     Configuration::$use_implicit_context = false;
 }
 
-// Preview\Configuration::set_assertion_error();
+// \Preview\Configuration::set_assertion_error();
+// \Preview\Configuration::$test_groups = array("pop");
 
 $loader = new Loader;
 foreach ($argv as $arg) {

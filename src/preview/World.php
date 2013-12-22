@@ -24,6 +24,8 @@ class World {
      */
     protected static $testsuite_chain = array();
 
+    protected static $groups = array();
+
     /**
      * Get current test suite
      *
@@ -59,6 +61,13 @@ class World {
      */
     public static function pop() {
         return array_pop(self::$testsuite_chain);
+    }
+
+    public static function add_to_group($group, $test) {
+        if (!array_key_exists($group, self::$groups)) {
+            self::$groups[$group] = array();
+        }
+        self::$groups[$group][] = $test;
     }
 
     /**
