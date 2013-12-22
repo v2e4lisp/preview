@@ -33,7 +33,7 @@ describe("Timer", function () {
             $self->timer->stop();
             ok($self->timer->stopped() === false);
         });
-    })->skip();
+    });
 
     context("when started", function() {
         before_each(function($self) {

@@ -87,6 +87,13 @@ class TestBase {
     public $endline = null;
 
     /**
+     * groups it belongs to
+     *
+     * @var array $groups
+     */
+    public $groups = array();
+
+    /**
      * A lambda contains contenst of the test.
      * If not set it means the test is pending.
      *
@@ -101,13 +108,6 @@ class TestBase {
      */
     protected $context = null;
 
-    /**
-     * groups it belongs to
-     *
-     * @var array $groups
-     */
-    protected $groups = array();
-
     public function __construct($title, $fn) {
         $this->context = new \stdClass;
         $this->title = $title;
@@ -120,6 +120,9 @@ class TestBase {
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
+            if (Configuration::$use_implicit_context) {
+                $this->fn = $ref->getClosure();
+            }
         }
     }
 
@@ -157,26 +160,28 @@ class TestBase {
     }
 
     /**
-     * add this test to group(s).
+     * make this test as a member of a test group;
      *
      * @param string group names
      * @retrun object $this
      */
-    public function group() {
-        $groups = func_get_args();
-        foreach ($groups as $group) {
+    public function add_to_group($group) {
+        if (!in_array($group, $this->groups)) {
             $this->groups[] = $group;
         }
-        return $this;
     }
 
     /**
-     * check if the test is in test group
+     * Check if the test is in test groups
      *
      * @param null
      * @retrun bool
      */
     public function in_test_group() {
+        if (empty(Configuration::$test_groups)) {
+            return true;
+        }
+
         foreach (Configuration::$test_groups as $group) {
             if ($this->in_group($group)) {
                 return true;
@@ -186,7 +191,7 @@ class TestBase {
     }
 
     /**
-     * check if test is in a certain group.
+     * Check if test is in a certain group.
      *
      * @param string $group
      * @retrun bool
@@ -231,7 +236,9 @@ class TestBase {
 
     /**
      * Check if the test is runnable.
-     * Test is runnable if test is neither finished, skipped nor pending.
+     * Test Suite is runnable if test is neither finished, skipped nor pending.
+     * But for test case only the ones that belongs to any test group can run.
+     * So this method will be overidden in TestCase class.
      *
      * @param null
      * @return bool
@@ -240,6 +247,20 @@ class TestBase {
         return !$this->finished and
             !$this->skipped and
             !$this->pending;
+    }
+
+    /**
+     * Merge current context with parent context if it has a parent testsuite.
+     *
+     * @param null
+     * @retrun stdClass current context;
+     */
+    protected function extend_context_with_parent() {
+        if ($this->parent) {
+            $this->context = (object) array_merge((array) $this->context,
+                                                  (array) $this->parent->context);
+        }
+        return $this->context;
     }
 
     /**

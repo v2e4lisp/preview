@@ -12,6 +12,7 @@ namespace Preview\DSL\BDD;
 use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\DSL\TestAPI;
 
 /**
  * Start a test suite.
@@ -26,7 +27,7 @@ function describe($title, $fn=null) {
     World::push($desc);
     $desc->setup();
     World::pop();
-    return $desc;
+    return new TestAPI($desc);
 }
 
 /**
@@ -51,7 +52,7 @@ function context($title, $fn=null) {
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
     World::current()->add($case);
-    return $case;
+    return new TestAPI($case);
 }
 
 /**

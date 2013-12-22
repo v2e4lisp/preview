@@ -22,7 +22,6 @@ test("return null for empty string", function () {
     ok(is_null(array_pop($empty_array)));
 });
 
-
 // test case without description;
 test(function() {
     array_pop($this->arr);

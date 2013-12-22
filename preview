@@ -25,8 +25,8 @@ use \Preview\Reporter\Spec as SpecReporter;
 
 Configuration::set_reporter(new SpecReporter);
 
-// PHP version < 5.4 , no $this for closure.
-// so we can't use this feature, instead we explicitly pass
+// Since for PHP version < 5.4 $this is not available for closure,
+// We can't use this feature, instead we explicitly pass
 // the context object as an argument to callback.
 if (version_compare(phpversion(), '5.4', '<')) {
     Configuration::$use_implicit_context = false;

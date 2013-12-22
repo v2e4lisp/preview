@@ -12,6 +12,7 @@ namespace Preview\DSL\TDD;
 use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\DSL\TestAPI;
 
 /**
  * create a test suite.
@@ -26,7 +27,7 @@ function suite($title, $fn=null) {
     World::push($desc);
     $desc->setup();
     World::pop();
-    return $desc;
+    return new TestAPI($desc);
 }
 
 /**
@@ -39,7 +40,7 @@ function suite($title, $fn=null) {
 function test($title, $fn=null) {
     $case = new TestCase($title, $fn);
     World::current()->add($case);
-    return $case;
+    return new TestAPI($case);
 }
 
 /**

@@ -32,6 +32,13 @@ class Configuration {
      */
     public static $test_groups = array();
 
+    /**
+     * If this property set to true, the context object will be the $this used
+     * in the testcase callback and other before/after hooks.
+     * Otherwise context object will be passed as an arguments to them.
+     *
+     * @var bool $use_implicit_context default is true.
+     */
     public static $use_implicit_context = true;
 
     /**

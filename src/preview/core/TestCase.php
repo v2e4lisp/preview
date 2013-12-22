@@ -46,8 +46,7 @@ class TestCase extends TestBase {
         if ($this->runnable()) {
             $this->timer->start();
 
-            $this->context = (object) array_merge((array) $this->context,
-                                                  (array) $this->parent->context);
+            $this->extend_context_with_parent();
             $this->parent->run_before_each($this->context);
             try {
                 $this->invoke_closure_with_context($this->fn, $this->context);
@@ -70,5 +69,9 @@ class TestCase extends TestBase {
         }
 
         Configuration::reporter()->after_case($this->result);
+    }
+
+    public function runnable() {
+        return parent::runnable() and $this->in_test_group();
     }
 }

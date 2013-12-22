@@ -12,6 +12,7 @@ namespace Preview\DSL\Testify;
 use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\DSL\TestAPI;
 
 class Suite {
     private $suite;
@@ -63,6 +64,6 @@ class Suite {
         }
         $case = new TestCase($title, $fn);
         $this->suite->add($case);
-        return $case;
+        return new TestAPI($case);
     }
 }

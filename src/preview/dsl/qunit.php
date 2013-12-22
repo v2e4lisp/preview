@@ -12,6 +12,7 @@ namespace Preview\DSL\Qunit;
 use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\DSL\TestAPI;
 
 /**
  * start a test suite
@@ -23,7 +24,7 @@ function suite($title) {
     $desc = new TestSuite($title, function(){});
     World::pop();
     World::push($desc);
-    return $desc;
+    return new TestAPI($desc);
 }
 
 /**
@@ -40,7 +41,7 @@ function test($title, $fn=null) {
     }
     $case = new TestCase($title, $fn);
     $case->set_parent(World::current());
-    return $case;
+    return new TestAPI($case);
 }
 
 /**

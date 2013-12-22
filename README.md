@@ -3,18 +3,19 @@
 BDD test for php.
 
 Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
+and Rspec
 
 # TODO
-- [x] comment base reporter and dsl
-- [x] add error status for test suite
-- [x] add exit status
-- [x] add timer
+- [X] comment base reporter and dsl
+- [X] add error status for test suite
+- [X] add exit status
+- [X] add timer
 - [.] test
 - [ ] update readme. some sample code.
-- [x] add simple dsl (qunit like dsl)
-- [x] bind closure(maybe add a scope object?) => use stdClass as context object.
+- [X] add simple dsl (qunit like dsl)
+- [X] bind closure(maybe add a scope object?) => use stdClass as context object.
 - [ ] more reporters.
-- [ ] add tag or group
-- [ ] add error state, => [finished, pending, skipped, passed, failed, error]
+- [X] add tag or group
+- [ ] cli interface parsing options ([-g]group, [-r]reporter, [-c]config, [-i]dsl not quite sure)
 
 

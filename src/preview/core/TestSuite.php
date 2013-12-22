@@ -136,12 +136,7 @@ class TestSuite extends TestBase {
         if ($this->runnable()) {
             $this->timer->start();
 
-            if ($this->parent) {
-                $this->context = (object) array_merge(
-                    (array) $this->context,
-                    (array) $this->parent->context);
-            }
-
+            $this->extend_context_with_parent();
             $this->run_before();
             foreach ($this->cases as $case) {
                 $case->run();

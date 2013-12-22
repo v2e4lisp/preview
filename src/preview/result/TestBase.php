@@ -36,7 +36,7 @@ class TestBase {
     }
 
     /**
-     * Get exception object from the test case/suite.
+     * Get exception object from the failed test case/suite.
      * Return null if this test case is passed.
      *
      * @param null
@@ -153,9 +153,30 @@ class TestBase {
      * Get running time.
      *
      * @param null
-     * @return null
+     * @return float timespan/seconds.
      */
     public function time() {
         return $this->test->time();
+    }
+
+
+    /**
+     * Get groups this test belongs to
+     *
+     * @param null
+     * @retrun array array of groups' name
+     */
+    public function groups() {
+        return $this->test->groups;
+    }
+
+    /**
+     * Check test is in any test group.
+     *
+     * @param null
+     * @retrun bool
+     */
+    public function in_test_group() {
+        $this->test->in_test_group();
     }
 }
