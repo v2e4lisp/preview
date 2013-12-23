@@ -28,20 +28,66 @@ Configuration::set_reporter(new SpecReporter);
 // Since for PHP version < 5.4 $this is not available for closure,
 // We can't use this feature, instead we explicitly pass
 // the context object as an argument to callback.
-if (version_compare(phpversion(), '5.4', '<')) {
+if (Configuration::php_version_is_53()) {
     Configuration::$use_implicit_context = false;
 }
 
-// \Preview\Configuration::set_assertion_error();
-// \Preview\Configuration::$test_groups = array("pop");
-
 $loader = new Loader;
-foreach ($argv as $arg) {
-    $loader->load($arg);
+
+// handle command line args
+$cmd = new Commando\Command();
+$cmd->setHelp("Usage: preview [options] [files or directories]");
+
+
+// preload config file
+$config_option = $cmd->option("c")
+    ->aka("config")
+    ->map(function ($config_file) use ($loader) {
+        $loader->load($config_file);
+    })
+    ->file();
+$config_option->describe("preload config file");
+
+
+// set test group
+$group_option = $cmd->option("g")
+    ->aka("group")
+    ->map(function ($groups) {
+        Configuration::$test_groups = explode(",", $groups);
+    });
+$group_option->describe("test group(s). use comma(,) to seperate groups");
+
+
+// set reporter
+$reporter_option = $cmd->option("r")
+    ->aka("reporter")
+    ->map(function ($reporter) {
+        $reporter = "\\Preview\\Reporter\\{$reporter}";
+        Configuration::set_reporter(new $reporter);
+    });
+$reporter_option->describe("set reporter");
+
+
+// No $this keyword for context
+$context_option = $cmd->option("n")
+    ->aka("nothis")
+    ->map(function () {
+        Configuration::$use_implicit_context = false;
+    })
+    ->boolean();
+$context_option->describe(
+    "Do not use this as an implicit context. Only for php 5.4 and above."
+);
+
+
+// load all test file
+$files = $cmd->getArgumentValues();
+foreach ($files as $file) {
+    $loader->load($file);
 }
 
+// run test and exit.
 $results = World::run();
-
 foreach($results as $result) {
     if ($result->error()) {
         exit(1);

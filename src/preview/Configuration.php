@@ -83,4 +83,8 @@ class Configuration {
     public static function assertion_error() {
         return static::$assertion_errors;
     }
+
+    public static function php_version_is_53() {
+        return version_compare(phpversion(), '5.4', '<');
+    }
 }

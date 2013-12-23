@@ -12,6 +12,11 @@
         }
     ],
 
+    "require": {
+        "php": ">=5.3",
+        "nategood/commando": "*"
+    },
+
     "autoload": {
         "psr-0": {
             "Preview": "src/"

@@ -120,7 +120,7 @@ class TestBase {
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
-            if (Configuration::$use_implicit_context) {
+            if (!Configuration::php_version_is_53()) {
                 $this->fn = $ref->getClosure();
             }
         }
