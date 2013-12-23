@@ -93,6 +93,17 @@ class TestSuite extends TestBase {
     }
 
     /**
+     * Add test child suite/case
+     *
+     * @param object $suite
+     * @retrun object $this
+     */
+    public function add($suite_or_case) {
+        $suite_or_case->set_parent($this);
+        return $this;
+    }
+
+    /**
      * Invoke $fn and randomize children cases and suites.
      *
      * @param null
