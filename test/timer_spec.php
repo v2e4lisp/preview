@@ -55,12 +55,12 @@ describe("Timer", function () {
             ok(!$this->timer->span());
         });
 
-        context("when stoped", function () {
+        context("then stopped", function () {
             before_each(function() {
                 $this->timer->stop();
             });
 
-            it("should be running", function () {
+            it("should not be running", function () {
                 ok($this->timer->running() === false);
             });
 
@@ -68,11 +68,11 @@ describe("Timer", function () {
                 ok($this->timer->started());
             });
 
-            it("should not be stopped", function () {
+            it("should be stopped", function () {
                 ok($this->timer->stopped());
             });
 
-            it("should not have time span", function () {
+            it("should have time span", function () {
                 ok($this->timer->span());
             });
         });
