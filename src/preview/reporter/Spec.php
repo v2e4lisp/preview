@@ -14,6 +14,7 @@ class Spec extends Base {
             $this->traces[] = array(
                 $case->full_title(),
                 $case->error()->getTraceAsString(),
+                $case->error()->getMessage(),
             );
             echo Util::color(". ", "red");
         } else if($case->passed()) {
@@ -43,8 +44,10 @@ class Spec extends Base {
         foreach ($this->traces as $i => $t) {
             echo " ".($i + 1).") ";
             echo Util::color($t[0].Util::br(), "red");
+            if (!empty($t[2])) {
+                echo Util::color($t[2].Util::br(), "red");
+            }
             echo $t[1].Util::br(2);
-            // echo $this->trace_message($t[1]).Util::br();
         }
     }
 
@@ -69,22 +72,4 @@ class Spec extends Base {
         return $time;
     }
 
-    /**
-     * format trace message
-     */
-    protected function trace_message($trace) {
-        $message = "";
-        $msg_list = explode(Util::br(), $trace);
-        foreach($msg_list as $msg) {
-            if (!$this->from_mocha_file($msg)) {
-                $message .= $msg.Util::br();
-            }
-        }
-        return $message;
-    }
-
-    protected function from_mocha_file($path) {
-        $mocha_dir = dirname(dirname(__DIR__));
-        return strpos($path, $mocha_dir) !== false;
-    }
 }
