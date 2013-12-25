@@ -179,4 +179,31 @@ class TestBase {
     public function in_test_group() {
         return $this->test->in_test_group();
     }
+
+    /**
+     * get title chain as an array;
+     *
+     * @param null
+     * @retrun array array of title(string);
+     */
+    public function titles() {
+        $titles = array($this->title());
+        $suite = $this->parent();
+        while($suite) {
+            $titles[] = $suite->title();
+            $suite = $suite->parent();
+        }
+
+        return array_reverse($titles);
+    }
+
+    /**
+     * get all titles as an string .
+     *
+     * @param null
+     * @retrun string
+     */
+    public function full_title() {
+        return implode($this->titles(), " ");
+    }
 }
