@@ -68,16 +68,23 @@ if (isset($options["reporter"])) {
     Configuration::set_reporter(new $reporter);
 }
 
-if (isset($options["groups"])) {
-    Configuration::$test_groups = explode(",", $options["groups"]);
+if (isset($options["group"])) {
+    Configuration::$test_groups = explode(",", $options["group"]);
 }
 
 if (isset($options["no-this"])) {
     Configuration::$use_implicit_context = false;
 }
 
-// load all test file
 $files = $cmd->getOperands();
+
+// default help message
+if (empty($options) and empty($files)) {
+    $cmd->showHelp();
+    exit(0);
+}
+
+// load all test file
 foreach ($files as $file) {
     $loader->load($file);
 }
