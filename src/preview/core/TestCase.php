@@ -13,6 +13,12 @@ use \Preview\Configuration;
 use \Preview\Result\TestCase as TestCaseResult;
 
 class TestCase extends TestBase {
+    /**
+     * constructor
+     *
+     * @param string $title
+     * @param function $fn
+     */
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestCaseResult($this);
@@ -71,6 +77,12 @@ class TestCase extends TestBase {
         Configuration::reporter()->after_case($this->result);
     }
 
+    /**
+     * Check if the test case is runnable.
+     *
+     * @param null
+     * @retrun bool
+     */
     public function runnable() {
         return parent::runnable() and $this->in_test_group();
     }

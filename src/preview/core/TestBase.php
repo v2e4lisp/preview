@@ -108,6 +108,12 @@ class TestBase {
      */
     protected $context = null;
 
+    /**
+     * constructor
+     *
+     * @param string $title
+     * @param function $fn
+     */
     public function __construct($title, $fn) {
         $this->context = new \stdClass;
         $this->title = $title;

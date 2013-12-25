@@ -57,6 +57,12 @@ class TestSuite extends TestBase {
      */
     public $cases = array();
 
+    /**
+     * constructor
+     *
+     * @param string $title
+     * @param function $fn
+     */
     public function __construct($title, $fn) {
         parent::__construct($title, $fn);
         $this->result = new TestSuiteResult($this);
