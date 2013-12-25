@@ -177,6 +177,6 @@ class TestBase {
      * @retrun bool
      */
     public function in_test_group() {
-        $this->test->in_test_group();
+        return $this->test->in_test_group();
     }
 }
