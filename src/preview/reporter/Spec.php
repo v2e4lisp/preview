@@ -20,14 +20,14 @@ class Spec extends Base {
         } else if($case->passed()) {
             $this->passed_cases += 1;
             echo Util::color(". ", "green");
-        } else if($case->skipped() and $case->in_test_group()) {
+        } else if($case->skipped()) {
             $this->skipped_cases += 1;
             echo Util::color(". ", "yellow");
         }
     }
 
     public function after_suite($suite) {
-        if ($suite->skipped() and $suite->in_test_group()) {
+        if ($suite->skipped()) {
             $num = count($suite->all_cases());
             echo Util::color(str_repeat(". ", $num), "yellow");
             $this->skipped_cases += $num;

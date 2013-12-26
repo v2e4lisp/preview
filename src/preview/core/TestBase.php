@@ -12,6 +12,7 @@ namespace Preview\Core;
 
 use Preview\Timer;
 use Preview\Configuration;
+use Preview\World;
 
 class TestBase {
     /**
@@ -175,6 +176,7 @@ class TestBase {
         if (!in_array($group, $this->groups)) {
             $this->groups[] = $group;
         }
+        World::add_test_to_group($this, $group);
     }
 
     /**
@@ -243,8 +245,6 @@ class TestBase {
     /**
      * Check if the test is runnable.
      * Test Suite is runnable if test is neither finished, skipped nor pending.
-     * But for test case only the ones that belongs to any test group can run.
-     * So this method will be overidden in TestCase class.
      *
      * @param null
      * @return bool

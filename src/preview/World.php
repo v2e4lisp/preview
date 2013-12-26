@@ -25,6 +25,13 @@ class World {
     protected static $testsuite_chain = array();
 
     /**
+     * all test groups
+     *
+     * @var array $groups
+     */
+    public static $groups = array();
+
+    /**
      * Get current test suite
      *
      * @param null
@@ -69,7 +76,41 @@ class World {
      * @return array
      */
     public static function run() {
-        $runner = new Runner(self::$start_points);
+        $tests = static::filter_test_by_group();
+        $runner = new Runner($tests);
         return $runner->run();
+    }
+
+    /**
+     * add a test case/suite to group
+     *
+     * @param object $test TestCase/TestSuite object
+     * @retrun string $group group name
+     */
+    public static function add_test_to_group($test, $group) {
+        if(isset(self::$groups[$group])) {
+            self::$groups[$group] = array();
+        }
+        self::$groups[$group][] = $test;
+    }
+
+    /**
+     * filter tests by groups which is set in Configuration.
+     *
+     * @param null
+     * @retrun array an array of test object.
+     */
+    private static function filter_test_by_group() {
+        if (empty(Configuration::$test_groups)) {
+            return self::$start_points;
+        }
+
+        $tests = array();
+        foreach(Configuration::$test_groups as $group) {
+            if(isset(self::$groups[$group])) {
+                $tests = array_merge($tests, self::$groups[$group]);
+            }
+        }
+        return array_unique($tests);
     }
 }

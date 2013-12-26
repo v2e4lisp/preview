@@ -76,14 +76,4 @@ class TestCase extends TestBase {
 
         Configuration::reporter()->after_case($this->result);
     }
-
-    /**
-     * Check if the test case is runnable.
-     *
-     * @param null
-     * @retrun bool
-     */
-    public function runnable() {
-        return parent::runnable() and $this->in_test_group();
-    }
 }

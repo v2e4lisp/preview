@@ -32,7 +32,7 @@ describe("Timer", function () {
             $this->timer->stop();
             ok($this->timer->stopped() === false);
         });
-    });
+    })->group("create");
 
     context("when started", function () {
         before_each(function () {
@@ -75,6 +75,6 @@ describe("Timer", function () {
             it("should have time span", function () {
                 ok($this->timer->span());
             });
-        });
-    });
+        })->group("stop");
+    })->group("start");
 });

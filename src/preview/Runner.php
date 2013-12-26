@@ -11,32 +11,37 @@ namespace Preview;
 
 class Runner {
     /**
-     * Top-level test suites
+     * test objects (suites or cases)
      *
-     * @var array $start_points
+     * @var array $tests
      */
-    protected $start_points = array();
+    protected $tests = array();
 
-    public function __construct($start_points) {
-        $this->start_points = $start_points;
-        shuffle($this->start_points);
+    /**
+     * Constructor
+     *
+     * @param array $tests array of test suites/cases
+     */
+    public function __construct($tests) {
+        $this->tests = $tests;
+        shuffle($this->tests);
     }
 
     /**
-     * run the top-level test suites and recursively run all test cases.
+     * run the test suites/cases and recursively run all test cases.
      *
      * @param null
      * @retrun array array of test result objects.
      */
     public function run() {
         $results = array();
-        foreach($this->start_points as $point) {
-            $results[] = $point->result;
+        foreach($this->tests as $test) {
+            $results[] = $test->result;
         }
 
         Configuration::reporter()->before_all($results);
-        foreach($this->start_points as $point) {
-            $point->run();
+        foreach($this->tests as $test) {
+            $test->run();
         }
         Configuration::reporter()->after_all($results);
 

@@ -42,12 +42,18 @@ $cmd = new Getopt(
         array("h", "help", Getopt::NO_ARGUMENT, "Show this help message."),
         array("c", "config", Getopt::REQUIRED_ARGUMENT, "Load config file"),
         array("r", "reporter", Getopt::REQUIRED_ARGUMENT, "Set reporter"),
-        array("g", "group", Getopt::REQUIRED_ARGUMENT,
-              "Test group(s). use comma(,) to seperate groups"
+        array(
+            "g", "group", Getopt::REQUIRED_ARGUMENT,
+            "Test group(s). use comma(,) to seperate groups"
         ),
-        array("n", "no-this", Getopt::NO_ARGUMENT,
-              'Disable using $this as an implicit context. '.
-              'Only for php 5.4 and above.'
+        array(
+            null, "list-groups", Getopt::NO_ARGUMENT,
+            'List all the test groups'
+        ),
+        array(
+            "n", "no-this", Getopt::NO_ARGUMENT,
+            'Disable using $this as an implicit context. '.
+            'Only for php 5.4 and above.'
         ),
     )
 );
@@ -87,6 +93,19 @@ if (empty($options) and empty($files)) {
 // load all test file
 foreach ($files as $file) {
     $loader->load($file);
+}
+
+if (isset($options["list-groups"])) {
+    $groups = array_keys(World::$groups);
+    if (empty($groups)) {
+        echo "    No test groups.";
+        exit(0);
+    }
+    foreach ($groups as $index => $group) {
+        $index = $index + 1;
+        echo "    $index) $group".PHP_EOL;
+    }
+    exit(0);
 }
 
 // run test and exit.

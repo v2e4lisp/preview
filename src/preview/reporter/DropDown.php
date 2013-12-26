@@ -22,14 +22,14 @@ class DropDown extends Base {
                 $case->error()->getTraceAsString(),
                 $case->error()->getMessage(),
             );
-        } else if ($case->skipped() and $case->in_test_group()) {
+        } else if ($case->skipped()) {
             $this->skipped_cases += 1;
             echo Util::color("  - ".$title.Util::br(), "dark_gray");
         }
     }
 
     public function after_suite($suite) {
-        if ($suite->skipped() and $suite->in_test_group()) {
+        if ($suite->skipped()) {
             $num = count($suite->all_cases());
             $this->skipped_cases += $num;
         }

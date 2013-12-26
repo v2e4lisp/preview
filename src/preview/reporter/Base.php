@@ -47,20 +47,18 @@ class Base {
     }
 
     /**
-     * A hook to be called before all test suite.
+     * A hook to be called before all test suites/cases.
      *
      * @param array array of test suite result objects.
-     *              test suites are the start points of the test world
      * @retrun null
      */
     public function before_all($results) {
     }
 
     /**
-     * A hook to be called after all test suite.
+     * A hook to be called after all test suite/cases.
      *
-     * @param array array of test suite result objects.
-     *              test suites are the start points of the test world
+     * @param array array of test suites/cases result objects.
      * @retrun null
      */
     public function after_all($results) {
