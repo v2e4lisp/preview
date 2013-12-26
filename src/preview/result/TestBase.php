@@ -171,16 +171,6 @@ class TestBase {
     }
 
     /**
-     * Check test is in any test group.
-     *
-     * @param null
-     * @retrun bool
-     */
-    public function in_test_group() {
-        return $this->test->in_test_group();
-    }
-
-    /**
      * get title chain as an array;
      *
      * @param null
