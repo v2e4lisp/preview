@@ -42,9 +42,18 @@ if (Preview::php_version_is_53()) {
 // handle command line args
 $cmd = new Getopt(
     array(
-        array("h", "help", Getopt::NO_ARGUMENT, "Show this help message."),
-        array("c", "config", Getopt::REQUIRED_ARGUMENT, "Load config file"),
-        array("r", "reporter", Getopt::REQUIRED_ARGUMENT, "Set reporter"),
+        array(
+            "h", "help", Getopt::NO_ARGUMENT,
+            "Show this help message."
+        ),
+        array(
+            "r", "reporter", Getopt::REQUIRED_ARGUMENT,
+            "Set reporter"
+        ),
+        array(
+            null, "no-color", Getopt::REQUIRED_ARGUMENT,
+            "Disable color output."
+        ),
         array(
             "g", "group", Getopt::REQUIRED_ARGUMENT,
             "Test group(s). use comma(,) to seperate groups"
@@ -68,8 +77,8 @@ if (isset($options["help"])) {
     exit(0);
 }
 
-if (isset($options["config"])) {
-    $loader->load($options["config"]);
+if (isset($options["no-color"])) {
+    Preview::$config->color_support = false;
 }
 
 if (isset($options["reporter"])) {

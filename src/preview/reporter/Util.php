@@ -8,6 +8,8 @@ namespace Preview\Reporter;
  *
  */
 
+use Preview\Preview;
+
 class Util {
     private static $foreground_colors = array(
         'black'        => '0;30',
@@ -44,6 +46,10 @@ class Util {
     }
 
     public static function color($string, $fg = null, $bg = null) {
+        if (!Preview::$config->color_support) {
+            return $string;
+        }
+
         $colored = "";
         if (isset(self::$foreground_colors[$fg])) {
             $colored .= "\033[". self::$foreground_colors[$fg]. "m";
