@@ -10,6 +10,13 @@ namespace Preview;
  */
 class Preview {
     /**
+     * Preview package version.
+     *
+     * @var string $version
+     */
+    public static $version = "1.0";
+
+    /**
      * Test world object.
      *
      * @var object $world
@@ -22,13 +29,6 @@ class Preview {
      * @var object $config;
      */
     public static $config;
-
-    /**
-     * Preview package version.
-     *
-     * @var string $version
-     */
-    public static $version = "1.0";
 
     /**
      * Check if php version is 5.3.

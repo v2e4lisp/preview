@@ -29,6 +29,7 @@ use Ulrichsg\Getopt;
 Preview::$world = new World;
 Preview::$config = new Configuration;
 $loader = new Loader;
+$br = PHP_EOL;
 
 Preview::$config->reporter = new SpecReporter;
 
@@ -51,24 +52,25 @@ $cmd = new Getopt(
             "Set reporter"
         ),
         array(
-            null, "no-color", Getopt::REQUIRED_ARGUMENT,
-            "Disable color output."
-        ),
-        array(
             "g", "group", Getopt::REQUIRED_ARGUMENT,
             "Test group(s). use comma(,) to seperate groups"
+        ),
+        array(
+            "n", "no-this", Getopt::NO_ARGUMENT,
+            'Disable using $this as an implicit context. PHP 5.4 only.'
         ),
         array(
             null, "list-groups", Getopt::NO_ARGUMENT,
             'List all the test groups'
         ),
         array(
-            "n", "no-this", Getopt::NO_ARGUMENT,
-            'Disable using $this as an implicit context. '.
-            'Only for php 5.4 and above.'
+            null, "no-color", Getopt::NO_ARGUMENT,
+            "Disable color output."
         ),
     )
 );
+$cmd->setTitle($br."    Preview ".Preview::$version.
+               " - bdd test framework for php ".$br.$br);
 $cmd->parse();
 $options = $cmd->getOptions();
 
@@ -115,7 +117,7 @@ if (isset($options["list-groups"])) {
     }
     foreach ($groups as $index => $group) {
         $index = $index + 1;
-        echo "    $index) $group".PHP_EOL;
+        echo "    $index) $group".$br;
     }
     exit(0);
 }
