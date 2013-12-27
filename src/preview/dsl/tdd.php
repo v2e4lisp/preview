@@ -9,7 +9,6 @@
 
 namespace Preview\DSL\TDD;
 
-use \Preview\World;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\DSL\TestAPI;
