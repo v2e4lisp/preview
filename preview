@@ -64,18 +64,34 @@ $cmd = new Getopt(
             'List all the test groups'
         ),
         array(
+            null, "list-reporters", Getopt::NO_ARGUMENT,
+            'List available reporters'
+        ),
+        array(
             null, "no-color", Getopt::NO_ARGUMENT,
             "Disable color output."
         ),
     )
 );
-$cmd->setTitle($br."    Preview ".Preview::$version.
-               " - bdd test framework for php ".$br.$br);
+$title = $br."    Preview ".Preview::$version.
+    " - bdd test framework for php ".$br.$br;
+$cmd->setTitle($title);
 $cmd->parse();
 $options = $cmd->getOptions();
 
 if (isset($options["help"])) {
     $cmd->showHelp();
+    exit(0);
+}
+
+if (isset($options["list-reporters"])) {
+    echo $title;
+    $reporters = array("spec", "dropdown");
+    foreach ($reporters as $index => $reporter) {
+        $index = $index + 1;
+        echo "    $index) $reporter$br";
+    }
+    echo $br;
     exit(0);
 }
 
@@ -110,14 +126,15 @@ foreach ($files as $file) {
 }
 
 if (isset($options["list-groups"])) {
+    echo $title;
     $groups = array_keys(Preview::$world->groups());
     if (empty($groups)) {
-        echo "    No test groups.";
+        echo "    No test groups.$br$br";
         exit(0);
     }
     foreach ($groups as $index => $group) {
         $index = $index + 1;
-        echo "    $index) $group".$br;
+        echo "    $index) $group$br$br";
     }
     exit(0);
 }
