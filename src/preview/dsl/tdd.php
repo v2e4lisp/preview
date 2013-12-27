@@ -23,10 +23,10 @@ use \Preview\DSL\TestAPI;
  */
 function suite($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
-    $desc->set_parent(World::current());
-    World::push($desc);
+    $desc->set_parent(Preview::$world->current());
+    Preview::$world->push($desc);
     $desc->setup();
-    World::pop();
+    Preview::$world->pop();
     return new TestAPI($desc);
 }
 
@@ -39,7 +39,7 @@ function suite($title, $fn=null) {
  */
 function test($title, $fn=null) {
     $case = new TestCase($title, $fn);
-    World::current()->add($case);
+    Preview::$world->current()->add($case);
     return new TestAPI($case);
 }
 
@@ -50,7 +50,7 @@ function test($title, $fn=null) {
  * @retrun null
  */
 function suite_setup($fn) {
-    World::current()->before($fn);
+    Preview::$world->current()->before($fn);
 }
 
 /**
@@ -60,7 +60,7 @@ function suite_setup($fn) {
  * @retrun null
  */
 function suite_teardown($fn) {
-    World::current()->after($fn);
+    Preview::$world->current()->after($fn);
 }
 
 /**
@@ -70,7 +70,7 @@ function suite_teardown($fn) {
  * @retrun null
  */
 function setup($fn) {
-    World::current()->before_each($fn);
+    Preview::$world->current()->before_each($fn);
 }
 
 /**
@@ -80,5 +80,5 @@ function setup($fn) {
  * @retrun null
  */
 function teardown($fn) {
-    World::current()->before_after($fn);
+    Preview::$world->current()->before_after($fn);
 }

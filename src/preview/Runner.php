@@ -39,11 +39,11 @@ class Runner {
             $results[] = $test->result;
         }
 
-        Configuration::reporter()->before_all($results);
+        Preview::$config->reporter->before_all($results);
         foreach($this->tests as $test) {
             $test->run();
         }
-        Configuration::reporter()->after_all($results);
+        Preview::$config->reporter->after_all($results);
 
         return $results;
     }

@@ -15,21 +15,21 @@ class World {
      *
      * @var array $start_points
      */
-    protected static $start_points = array();
+    protected $start_points = array();
 
     /**
      * array of TestSuite objects to track nested test suites.
      *
      * @var array $testsuite_chain
      */
-    protected static $testsuite_chain = array();
+    protected $testsuite_chain = array();
 
     /**
      * all test groups
      *
      * @var array $groups
      */
-    public static $groups = array();
+    protected $groups = array();
 
     /**
      * Get current test suite
@@ -37,11 +37,11 @@ class World {
      * @param null
      * @return object|null
      */
-    public static function current() {
-        if (empty(self::$testsuite_chain)) {
+    public function current() {
+        if (empty($this->testsuite_chain)) {
             return null;
         }
-        return end(self::$testsuite_chain);
+        return end($this->testsuite_chain);
     }
 
     /**
@@ -50,12 +50,12 @@ class World {
      * @param object $testsuite
      * @return null
      */
-    public static function push($testsuite) {
-        if (empty(self::$testsuite_chain)) {
-            self::$start_points[] = $testsuite;
+    public function push($testsuite) {
+        if (empty($this->testsuite_chain)) {
+            $this->start_points[] = $testsuite;
         }
 
-        self::$testsuite_chain[] = $testsuite;
+        $this->testsuite_chain[] = $testsuite;
     }
 
     /**
@@ -64,8 +64,8 @@ class World {
      * @param null
      * @return object|null
      */
-    public static function pop() {
-        return array_pop(self::$testsuite_chain);
+    public function pop() {
+        return array_pop($this->testsuite_chain);
     }
 
     /**
@@ -75,10 +75,20 @@ class World {
      * @param null
      * @return array
      */
-    public static function run() {
-        $tests = static::filter_test_by_group();
+    public function run() {
+        $tests = $this->filter_test_by_group();
         $runner = new Runner($tests);
         return $runner->run();
+    }
+
+    /**
+     * Get all test groups
+     *
+     * @param null
+     * @retrun array an array of test group names(string)
+     */
+    public function groups() {
+        return $this->groups;
     }
 
     /**
@@ -87,11 +97,11 @@ class World {
      * @param object $test TestCase/TestSuite object
      * @retrun string $group group name
      */
-    public static function add_test_to_group($test, $group) {
-        if(isset(self::$groups[$group])) {
-            self::$groups[$group] = array();
+    public function add_test_to_group($test, $group) {
+        if(isset($this->groups[$group])) {
+            $this->groups[$group] = array();
         }
-        self::$groups[$group][] = $test;
+        $this->groups[$group][] = $test;
     }
 
     /**
@@ -100,15 +110,15 @@ class World {
      * @param null
      * @retrun array an array of test object.
      */
-    private static function filter_test_by_group() {
-        if (empty(Configuration::$test_groups)) {
-            return self::$start_points;
+    private function filter_test_by_group() {
+        if (empty(Preview::$config->test_groups)) {
+            return $this->start_points;
         }
 
         $tests = array();
-        foreach(Configuration::$test_groups as $group) {
-            if(isset(self::$groups[$group])) {
-                $tests = array_merge($tests, self::$groups[$group]);
+        foreach(Preview::$config->test_groups as $group) {
+            if(isset($this->groups[$group])) {
+                $tests = array_merge($tests, $this->groups[$group]);
             }
         }
         return array_unique($tests);

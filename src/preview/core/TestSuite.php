@@ -11,7 +11,7 @@
 
 namespace Preview\Core;
 
-use Preview\Configuration;
+use Preview\Preview;
 use Preview\Result\TestSuite as TestSuiteResult;
 
 class TestSuite extends TestBase {
@@ -137,7 +137,7 @@ class TestSuite extends TestBase {
      * @return null
      */
     public function run() {
-        Configuration::reporter()->before_suite($this->result);
+        Preview::$config->reporter->before_suite($this->result);
 
         if ($this->runnable()) {
             $this->timer->start();
@@ -156,7 +156,7 @@ class TestSuite extends TestBase {
             $this->timer->stop();
         }
 
-        Configuration::reporter()->after_suite($this->result);
+        Preview::$config->reporter->after_suite($this->result);
     }
 
     /**

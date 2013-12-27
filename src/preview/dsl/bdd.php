@@ -9,7 +9,7 @@
 
 namespace Preview\DSL\BDD;
 
-use \Preview\World;
+use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\DSL\TestAPI;
@@ -23,10 +23,10 @@ use \Preview\DSL\TestAPI;
  */
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
-    $desc->set_parent(World::current());
-    World::push($desc);
+    $desc->set_parent(Preview::$world->current());
+    Preview::$world->push($desc);
     $desc->setup();
-    World::pop();
+    Preview::$world->pop();
     return new TestAPI($desc);
 }
 
@@ -51,7 +51,7 @@ function context($title, $fn=null) {
  */
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
-    World::current()->add($case);
+    Preview::$world->current()->add($case);
     return new TestAPI($case);
 }
 
@@ -62,7 +62,7 @@ function it($title, $fn=null) {
  * @retrun null
  */
 function before($fn) {
-    World::current()->before($fn);
+    Preview::$world->current()->before($fn);
 }
 
 /**
@@ -72,7 +72,7 @@ function before($fn) {
  * @retrun null
  */
 function after($fn) {
-    World::current()->after($fn);
+    Preview::$world->current()->after($fn);
 }
 
 /**
@@ -82,7 +82,7 @@ function after($fn) {
  * @retrun null
  */
 function before_each($fn) {
-    World::current()->before_each($fn);
+    Preview::$world->current()->before_each($fn);
 }
 
 /**
@@ -92,5 +92,5 @@ function before_each($fn) {
  * @retrun null
  */
 function after_each($fn) {
-    World::current()->before_after($fn);
+    Preview::$world->current()->before_after($fn);
 }

@@ -9,7 +9,7 @@
 
 namespace Preview\Core;
 
-use \Preview\Configuration;
+use \Preview\Preview;
 use \Preview\Result\TestCase as TestCaseResult;
 
 class TestCase extends TestBase {
@@ -47,7 +47,7 @@ class TestCase extends TestBase {
      * @return null
      */
     public function run() {
-        Configuration::reporter()->before_case($this->result);
+        Preview::$config->reporter->before_case($this->result);
 
         if ($this->runnable()) {
             $this->timer->start();
@@ -57,7 +57,7 @@ class TestCase extends TestBase {
             try {
                 $this->invoke_closure_with_context($this->fn, $this->context);
             } catch (\Exception $e) {
-                foreach(Configuration::assertion_error() as $klass) {
+                foreach(Preview::$config->assertion_errors as $klass) {
                     if ($e instanceof $klass) {
                         $this->set_error($e);
                         break;
@@ -74,6 +74,6 @@ class TestCase extends TestBase {
             $this->timer->stop();
         }
 
-        Configuration::reporter()->after_case($this->result);
+        Preview::$config->reporter->after_case($this->result);
     }
 }

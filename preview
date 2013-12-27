@@ -18,23 +18,26 @@ if (!defined("PREVIEW_INSTALLED")) {
     die("Preview is not correctly installed");
 }
 
+use \Preview\Preview;
+use \Preview\World;
 use \Preview\Configuration;
 use \Preview\Loader;
-use \Preview\World;
 use \Preview\Reporter\Spec as SpecReporter;
 
 use Ulrichsg\Getopt;
 
-Configuration::set_reporter(new SpecReporter);
+Preview::$world = new World;
+Preview::$config = new Configuration;
+$loader = new Loader;
+
+Preview::$config->reporter = new SpecReporter;
 
 // Since for PHP version < 5.4 $this is not available for closure,
 // We can't use this feature, instead we explicitly pass
 // the context object as an argument to callback.
-if (Configuration::php_version_is_53()) {
-    Configuration::$use_implicit_context = false;
+if (Preview::php_version_is_53()) {
+    Preview::$config->use_implicit_context = false;
 }
-
-$loader = new Loader;
 
 // handle command line args
 $cmd = new Getopt(
@@ -71,15 +74,15 @@ if (isset($options["config"])) {
 
 if (isset($options["reporter"])) {
     $reporter = "\\Preview\\Reporter\\{$options['reporter']}";
-    Configuration::set_reporter(new $reporter);
+    Preview::$config->reporter = new $reporter;
 }
 
 if (isset($options["group"])) {
-    Configuration::$test_groups = explode(",", $options["group"]);
+    Preview::$config->test_groups = explode(",", $options["group"]);
 }
 
 if (isset($options["no-this"])) {
-    Configuration::$use_implicit_context = false;
+    Preview::$config->use_implicit_context = false;
 }
 
 $files = $cmd->getOperands();
@@ -96,7 +99,7 @@ foreach ($files as $file) {
 }
 
 if (isset($options["list-groups"])) {
-    $groups = array_keys(World::$groups);
+    $groups = array_keys(Preview::$world->groups());
     if (empty($groups)) {
         echo "    No test groups.";
         exit(0);
@@ -109,7 +112,7 @@ if (isset($options["list-groups"])) {
 }
 
 // run test and exit.
-$results = World::run();
+$results = Preview::$world->run();
 foreach($results as $result) {
     if ($result->error()) {
         exit(1);

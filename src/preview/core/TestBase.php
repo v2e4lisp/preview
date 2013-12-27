@@ -11,8 +11,7 @@
 namespace Preview\Core;
 
 use Preview\Timer;
-use Preview\Configuration;
-use Preview\World;
+use Preview\Preview;
 
 class TestBase {
     /**
@@ -127,7 +126,7 @@ class TestBase {
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
-            if (!Configuration::php_version_is_53()) {
+            if (!Preview::php_version_is_53()) {
                 $this->fn = $ref->getClosure();
             }
         }
@@ -176,7 +175,7 @@ class TestBase {
         if (!in_array($group, $this->groups)) {
             $this->groups[] = $group;
         }
-        World::add_test_to_group($this, $group);
+        Preview::$world->add_test_to_group($this, $group);
     }
 
     /**
@@ -186,11 +185,11 @@ class TestBase {
      * @retrun bool
      */
     public function in_test_group() {
-        if (empty(Configuration::$test_groups)) {
+        if (empty(Preview::$config->$test_groups)) {
             return true;
         }
 
-        foreach (Configuration::$test_groups as $group) {
+        foreach (Preview::$config->$test_groups as $group) {
             if ($this->in_group($group)) {
                 return true;
             }
@@ -271,7 +270,7 @@ class TestBase {
 
     /**
      * Invoke a closure with context(explicitly or implicitly)
-     * if Configuration::$use_implicit_context is set to true,
+     * if Preview::$config->$use_implicit_context is set to true,
      * the closure will be bound to the context object.
      * Otherwise context will be passed to closure as an argument.
      *
@@ -280,7 +279,7 @@ class TestBase {
      * @retrun mixed
      */
     protected function invoke_closure_with_context($fn, $context) {
-        if (Configuration::$use_implicit_context) {
+        if (Preview::$config->use_implicit_context) {
             return $fn->bindTo($context, $context)->__invoke();
         } else {
             return $fn->__invoke($context);

@@ -19,8 +19,8 @@ class Suite {
 
     public function __construct($title) {
         $suite = new TestSuite($title, function(){});
-        World::pop();
-        World::push($suite);
+        Preview::$world->pop();
+        Preview::$world->push($suite);
         $this->suite = $suite;
     }
 
