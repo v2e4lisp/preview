@@ -56,6 +56,12 @@ function it($title, $fn=null) {
     return new TestAPI($case);
 }
 
+function let($name, $value) {
+    before_each(function () use ($name, $value) {
+        $this->$name = $value;
+    });
+}
+
 /**
  * Current test suite first run this hook before any test cases/suites.
  *

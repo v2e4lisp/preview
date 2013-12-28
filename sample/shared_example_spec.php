@@ -17,9 +17,7 @@ shared_example("stack", function ($group) {
 });
 
 describe("world", function () {
-    before_each(function () {
-        $this->subject = array(1,2,3);
-    });
+    let("subject", array(1,2,3));
 
     it_behaves_like("stack", "hello world");
 });
