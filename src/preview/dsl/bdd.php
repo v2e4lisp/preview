@@ -56,6 +56,20 @@ function it($title, $fn=null) {
     return new TestAPI($case);
 }
 
+/**
+ * Assign value to var.
+ * This is shorthand for assignment in before each hook.
+ *
+ * before_each(function () {
+ *     $this->somevar = value
+ * })
+ *
+ * let("somevar", value);
+ *
+ * @param string $name
+ * @param mixed $value
+ * @retrun null
+ */
 function let($name, $value) {
     before_each(function () use ($name, $value) {
         $this->$name = $value;
@@ -102,10 +116,25 @@ function after_each($fn) {
     Preview::$world->current()->before_after($fn);
 }
 
+/**
+ * Create a shared test
+ * Shared test when applied (by invoking it_behaves_like)
+ * will use current test's context object as its context.
+ *
+ * @param string $name
+ * @param function $fn
+ * @retrun null
+ */
 function shared_example($name, $fn) {
     TestShared::define($name, $fn);
 }
 
+/**
+ * Invoke a shared test
+ *
+ * @param string $name
+ * @retrun null
+ */
 function it_behaves_like($name) {
     $args = func_get_args();
     array_shift($args);
