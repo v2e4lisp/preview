@@ -3,9 +3,6 @@
 namespace Preview\DSL\BDD;
 
 require_once __DIR__."/../helper.php";
-use Preview\Configuration;
-
-// use Preview\Reporter\Base as BaseReporter;
 
 shared_example("pending test", function () {
     describe("#runnable", function () {
