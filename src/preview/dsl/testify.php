@@ -9,6 +9,7 @@
 
 namespace Preview\DSL\Testify;
 
+use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\DSL\TestAPI;

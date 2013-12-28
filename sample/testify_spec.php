@@ -2,7 +2,7 @@
 
 namespace Preview\DSL\Testify;
 
-require_once __DIR__ . '/../test/ok.php';
+require_once 'ok.php';
 
 $suite = new Suite("array functions");
 

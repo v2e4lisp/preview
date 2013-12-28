@@ -2,7 +2,7 @@
 
 namespace Preview\DSL\TDD;
 
-require_once __DIR__ . '/../test/ok.php';
+require_once 'ok.php';
 
 suite("array_pop", function () {
     suite_setup(function () {

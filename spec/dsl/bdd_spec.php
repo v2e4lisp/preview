@@ -6,7 +6,7 @@ use Preview\World;
 use Preview\Configuration;
 use Preview\Reporter\Base as BaseReporter;
 
-require_once dirname(__DIR__).'/helper.php';
+require_once __DIR__.'/../helper.php';
 
 describe("bdd", function () {
     before_each(function () {

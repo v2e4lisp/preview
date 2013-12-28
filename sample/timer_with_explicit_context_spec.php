@@ -5,7 +5,7 @@ namespace Preview\DSL\BDD;
 use Preview\Timer;
 
 // require_once 'ok.php';
-require_once __DIR__ . '/../test/ok.php';
+require_once 'ok.php';
 
 describe("Timer", function () {
     before_each(function($self) {
