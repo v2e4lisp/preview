@@ -12,6 +12,7 @@ namespace Preview\DSL\BDD;
 use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\Core\TestShared;
 use \Preview\DSL\TestAPI;
 
 /**
@@ -93,4 +94,12 @@ function before_each($fn) {
  */
 function after_each($fn) {
     Preview::$world->current()->before_after($fn);
+}
+
+function shared_example($name, $fn) {
+    TestShared::define($name, $fn);
+}
+
+function it_behaves_like($name) {
+    TestShared::invoke($name);
 }
