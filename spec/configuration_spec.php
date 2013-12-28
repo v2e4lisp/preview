@@ -3,7 +3,7 @@ namespace Preview\DSL\BDD;
 
 use Preview\Configuration;
 
-require_once 'ok.php';
+require_once 'helper.php';
 
 describe("Configuration", function () {
     before(function () {

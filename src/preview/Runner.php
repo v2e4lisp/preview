@@ -15,7 +15,7 @@ class Runner {
      *
      * @var array $tests
      */
-    protected $tests = array();
+    public $tests = array();
 
     /**
      * Constructor

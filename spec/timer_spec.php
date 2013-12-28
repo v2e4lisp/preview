@@ -4,7 +4,7 @@ namespace Preview\DSL\BDD;
 
 use Preview\Timer;
 
-require_once 'ok.php';
+require_once 'helper.php';
 
 describe("Timer", function () {
     before_each(function () {
