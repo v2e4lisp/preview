@@ -66,6 +66,11 @@ function it($title, $fn=null) {
  *
  * let("somevar", value);
  *
+ * If value is an object it will first be cloned and the copy
+ * will be assigned to $name for every case.
+ * And if it's an closure it will be invoked and the return value
+ * will be used.
+ *
  * @param string $name
  * @param mixed $value
  * @retrun null
@@ -73,12 +78,22 @@ function it($title, $fn=null) {
 if (Preview::php_version_is_53()) {
     function let($name, $value) {
         before_each(function ($self) use ($name, $value) {
+            if ($value instanceof \Closure) {
+                $self->$name = $value->__invoke();
+            } else if (is_object($value)) {
+                $value = clone $value;
+            }
             $self->$name = $value;
         });
     }
 } else {
     function let($name, $value) {
         before_each(function () use ($name, $value) {
+            if ($value instanceof \Closure) {
+                $this->$name = $value->__invoke();
+            } else if (is_object($value)) {
+                $value = clone $value;
+            }
             $this->$name = $value;
         });
     }
@@ -88,7 +103,7 @@ if (Preview::php_version_is_53()) {
  * Assign value to subject
  * It is short hand for let("subject", $value);
  *
- * @param string $param
+ * @param mixed $value
  * @retrun null
  */
 function subject($value) {
