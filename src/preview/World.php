@@ -32,12 +32,20 @@ class World {
     protected $groups = array();
 
     /**
+     * Test is running or not.
+     *
+     * @var bool $running
+     */
+    protected $running = false;
+
+    /**
      * Get current test suite
      *
      * @param null
      * @return object|null
      */
     public function current() {
+        $this->throw_exception_if_running("current");
         if (empty($this->testsuite_chain)) {
             return null;
         }
@@ -51,6 +59,7 @@ class World {
      * @return null
      */
     public function push($testsuite) {
+        $this->throw_exception_if_running("push");
         if (empty($this->testsuite_chain)) {
             $this->start_points[] = $testsuite;
         }
@@ -65,6 +74,7 @@ class World {
      * @return object|null
      */
     public function pop() {
+        $this->throw_exception_if_running("pop");
         return array_pop($this->testsuite_chain);
     }
 
@@ -76,9 +86,13 @@ class World {
      * @return array
      */
     public function run() {
+        $this->throw_exception_if_running("run");
+        $this->running = true;
         $tests = $this->filter_test_by_group();
         $runner = new Runner($tests);
-        return $runner->run();
+        $results = $runner->run();
+        $this->running = false;
+        return $results;
     }
 
     /**
@@ -88,6 +102,7 @@ class World {
      * @retrun array an array of test group names(string)
      */
     public function groups() {
+        $this->throw_exception_if_running("run");
         return $this->groups;
     }
 
@@ -98,6 +113,7 @@ class World {
      * @retrun string $group group name
      */
     public function add_test_to_group($test, $group) {
+        $this->throw_exception_if_running("add_test_to_group");
         if(isset($this->groups[$group])) {
             $this->groups[$group] = array();
         }
@@ -122,5 +138,21 @@ class World {
             }
         }
         return array_unique($tests);
+    }
+
+    /**
+     * This function will freeze the world if tests are running.
+     * Which means you cannot call any method on the current World.
+     *
+     * @param string $param
+     * @retrun null
+     */
+    private function throw_exception_if_running($name) {
+        if ($this->running) {
+            throw new \Exception("You can't call World#$name ".
+                                 "while test world is running. ".
+                                 "This error occures when you try to ".
+                                 "create a test suite in a test case.");
+        }
     }
 }
