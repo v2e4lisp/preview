@@ -224,7 +224,7 @@ class TestBase {
      * @return object $this
      */
     public function skip() {
-        if ($this->fn) {
+        if (!$this->pending) {
             $this->skipped = true;
         }
         return $this;
