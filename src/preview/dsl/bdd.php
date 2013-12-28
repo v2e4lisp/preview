@@ -75,29 +75,29 @@ function it($title, $fn=null) {
  * @param mixed $value
  * @retrun null
  */
-if (Preview::php_version_is_53()) {
-    function let($name, $value) {
+
+function let($name, $value) {
+    if (Preview::$config->use_implicit_context) {
+        before_each(function () use ($name, $value) {
+            if ($value instanceof \Closure) {
+                $value = $value->bindTo($this, $this)->__invoke();
+            } else if (is_object($value)) {
+                $value = clone $value;
+            }
+            $this->$name = $value;
+        });
+    } else {
         before_each(function ($self) use ($name, $value) {
             if ($value instanceof \Closure) {
-                $self->$name = $value->__invoke();
+                $value = $value->__invoke($self);
             } else if (is_object($value)) {
                 $value = clone $value;
             }
             $self->$name = $value;
         });
     }
-} else {
-    function let($name, $value) {
-        before_each(function () use ($name, $value) {
-            if ($value instanceof \Closure) {
-                $this->$name = $value->__invoke();
-            } else if (is_object($value)) {
-                $value = clone $value;
-            }
-            $this->$name = $value;
-        });
-    }
 }
+
 
 /**
  * Assign value to subject
