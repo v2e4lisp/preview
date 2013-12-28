@@ -23,7 +23,7 @@ class TestBase {
 
     /**
      * Whether this test case/suite passed or failed
-     * false if passed otherwise holds an exception object.
+     * null if passed otherwise holds an exception object.
      * for test suite it will hold the first error object.
      *
      * @var object|false $error
@@ -231,17 +231,6 @@ class TestBase {
     }
 
     /**
-     * Mark this test finished.
-     *
-     * @param null
-     * @return object $this
-     */
-    public function finish() {
-        $this->finished = true;
-        return $this;
-    }
-
-    /**
      * Check if the test is runnable.
      * Test Suite is runnable if test is neither finished, skipped nor pending.
      *
@@ -252,6 +241,17 @@ class TestBase {
         return !$this->finished and
             !$this->skipped and
             !$this->pending;
+    }
+
+    /**
+     * Mark this test finished.
+     *
+     * @param null
+     * @return object $this
+     */
+    protected function finish() {
+        $this->finished = true;
+        return $this;
     }
 
     /**
