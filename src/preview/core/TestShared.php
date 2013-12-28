@@ -2,39 +2,33 @@
 
 namespace Preview\Core;
 
-use Preview\Timer;
 use Preview\Preview;
 
-class TestShared extends TestSuite {
+class TestShared {
     public static $registered = array();
 
-    public static function invoke($name) {
-        if (!array_key_exists($name, static::$registered)) {
+    public static function invoke($name, $args=array()) {
+        if (!array_key_exists($name, self::$registered)) {
             throw new Exception("no such shared test: $name");
         }
 
         $shared = self::$registered[$name];
-        $shared->setup();
+        $shared->setup($args);
     }
 
     public static function define($name, $fn) {
-        static::$registered[$name] = new TestSuite("", $fn);
+        self::$registered[$name] = new self($fn);
     }
 
-    public function run() {
-        if (!$this->runnable()) {
-            return;
+    public function __construct($fn) {
+        $this->fn = $fn;
+        if (!Preview::php_version_is_53()) {
+            $ref = new \ReflectionFunction($fn);
+            $this->fn = $ref->getClosure();
         }
+    }
 
-        $this->extend_context_with_parent();
-        $this->run_before();
-        foreach ($this->cases as $case) {
-            $case->run();
-        }
-        foreach ($this->suites as $suite) {
-            $suite->run();
-        }
-        $this->run_after();
-        $this->finish();
+    public function setup($args) {
+        call_user_func_array($this->fn, $args);
     }
 }

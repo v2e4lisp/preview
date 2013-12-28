@@ -101,5 +101,7 @@ function shared_example($name, $fn) {
 }
 
 function it_behaves_like($name) {
-    TestShared::invoke($name);
+    $args = func_get_args();
+    array_shift($args);
+    TestShared::invoke($name, $args);
 }
