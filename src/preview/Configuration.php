@@ -40,11 +40,21 @@ class Configuration {
     public $test_groups = array();
 
     /**
-     * If this property set to true, the context object will be the $this used
+     * If this property set to true,
+     * the context object will be the $this used
      * in the testcase callback and other before/after hooks.
      * Otherwise context object will be passed as an arguments to them.
      *
      * @var bool $use_implicit_context default is true.
      */
     public $use_implicit_context = true;
+
+    /**
+     * File loader object will use this regexp
+     * to check if a file is a spec file.
+     * Non-spec file will be ignored.
+     *
+     * @var regexp $filename_regexp
+     */
+    public $filename_regexp = '/_spec\.php/';
 }

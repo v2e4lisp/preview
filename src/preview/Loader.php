@@ -11,13 +11,6 @@ namespace Preview;
 
 class Loader {
     /**
-     * Suffix of test filename
-     *
-     * @var $suffix = "_spec.php"
-     */
-    private $suffix = "_spec.php";
-
-    /**
      * Load test file(s) or dir(s) by path
      *
      * @param string $path
@@ -43,7 +36,7 @@ class Loader {
      * @return null
      */
     private function load_file($path) {
-        if ($this->is_spec_file($path)) {
+        if (!$this->is_spec_file($path)) {
             return false;
         }
 
@@ -65,18 +58,12 @@ class Loader {
     }
 
     /**
-     * Check if a string is end with another string
+     * Check if it's a test file by its filename
      *
-     * @param string $haystack string to check
-     * @param string $needle substring
-     * @return bool
+     * @param string $param
+     * @retrun bool
      */
-    private function endswith($haystack, $needle) {
-        return $needle === "" ||
-            substr($haystack, -strlen($needle)) === $needle;
-    }
-
     private function is_spec_file($file) {
-        return !$this->endswith($file, $this->suffix);
+        return preg_match(Preview::$config->filename_regexp, $file);
     }
 }
