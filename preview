@@ -56,8 +56,12 @@ $cmd = new Getopt(
             "Test group(s). use comma(,) to seperate groups"
         ),
         array(
-            "n", "no-this", Getopt::NO_ARGUMENT,
+            null, "no-this", Getopt::NO_ARGUMENT,
             'Disable using $this as an implicit context. PHP 5.4 only.'
+        ),
+        array(
+            null, "no-color", Getopt::NO_ARGUMENT,
+            "Disable color output."
         ),
         array(
             null, "list-groups", Getopt::NO_ARGUMENT,
@@ -66,10 +70,6 @@ $cmd = new Getopt(
         array(
             null, "list-reporters", Getopt::NO_ARGUMENT,
             'List available reporters'
-        ),
-        array(
-            null, "no-color", Getopt::NO_ARGUMENT,
-            "Disable color output."
         ),
     )
 );
