@@ -70,10 +70,29 @@ function it($title, $fn=null) {
  * @param mixed $value
  * @retrun null
  */
-function let($name, $value) {
-    before_each(function () use ($name, $value) {
-        $this->$name = $value;
-    });
+if (Preview::php_version_is_53()) {
+    function let($name, $value) {
+        before_each(function ($self) use ($name, $value) {
+            $self->$name = $value;
+        });
+    }
+} else {
+    function let($name, $value) {
+        before_each(function () use ($name, $value) {
+            $this->$name = $value;
+        });
+    }
+}
+
+/**
+ * Assign value to subject
+ * It is short hand for let("subject", $value);
+ *
+ * @param string $param
+ * @retrun null
+ */
+function subject($value) {
+    let("subject", $value);
 }
 
 /**
