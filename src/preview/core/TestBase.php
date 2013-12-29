@@ -270,7 +270,7 @@ class TestBase {
 
     /**
      * Invoke a closure with context(explicitly or implicitly)
-     * if Preview::$config->$use_implicit_context is set to true,
+     * if Preview::$config->use_implicit_context is set to true,
      * the closure will be bound to the context object.
      * Otherwise context will be passed to closure as an argument.
      *
