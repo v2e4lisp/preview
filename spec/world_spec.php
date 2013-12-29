@@ -3,6 +3,7 @@ namespace Preview\DSL\BDD;
 
 use Preview\Preview;
 use Preview\World;
+use Preview\Core\TestShared;
 use Preview\Configuration;
 use Preview\Reporter\Base as BaseReporter;
 
@@ -65,6 +66,22 @@ describe("World", function () {
         it("should add test to group", function () {
             $this->world->add_test_to_group("a-test", "a-group");
             ok($this->world->groups() == array("a-group" => array("a-test")));
+        });
+    });
+
+    describe("#shared_example", function () {
+        context("when no such test", function () {
+            it ("should return null", function () {
+                ok(is_null($this->world->shared_example("foo")));
+            });
+        });
+    });
+
+    describe("#add_shared_example", function () {
+        it('should add this test to $share_examples', function () {
+            $shared = new TestShared("foo", function (){});
+            $this->world->add_shared_example($shared);
+            ok($this->world->shared_example("foo")->name() == "foo");
         });
     });
 
