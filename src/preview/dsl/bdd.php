@@ -98,7 +98,6 @@ function let($name, $value) {
     }
 }
 
-
 /**
  * Assign value to subject
  * It is short hand for let("subject", $value);
@@ -160,7 +159,7 @@ function after_each($fn) {
  * @retrun null
  */
 function shared_example($name, $fn) {
-    TestShared::define($name, $fn);
+    Preview::$world->add_shared_example(new TestShared($name, $fn));
 }
 
 /**
@@ -172,5 +171,5 @@ function shared_example($name, $fn) {
 function it_behaves_like($name) {
     $args = func_get_args();
     array_shift($args);
-    TestShared::invoke($name, $args);
+    Preview::$world->invoke_shared_example($name, $args);
 }

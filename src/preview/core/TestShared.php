@@ -6,7 +6,6 @@ use Preview\Preview;
 
 /**
  * TestShared class
- * This class is responsible to create common shared test.
  *
  * @package Preview
  * @author Wenjun Yan
@@ -14,50 +13,42 @@ use Preview\Preview;
  */
 class TestShared {
     /**
-     * Registered shared test
+     * name of the shared test
      *
-     * @var array $registered an array of closure
+     * @var string $name
      */
-    public static $registered = array();
+    protected $name;
 
     /**
-     * Invoke some shared test.
+     * Shared test body
      *
-     * @param string $name shared test name.
-     * @param array $args array of arguments . Default empty array.
-     * @retrun null
+     * @var function $fn
      */
-    public static function invoke($name, $args=array()) {
-        if (!array_key_exists($name, self::$registered)) {
-            throw new Exception("no such shared test: $name");
-        }
-
-        $shared = self::$registered[$name];
-        $shared->setup($args);
-    }
-
-    /**
-     * Create a shared test
-     *
-     * @param string $name shared test name
-     * @param function $fn
-     * @retrun null
-     */
-    public static function define($name, $fn) {
-        self::$registered[$name] = new self($fn);
-    }
+    protected $fn;
 
     /**
      * Constructor
      *
+     * @param string $name
      * @param function $fn
      */
-    public function __construct($fn) {
+    public function __construct($name, $fn) {
         $this->fn = $fn;
+        $this->name = $name;
         if (!Preview::php_version_is_53()) {
             $ref = new \ReflectionFunction($fn);
             $this->fn = $ref->getClosure();
         }
+    }
+
+    /**
+     * Get name
+     *
+     * @param null
+     * @retrun string
+     */
+    public function name() {
+        return $this->name;
     }
 
     /**

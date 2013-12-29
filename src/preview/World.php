@@ -39,6 +39,13 @@ class World {
     protected $running = false;
 
     /**
+     * shared tests
+     *
+     * @var array $shared_examples array of TestShared objects.
+     */
+    protected $shared_examples = array();
+
+    /**
      * Get current test suite
      *
      * @param null
@@ -107,7 +114,7 @@ class World {
     }
 
     /**
-     * add a test case/suite to group
+     * Add a test case/suite to group
      *
      * @param object $test TestCase/TestSuite object
      * @retrun string $group group name
@@ -118,6 +125,33 @@ class World {
             $this->groups[$group] = array();
         }
         $this->groups[$group][] = $test;
+    }
+
+    /**
+     * Add a shared test.
+     *
+     * @param string $name shared test name
+     * @param function $fn
+     * @retrun null
+     */
+    public function add_shared_example($shared) {
+        $this->shared_examples[$shared->name()] = $shared;
+    }
+
+    /**
+     * Invoke some shared test.
+     *
+     * @param string $name shared test name.
+     * @param array $args array of arguments . Default empty array.
+     * @retrun null
+     */
+    public function invoke_shared_example($name, $args=array()) {
+        if (!array_key_exists($name, $this->shared_examples)) {
+            throw new \Exception("no such shared test: $name");
+        }
+
+        $shared = $this->shared_examples[$name];
+        $shared->setup($args);
     }
 
     /**
