@@ -10,7 +10,7 @@ describe("Configuration", function () {
         $this->config = new Configuration;
     });
 
-    context("default", function() {
+    context("with default value", function() {
         it("assertion errors should be Exception", function () {
             ok($this->config->assertion_errors == array("\\Exception"));
         });
@@ -29,6 +29,14 @@ describe("Configuration", function () {
 
         it("use implicit context", function () {
             ok($this->config->use_implicit_context);
+        });
+
+        it("shared_dir_name should be shared", function () {
+            ok($this->config->shared_dir_name == "shared");
+        });
+
+        it("spec_file_regexp should be _spec.php", function () {
+            ok($this->config->spec_file_regexp == '/_spec\.php/');
         });
     });
 });
