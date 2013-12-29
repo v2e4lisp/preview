@@ -45,12 +45,22 @@ class Loader {
 
     /**
      * Recursively load all test files in a dir.
+     * shared dir will be first loaded if there is one in current dir.
      *
      * @param string $path
      * @return null
      */
     private function load_dir($path) {
-        foreach (scandir($path) as $p) {
+        $shared = Preview::$config->shared_dir_name;
+
+        // load shared dir first
+        $dirs = scandir($path);
+        if(($key = array_search($shared, $dirs)) !== false) {
+            $this->load("{$path}/{$shared}");
+            unset($dirs[$key]);
+        }
+
+        foreach ($dirs as $p) {
             if ($p[0] != ".") {
                 $this->load("{$path}/{$p}");
             }
@@ -64,6 +74,6 @@ class Loader {
      * @retrun bool
      */
     private function is_spec_file($file) {
-        return preg_match(Preview::$config->filename_regexp, $file);
+        return preg_match(Preview::$config->spec_file_regexp, $file);
     }
 }

@@ -56,5 +56,13 @@ class Configuration {
      *
      * @var regexp $filename_regexp
      */
-    public $filename_regexp = '/_spec\.php/';
+    public $spec_file_regexp = '/_spec\.php/';
+
+    /**
+     * Name of a shared directory which contains shared_example spec file.
+     * This dir will be first loaded before any other spec file.
+     *
+     * @var string $shared_dir_name;
+     */
+    public $shared_dir_name = 'shared';
 }

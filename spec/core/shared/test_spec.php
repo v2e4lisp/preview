@@ -2,7 +2,7 @@
 
 namespace Preview\DSL\BDD;
 
-require_once __DIR__."/../helper.php";
+require_once __DIR__."/../../helper.php";
 
 shared_example("pending test", function () {
     describe("#runnable", function () {

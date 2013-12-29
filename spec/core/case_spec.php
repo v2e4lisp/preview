@@ -7,8 +7,6 @@ use Preview\Core\TestCase;
 use Preview\Core\TestSuite;
 use Preview\Reporter\Base as BaseReporter;
 
-require_once "base.php";
-
 describe("TestCase", function () {
     subject(function () {
         return new TestCase("test case", function () {});
