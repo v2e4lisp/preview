@@ -11,6 +11,8 @@ describe("TestSuite", function () {
         return new TestSuite("test suite", function () {});
     });
 
+    it_behaves_like("groupable test");
+
     context("when skipped", function () {
         before_each(function () {
             $this->subject->add(new TestSuite("", function(){}));

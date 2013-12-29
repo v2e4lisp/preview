@@ -12,6 +12,8 @@ describe("TestCase", function () {
         return new TestCase("test case", function () {});
     });
 
+    it_behaves_like("groupable test");
+
     context("when skipped", function () {
         before_each(function () {
             $this->subject->skip();
