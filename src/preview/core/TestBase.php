@@ -185,11 +185,11 @@ class TestBase {
      * @retrun bool
      */
     public function in_test_group() {
-        if (empty(Preview::$config->$test_groups)) {
+        if (empty(Preview::$config->test_groups)) {
             return true;
         }
 
-        foreach (Preview::$config->$test_groups as $group) {
+        foreach (Preview::$config->test_groups as $group) {
             if ($this->in_group($group)) {
                 return true;
             }
