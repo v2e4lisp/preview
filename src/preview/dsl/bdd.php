@@ -171,5 +171,9 @@ function shared_example($name, $fn) {
 function it_behaves_like($name) {
     $args = func_get_args();
     array_shift($args);
-    Preview::$world->invoke_shared_example($name, $args);
+    $shared = Preview::$world->shared_example($name);
+    if (!$shared) {
+        throw new \Exception("no such shared test: $name");
+    }
+    $shared->setup($args);
 }

@@ -139,19 +139,16 @@ class World {
     }
 
     /**
-     * Invoke some shared test.
+     * Get shared test by name
      *
      * @param string $name shared test name.
-     * @param array $args array of arguments . Default empty array.
-     * @retrun null
+     * @retrun object|false shared test
      */
-    public function invoke_shared_example($name, $args=array()) {
-        if (!array_key_exists($name, $this->shared_examples)) {
-            throw new \Exception("no such shared test: $name");
+    public function shared_example($name) {
+        if (array_key_exists($name, $this->shared_examples)) {
+            return $this->shared_examples[$name];
         }
-
-        $shared = $this->shared_examples[$name];
-        $shared->setup($args);
+        return null;
     }
 
     /**
