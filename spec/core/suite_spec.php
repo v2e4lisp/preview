@@ -57,4 +57,17 @@ describe("TestSuite", function () {
 
         it_behaves_like("finished test");
     });
+
+    it_behaves_like("having its own hooks to run", "after");
+    it_behaves_like("having its own hooks to run", "before");
+
+    context("with parent", function () {
+        let("parent", function () {
+            $parent = new TestSuite("parent suite", function () {});
+            $parent->add($this->subject);
+            return $parent;
+        });
+        it_behaves_like("having hooks for its children", "after_each");
+        it_behaves_like("having hooks for its children", "before_each");
+    });
 });

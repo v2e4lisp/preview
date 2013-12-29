@@ -128,3 +128,46 @@ shared_example("groupable test", function () {
         });
     });
 });
+
+shared_example("having its own hooks to run", function ($hook) {
+    describe("#run_$hook", function () use ($hook) {
+        it("should run $hook hooks", function () use ($hook) {
+            $old_world = Preview::$world;
+            $run = false;
+            $this->subject->$hook(function () use (&$run) {
+                $run = true;
+            });
+            $run_hook = "run_$hook";
+            $this->subject->$run_hook();
+            Preview::$world = $old_world;
+
+            ok($run);
+        });
+    });
+});
+
+shared_example("having hooks for its children", function ($hook) {
+    describe("#run_$hook", function () use ($hook) {
+        it("should run $hook hooks and its parents'", function () use ($hook) {
+            $old_world = Preview::$world;
+
+            $run = false;
+            $parent_run = false;
+
+            $this->parent->$hook(function () use (&$parent_run) {
+                $parent_run = true;
+            });
+            $this->subject->$hook( function () use (&$run) {
+                $run = true;
+            });
+
+            $run_hook = "run_$hook";
+            $context = new \stdClass;
+            $this->subject->$run_hook($context);
+
+            Preview::$world = $old_world;
+
+            ok($run and $parent_run);
+        });
+    });
+});
