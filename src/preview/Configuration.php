@@ -11,7 +11,8 @@ namespace Preview;
 
 class Configuration {
     /**
-     * Exception types which will be catched as a test failure error message.
+     * Exception types which will be catched
+     * as a test failure object.
      *
      * @var array $assertion_errors default is array("\\Exception")
      */
@@ -41,7 +42,7 @@ class Configuration {
 
     /**
      * If this property set to true,
-     * the context object will be the $this used
+     * context object will be the $this used
      * in the testcase callback and other before/after hooks.
      * Otherwise context object will be passed as an arguments to them.
      *
@@ -59,7 +60,8 @@ class Configuration {
     public $spec_file_regexp = '/_spec\.php/';
 
     /**
-     * Name of a shared directory which contains shared_example spec file.
+     * Name of a shared directory
+     * which contains shared_example spec files.
      * This dir will be first loaded before any other spec file.
      *
      * @var string $shared_dir_name;
@@ -67,7 +69,7 @@ class Configuration {
     public $shared_dir_name = 'shared';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $options
      */
@@ -81,7 +83,7 @@ class Configuration {
     }
 
     /**
-     * Load config from file
+     * Load config from file.
      *
      * @param string $file config file path
      * @retrun object Configuration object.
