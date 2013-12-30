@@ -9,7 +9,7 @@ class Spec extends Base {
     private $traces = array();
 
     public function after_case($case) {
-        if($case->failed()) {
+        if($case->error_or_failed()) {
             $this->failed_cases += 1;
             $this->traces[] = array(
                 $case->full_title(),
@@ -20,7 +20,7 @@ class Spec extends Base {
         } else if($case->passed()) {
             $this->passed_cases += 1;
             echo Util::color(". ", "green");
-        } else if($case->skipped()) {
+        } else {
             $this->skipped_cases += 1;
             echo Util::color(". ", "yellow");
         }
@@ -57,7 +57,7 @@ class Spec extends Base {
         echo $this->passed_cases;
         echo Util::color("  failed: ", "red");
         echo $this->failed_cases;
-        echo Util::color("  skipped: ", "yellow");
+        echo Util::color("  skipped: ", "cyan");
         echo $this->skipped_cases;
         echo Util::br();
         echo Util::color("        running time: ". $time. " seconds", "dark_gray");

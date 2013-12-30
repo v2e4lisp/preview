@@ -51,26 +51,28 @@ class TestCase extends TestBase {
 
         if ($this->runnable()) {
             $this->timer->start();
-
             $this->extend_context_with_parent();
-            $this->parent->run_before_each($this->context);
+
             try {
+                $this->parent->run_before_each($this->context);
                 $this->invoke_closure_with_context($this->fn, $this->context);
+                $this->parent->run_after_each($this->context);
+            } catch (\ErrorException $error) {
+                $this->set_error($error);
             } catch (\Exception $e) {
                 foreach(Preview::$config->assertion_errors as $klass) {
                     if ($e instanceof $klass) {
-                        $this->set_error($e);
+                        $this->set_failure($e);
                         break;
                     }
                 }
 
-                if (!$this->error) {
-                    throw $e;
+                if (!$this->failure) {
+                    $this->set_error($e);
                 }
             }
-            $this->parent->run_after_each($this->context);
-            $this->finish();
 
+            $this->finish();
             $this->timer->stop();
         }
 

@@ -24,9 +24,17 @@ class TestBase {
     /**
      * Whether this test case/suite passed or failed
      * null if passed otherwise holds an exception object.
-     * for test suite it will hold the first error object.
+     * for test suite it will hold the first failure object.
      *
-     * @var object|false $error
+     * @var object|null $failure
+     */
+    public $failure = null;
+
+    /**
+     * if error occured when running this test,
+     * $error will hold a exception.
+     *
+     * @var object|null $error
      */
     public $error = null;
 
@@ -149,7 +157,24 @@ class TestBase {
     public function set_parent($suite) {}
 
     /**
-     * set error object for failed test.
+     * set failure object for failed test.
+     *
+     * @param object $error
+     * @retrun null
+     */
+    public function set_failure($failure) {
+        if ($this->failure) {
+            return;
+        }
+        $this->failure = $failure;
+
+        if ($this->parent) {
+            $this->parent->set_failure($failure);
+        }
+    }
+
+    /**
+     * set error object for error test.
      *
      * @param object $error
      * @retrun null

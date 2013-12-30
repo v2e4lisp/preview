@@ -14,7 +14,7 @@ class DropDown extends Base {
             echo Util::color("  o ", "green");
             echo $title.Util::br();
             $this->passed_cases += 1;
-        } else if ($case->failed()) {
+        } else if ($case->error_or_failed()) {
             $this->failed_cases += 1;
             echo Util::color("  x ".$title.Util::br(), "red");
             $this->traces[] = array(
@@ -22,7 +22,7 @@ class DropDown extends Base {
                 $case->error()->getTraceAsString(),
                 $case->error()->getMessage(),
             );
-        } else if ($case->skipped()) {
+        } else {
             $this->skipped_cases += 1;
             echo Util::color("  - ".$title.Util::br(), "dark_gray");
         }

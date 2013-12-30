@@ -66,6 +66,10 @@ $cmd = new Getopt(
             "Disable color output."
         ),
         array(
+            null, "with-error", Getopt::NO_ARGUMENT,
+            "Disable converting error to exception. Exit when error."
+        ),
+        array(
             null, "list-groups", Getopt::NO_ARGUMENT,
             'List all the test groups'
         ),
@@ -85,14 +89,14 @@ $options = $cmd->getOptions();
 
 
 /*
- * setup loader and test world
+ * setup loader and test config, test world
  */
 Preview::$world = new World;
+Preview::$config = new Configuration;
 $loader = new Loader;
 
-
 /*
- * parse args, setup test config and load test files.
+ * parse args, update config and load test files.
  */
 $config_file = PREVIEW_CONFIG_FILE;
 if (isset($options["config"])) {
@@ -102,13 +106,13 @@ if (isset($options["config"])) {
 $config_file = realpath($config_file);
 if (is_file($config_file)) {
     Preview::$config = Configuration::load_from_file($config_file);
-} else {
-    Preview::$config = new Configuration;
 }
 
+// default reporter
 if (!Preview::$config->reporter) {
     Preview::$config->reporter = new SpecReporter;
 }
+
 
 // Since for PHP version < 5.4 $this is not available for closure,
 // We can't use this feature, instead we explicitly pass
@@ -176,6 +180,17 @@ if (isset($options["list-groups"])) {
         echo "    $index) $group$br$br";
     }
     exit(0);
+}
+
+
+/*
+ * setup error handler
+ */
+if (Preview::$config->error_exception) {
+    set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+        throw new ErrorException($errstr, $errno, 0,
+                                 $errfile, $errline);
+    });
 }
 
 

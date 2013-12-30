@@ -36,17 +36,6 @@ class TestBase {
     }
 
     /**
-     * Get exception object from the failed test case/suite.
-     * Return null if this test case is passed.
-     *
-     * @param null
-     * @return object|null
-     */
-    public function error() {
-        return $this->test->error;
-    }
-
-    /**
      * Get test filename
      *
      * @param null
@@ -95,17 +84,46 @@ class TestBase {
      * @return bool
      */
     public function passed() {
-        return $this->finished() and empty($this->test->error);
+        return $this->finished() and
+            !$this->error() and
+            !$this->failed();
     }
 
     /**
-     * Check if the test is failed
+     * Get failure exception.
+     * if failed an exception object will be returned
+     * otherwise null.
      *
      * @param null
-     * @return bool
+     * @return object|null
      */
     public function failed() {
-        return !empty($this->test->error);
+        return $this->test->failure;
+    }
+
+    /**
+     * Get exception for error test.
+     * Return null if this test case does not have any error.
+     *
+     * @param null
+     * @return object|null
+     */
+    public function error() {
+        return $this->test->error;
+    }
+
+    /**
+     * Get error exception or failure exception if there's any.
+     *
+     * @param null
+     * @retrun object|null error/failure exception object
+     */
+    public function error_or_failed() {
+        if ($this->error()) {
+            return $this->error();
+        }
+
+        return $this->failed();
     }
 
     /**
@@ -119,16 +137,6 @@ class TestBase {
     }
 
     /**
-     * Check if the test is finished.
-     *
-     * @param null
-     * @return bool
-     */
-    public function finished() {
-        return $this->test->finished;
-    }
-
-    /**
      * Check if the test is pending.
      *
      * @param null
@@ -136,6 +144,26 @@ class TestBase {
      */
     public function pending() {
         return $this->test->pending;
+    }
+
+    /**
+     * Check if test is skipped or pending
+     *
+     * @param null
+     * @retrun bool
+     */
+    public function skipped_or_pending() {
+        return $this->skipped() and $this->pending();
+    }
+
+    /**
+     * Check if the test is finished.
+     *
+     * @param null
+     * @return bool
+     */
+    public function finished() {
+        return $this->test->finished;
     }
 
     /**

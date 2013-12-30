@@ -19,6 +19,14 @@ class Configuration {
     public $assertion_errors = array("\\Exception");
 
     /**
+     * Convert php error to an ErrorException
+     * so that can be handled by test.
+     *
+     * @var bool $error_exception default true.
+     */
+    public $error_exception = true;
+
+    /**
      * Reporter object.
      *
      * @var object $reporter
