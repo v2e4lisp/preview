@@ -135,6 +135,7 @@ class World {
      * @retrun null
      */
     public function add_shared_example($shared) {
+        $this->throw_exception_if_running("add_test_to_group");
         $this->shared_examples[$shared->name()] = $shared;
     }
 
@@ -145,6 +146,7 @@ class World {
      * @retrun object|false shared test
      */
     public function shared_example($name) {
+        $this->throw_exception_if_running("add_test_to_group");
         if (array_key_exists($name, $this->shared_examples)) {
             return $this->shared_examples[$name];
         }
@@ -183,7 +185,8 @@ class World {
             throw new \Exception("You can't call World#$name ".
                                  "while test world is running. ".
                                  "This error occures when you try to ".
-                                 "create a test suite in a test case.");
+                                 "create a test suite or new test case".
+                                 "in test case context.");
         }
     }
 }
