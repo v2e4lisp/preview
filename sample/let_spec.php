@@ -6,7 +6,7 @@ use Preview\Preview;
 require_once 'ok.php';
 
 // for php 5.3
-if (Preview::php_version_is_53()) {
+if (!Preview::$config->use_implicit_context) {
     describe("array_pop", function () {
         let("subject", array(0,1,2,3));
 
