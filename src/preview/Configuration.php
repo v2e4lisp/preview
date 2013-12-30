@@ -65,4 +65,40 @@ class Configuration {
      * @var string $shared_dir_name;
      */
     public $shared_dir_name = 'shared';
+
+    /**
+     * Constructor
+     *
+     * @param array $options
+     */
+    public function __construct($options=array()) {
+        $attrs = array_keys(get_object_vars($this));
+        foreach ($options as $key => $value) {
+            if (in_array($key, $attrs)) {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    /**
+     * Load config from file
+     *
+     * @param string $file config file path
+     * @retrun object Configuration object.
+     */
+    public static function load_from_file($file) {
+        $options = require_once $file;
+        if (!is_array($options)) {
+            $options = array();
+        }
+
+        if (isset($options["reporter"])) {
+            $reporter = $options["reporter"];
+            if (is_string($reporter)) {
+                $options["reporter"] = new $reporter;
+            }
+        }
+
+        return new self($options);
+    }
 }

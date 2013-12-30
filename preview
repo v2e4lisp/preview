@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+/*
+ * check preview files are autoloaded
+ */
 $files = array(
     __DIR__ . '/vendor/autoload.php',
     __DIR__ . '/../../autoload.php'
@@ -18,6 +21,12 @@ if (!defined("PREVIEW_INSTALLED")) {
     die("Preview is not correctly installed");
 }
 
+
+/*
+ * dependencies and const
+ */
+define("PREVIEW_CONFIG_FILE", "preview.config.php");
+
 use \Preview\Preview;
 use \Preview\World;
 use \Preview\Configuration;
@@ -26,21 +35,10 @@ use \Preview\Reporter\Spec as SpecReporter;
 
 use Ulrichsg\Getopt;
 
-Preview::$world = new World;
-Preview::$config = new Configuration;
-$loader = new Loader;
-$br = PHP_EOL;
 
-Preview::$config->reporter = new SpecReporter;
-
-// Since for PHP version < 5.4 $this is not available for closure,
-// We can't use this feature, instead we explicitly pass
-// the context object as an argument to callback.
-if (Preview::php_version_is_53()) {
-    Preview::$config->use_implicit_context = false;
-}
-
-// handle command line args
+/*
+ * setup command line parser
+ */
 $cmd = new Getopt(
     array(
         array(
@@ -54,6 +52,10 @@ $cmd = new Getopt(
         array(
             "g", "group", Getopt::REQUIRED_ARGUMENT,
             "Test group(s). use comma(,) to seperate groups"
+        ),
+        array(
+            "c", "config", Getopt::REQUIRED_ARGUMENT,
+            "config file"
         ),
         array(
             null, "no-this", Getopt::NO_ARGUMENT,
@@ -70,14 +72,50 @@ $cmd = new Getopt(
         array(
             null, "list-reporters", Getopt::NO_ARGUMENT,
             'List available reporters'
-        ),
+        )
     )
 );
+
+$br = PHP_EOL;
 $title = $br."    Preview ".Preview::$version.
     " - bdd test framework for php ".$br.$br;
 $cmd->setTitle($title);
 $cmd->parse();
 $options = $cmd->getOptions();
+
+
+/*
+ * setup loader and test world
+ */
+Preview::$world = new World;
+$loader = new Loader;
+
+
+/*
+ * parse args, setup test config and load test files.
+ */
+$config_file = PREVIEW_CONFIG_FILE;
+if (isset($options["config"])) {
+    $config_file = $options["config"];
+}
+
+$config_file = realpath($config_file);
+if (is_file($config_file)) {
+    Preview::$config = Configuration::load_from_file($config_file);
+} else {
+    Preview::$config = new Configuration;
+}
+
+if (!Preview::$config->reporter) {
+    Preview::$config->reporter = new SpecReporter;
+}
+
+// Since for PHP version < 5.4 $this is not available for closure,
+// We can't use this feature, instead we explicitly pass
+// the context object as an argument to callback.
+if (Preview::php_version_is_53()) {
+    Preview::$config->use_implicit_context = false;
+}
 
 if (isset($options["help"])) {
     $cmd->showHelp();
@@ -125,6 +163,7 @@ foreach ($files as $file) {
     $loader->load($file);
 }
 
+// list groups
 if (isset($options["list-groups"])) {
     echo $title;
     $groups = array_keys(Preview::$world->groups());
@@ -139,7 +178,10 @@ if (isset($options["list-groups"])) {
     exit(0);
 }
 
-// run test and exit.
+
+/*
+ * run test and exit.
+ */
 $results = Preview::$world->run();
 foreach($results as $result) {
     if ($result->error()) {
