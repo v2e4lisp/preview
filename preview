@@ -184,17 +184,6 @@ if (isset($options["list-groups"])) {
 
 
 /*
- * setup error handler
- */
-if (Preview::$config->error_exception) {
-    set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-        throw new ErrorException($errstr, $errno, 0,
-                                 $errfile, $errline);
-    });
-}
-
-
-/*
  * run test and exit.
  */
 $results = Preview::$world->run();

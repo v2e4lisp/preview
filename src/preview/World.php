@@ -94,6 +94,14 @@ class World {
      */
     public function run() {
         $this->throw_exception_if_running("run");
+
+        // setup error handler
+        if (Preview::$config->error_exception) {
+            set_error_handler(function ($no, $str, $file, $line) {
+                throw new \ErrorException($str, $no, 0, $file, $line);
+            });
+        }
+
         $this->running = true;
         $tests = $this->filter_test_by_group();
         $runner = new Runner($tests);
@@ -182,11 +190,11 @@ class World {
      */
     private function throw_exception_if_running($name) {
         if ($this->running) {
-            throw new \Exception("You can't call World#$name ".
-                                 "while test world is running. ".
-                                 "This error occures when you try to ".
-                                 "create a test suite or new test case".
-                                 "in test case context.");
+            throw new \ErrorException("You can't call World#$name ".
+                                      "while test world is running. ".
+                                      "This error occures when you try to ".
+                                      "create a test suite or new test case".
+                                      "in test case context.");
         }
     }
 }
