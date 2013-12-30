@@ -9,17 +9,19 @@ class Spec extends Base {
     private $traces = array();
 
     public function after_case($case) {
-        if($case->error_or_failed()) {
+        if($err = $case->error_or_failed()) {
             $this->failed_cases += 1;
             $this->traces[] = array(
                 $case->full_title(),
-                $case->error()->getTraceAsString(),
-                $case->error()->getMessage(),
+                $err->getTraceAsString(),
+                $err->getMessage(),
             );
             echo Util::color(". ", "red");
+
         } else if($case->passed()) {
             $this->passed_cases += 1;
             echo Util::color(". ", "green");
+
         } else {
             $this->skipped_cases += 1;
             echo Util::color(". ", "yellow");

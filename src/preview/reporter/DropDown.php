@@ -14,14 +14,16 @@ class DropDown extends Base {
             echo Util::color("  o ", "green");
             echo $title.Util::br();
             $this->passed_cases += 1;
-        } else if ($case->error_or_failed()) {
+
+        } else if ($err = $case->error_or_failed()) {
             $this->failed_cases += 1;
             echo Util::color("  x ".$title.Util::br(), "red");
             $this->traces[] = array(
                 $case->full_title(),
-                $case->error()->getTraceAsString(),
-                $case->error()->getMessage(),
+                $err->getTraceAsString(),
+                $err->getMessage(),
             );
+
         } else {
             $this->skipped_cases += 1;
             echo Util::color("  - ".$title.Util::br(), "dark_gray");
