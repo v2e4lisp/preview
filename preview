@@ -21,7 +21,6 @@ if (!defined("PREVIEW_INSTALLED")) {
     die("Preview is not correctly installed");
 }
 
-
 /*
  * dependencies and const
  */
@@ -47,15 +46,15 @@ $cmd = new Getopt(
         ),
         array(
             "r", "reporter", Getopt::REQUIRED_ARGUMENT,
-            "Set reporter"
+            "Set reporter."
         ),
         array(
             "g", "group", Getopt::REQUIRED_ARGUMENT,
-            "Test group(s). use comma(,) to seperate groups"
+            "Test group(s). use comma(,) to seperate groups."
         ),
         array(
             "c", "config", Getopt::REQUIRED_ARGUMENT,
-            "config file"
+            "Load config file. Default './preview.config.php'."
         ),
         array(
             null, "no-this", Getopt::NO_ARGUMENT,
@@ -67,15 +66,15 @@ $cmd = new Getopt(
         ),
         array(
             null, "with-error", Getopt::NO_ARGUMENT,
-            "Disable converting error to exception. Exit when error."
+            "Disable converting error to exception."
         ),
         array(
             null, "list-groups", Getopt::NO_ARGUMENT,
-            'List all the test groups'
+            'List all the test groups.'
         ),
         array(
             null, "list-reporters", Getopt::NO_ARGUMENT,
-            'List available reporters'
+            'List available reporters.'
         )
     )
 );
@@ -113,7 +112,6 @@ if (!Preview::$config->reporter) {
     Preview::$config->reporter = new SpecReporter;
 }
 
-
 // Since for PHP version < 5.4 $this is not available for closure,
 // We can't use this feature, instead we explicitly pass
 // the context object as an argument to callback.
@@ -137,10 +135,6 @@ if (isset($options["list-reporters"])) {
     exit(0);
 }
 
-if (isset($options["no-color"])) {
-    Preview::$config->color_support = false;
-}
-
 if (isset($options["reporter"])) {
     $reporter = "\\Preview\\Reporter\\{$options['reporter']}";
     Preview::$config->reporter = new $reporter;
@@ -152,6 +146,14 @@ if (isset($options["group"])) {
 
 if (isset($options["no-this"])) {
     Preview::$config->use_implicit_context = false;
+}
+
+if (isset($options["no-color"])) {
+    Preview::$config->color_support = false;
+}
+
+if (isset($options["with-error"])) {
+    Preview::$config->error_exception = false;
 }
 
 $files = $cmd->getOperands();
@@ -177,8 +179,9 @@ if (isset($options["list-groups"])) {
     }
     foreach ($groups as $index => $group) {
         $index = $index + 1;
-        echo "    $index) $group$br$br";
+        echo "    $index) $group$br";
     }
+    echo $br;
     exit(0);
 }
 
