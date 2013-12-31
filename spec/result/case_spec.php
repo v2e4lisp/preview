@@ -3,12 +3,15 @@
 namespace Preview\DSL\BDD;
 
 // use Preview\Result\TestCase;
+use Preview\Preview;
+use Preview\Configuration;
 use Preview\Core\TestSuite;
 use Preview\Core\TestCase;
+use Preview\Reporter\Base as BaseReporter;
 
 require_once __DIR__.'/../helper.php';
 
-describe("TestCase", function () {
+describe("Result\TestCase", function () {
     before(function () {
         $this->startline = __LINE__ + 1;
         $testcase = new TestCase("case-title", function () {});
@@ -122,7 +125,7 @@ describe("TestCase", function () {
             });
         });
 
-        describe("#time", function () {
+        describe("#groups", function () {
             it("should return empty array", function () {
                 ok($this->result->groups() == array());
             });
@@ -170,6 +173,111 @@ describe("TestCase", function () {
         describe("#skipped_or_pending", function () {
             it("should return true", function () {
                 ok($this->result->skipped_or_pending());
+            });
+        });
+    });
+
+    context("for finished testcase", function () {
+        before(function () {
+            $old_config = Preview::$config;
+            Preview::$config = new Configuration;
+            Preview::$config->reporter = new BaseReporter;
+
+            $testcase = new TestCase("case-title", function () {});
+            $testcase->set_parent(new TestSuite("suite-title",
+                                                function() {}));
+            // $testcase->finished = true;
+            $testcase->run();
+
+            Preview::$config = $old_config;
+            $this->testcase = $testcase;
+            $this->result = $testcase->result;
+            $this->username = "wenjun.yan";
+        });
+
+        describe("#finished", function () {
+            it("should return true", function () {
+                ok($this->result->finished() === true);
+                $x = $this->result->finished();
+            });
+        });
+
+        describe("#runnable", function () {
+            it("should return true", function () {
+                ok(!$this->result->runnable());
+            });
+        });
+
+        describe("#time", function () {
+            it("should return an float", function () {
+                ok(is_float($this->result->time()));
+            });
+        });
+
+        context("when passed", function () {
+            describe("#passed", function () {
+                it("should return true", function () {
+                    ok($this->result->passed() === true);
+                })->group("passed");
+            });
+        });
+
+        context("when failed", function () {
+            before_each(function () {
+                $this->testcase->set_failure(new \Exception("failed"));
+            });
+
+            describe("#failed", function () {
+                it("should return failure exception", function () {
+                    $e = $this->result->failed();
+                    ok($e instanceof \Exception);
+                });
+            });
+
+            describe("#failed_or_error", function () {
+                it("should return failure exception", function () {
+                    $e = $this->result->failed();
+                    ok($e instanceof \Exception);
+                });
+            });
+        })->group("failed");
+
+        context("when error occurred", function () {
+            before_each(function () {
+                $this->testcase->set_error(new \ErrorException("failed"));
+            });
+
+            describe("#error", function () {
+                it("should return error exception", function () {
+                    $e = $this->result->error();
+                    ok($e instanceof \ErrorException);
+                });
+            });
+
+            describe("#failed_or_error", function () {
+                it("should return failure exception", function () {
+                    $e = $this->result->error();
+                    ok($e instanceof \ErrorException);
+                });
+            });
+        });
+    });
+
+    context("for grouped test", function () {
+        before(function () {
+            $testcase = new TestCase("case-title", function () {});
+            $testcase->set_parent(new TestSuite("suite-title",
+                                                function() {}));
+
+            $testcase->add_to_group("group-1");
+            $testcase->add_to_group("group-2");
+
+            $this->result = $testcase->result;
+        });
+
+        describe("#groups", function () {
+            it("should return array of groups", function () {
+                ok($this->result->groups() == array("group-1", "group-2"));
             });
         });
     });
