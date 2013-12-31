@@ -66,10 +66,10 @@ function it($title, $fn=null) {
  *
  * let("somevar", value);
  *
- * If value is an object it will first be cloned and the copy
- * will be assigned to $name for every case.
- * And if it's an closure it will be invoked and the return value
- * will be used.
+ * If value is an object it will first be cloned
+ * and the copy will be assigned to $name for every case.
+ * And if it's an closure it will be invoked and
+ * the return value will be used.
  *
  * @param string $name
  * @param mixed $value
@@ -110,7 +110,8 @@ function subject($value) {
 }
 
 /**
- * Current test suite first run this hook before any test cases/suites.
+ * Current test suite first run this hook
+ * before any test cases/suites.
  *
  * @param function $fn
  * @retrun null
@@ -120,7 +121,8 @@ function before($fn) {
 }
 
 /**
- * Current test suite run this hook after all test cases/suites.
+ * Current test suite run this hook
+ * after all test cases/suites.
  *
  * @param function $fn
  * @retrun null
@@ -130,7 +132,8 @@ function after($fn) {
 }
 
 /**
- * A hook to be called before running each test case in current test suite.
+ * A hook to be called before running each test case
+ * in current test suite.
  *
  * @param function $fn
  * @retrun null
@@ -140,7 +143,8 @@ function before_each($fn) {
 }
 
 /**
- * A hook to be called after running each test case in current test suite.
+ * A hook to be called after running each test case
+ * in current test suite.
  *
  * @param string $param
  * @retrun null
