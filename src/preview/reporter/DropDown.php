@@ -57,7 +57,7 @@ class DropDown extends Base {
     }
 
     protected function print_summary($time) {
-        echo Util::br(2);
+        echo Util::br();
         echo Util::color("        passed: ", "green");
         echo $this->passed_cases;
         echo Util::color("  failed: ", "red");

@@ -49,7 +49,8 @@ class Spec extends Base {
             if (!empty($t[2])) {
                 echo Util::color($t[2].Util::br(), "red");
             }
-            echo $t[1].Util::br(2);
+            echo $this->trace_message($t[1].Util::br(2));
+            echo Util::br();
         }
     }
 
@@ -74,4 +75,26 @@ class Spec extends Base {
         return $time;
     }
 
+
+    /**
+     * format trace message
+     */
+    protected function trace_message($trace) {
+        $message = "";
+        $msg_list = array_filter(explode(Util::br(), $trace));
+        array_pop($msg_list);
+        foreach($msg_list as $msg) {
+            if (!$this->from_preview_file($msg)) {
+                $message .= $msg.Util::br();
+            }
+        }
+        return $message;
+    }
+
+    protected function from_preview_file($path) {
+        $preview_dir = dirname(dirname(__DIR__));
+        $preview_bin = dirname($preview_dir).DIRECTORY_SEPARATOR."preview";
+        return strpos($path, $preview_dir) !== false or
+            strpos($path, $preview_bin) !== false;
+    }
 }
