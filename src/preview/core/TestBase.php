@@ -287,8 +287,8 @@ class TestBase {
      */
     protected function extend_context_with_parent() {
         if ($this->parent) {
-            $this->context = (object) array_merge((array) $this->context,
-                                                  (array) $this->parent->context);
+            $this->context = (object) array_merge((array) $this->parent->context,
+                                                  (array) $this->context);
         }
         return $this->context;
     }
