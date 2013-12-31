@@ -11,8 +11,7 @@ require_once __DIR__.'/../helper.php';
 describe("TestCase", function () {
     before(function () {
         $this->startline = __LINE__ + 1;
-        $testcase = new TestCase("case-title", function () {
-        });
+        $testcase = new TestCase("case-title", function () {});
         $this->endline = __LINE__ - 1;
         $testcase->set_parent(new TestSuite("suite-title",
                                             function() {}));
@@ -126,6 +125,51 @@ describe("TestCase", function () {
         describe("#time", function () {
             it("should return empty array", function () {
                 ok($this->result->groups() == array());
+            });
+        });
+    });
+
+    context("for skipped testcase", function () {
+        before(function () {
+            $testcase = new TestCase("case-title", function () {});
+            $testcase->skip();
+            $this->result = $testcase->result;
+        });
+
+        describe("#skipped", function () {
+            it("should return true", function () {
+                ok($this->result->skipped());
+            });
+        });
+
+        describe("#skipped_or_pending", function () {
+            it("should return true", function () {
+                ok($this->result->skipped_or_pending());
+            });
+        });
+
+        describe("#runnable", function () {
+            it("should return false", function () {
+                ok($this->result->runnable() === false);
+            });
+        });
+    });
+
+    context("for pending testcase", function () {
+        before(function () {
+            $testcase = new TestCase("case-title", null);
+            $this->result = $testcase->result;
+        });
+
+        describe("#pending", function () {
+            it("should return true", function () {
+                ok($this->result->pending());
+            });
+        });
+
+        describe("#skipped_or_pending", function () {
+            it("should return true", function () {
+                ok($this->result->skipped_or_pending());
             });
         });
     });

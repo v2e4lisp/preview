@@ -153,7 +153,7 @@ class TestBase {
      * @retrun bool
      */
     public function skipped_or_pending() {
-        return $this->skipped() and $this->pending();
+        return $this->skipped() or $this->pending();
     }
 
     /**
