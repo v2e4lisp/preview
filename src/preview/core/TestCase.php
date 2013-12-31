@@ -36,6 +36,17 @@ class TestCase extends TestBase {
     }
 
     /**
+     * Recursively add its parent and itself to group.
+     *
+     * @param string $group
+     * @retrun null
+     */
+    public function add_to_group($group) {
+        $this->add_self_to_group($group);
+        $this->add_parent_to_group($group);
+    }
+
+    /**
      * Run the test.
      * 1. Call Reporter's before_case method
      * 2. Run all the registered before hooks

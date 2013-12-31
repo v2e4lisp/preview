@@ -172,7 +172,7 @@ foreach ($files as $file) {
 // list groups
 if (isset($options["list-groups"])) {
     echo $title;
-    $groups = array_keys(Preview::$world->groups());
+    $groups = Preview::$world->groups();
     if (empty($groups)) {
         echo "    No test groups.$br$br";
         exit(0);

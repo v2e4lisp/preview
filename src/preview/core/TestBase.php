@@ -191,19 +191,6 @@ class TestBase {
     }
 
     /**
-     * make this test as a member of a test group;
-     *
-     * @param string group names
-     * @retrun object $this
-     */
-    public function add_to_group($group) {
-        if (!in_array($group, $this->groups)) {
-            $this->groups[] = $group;
-        }
-        Preview::$world->add_test_to_group($this, $group);
-    }
-
-    /**
      * Check if the test is in test groups
      *
      * @param null
@@ -277,6 +264,31 @@ class TestBase {
     protected function finish() {
         $this->finished = true;
         return $this;
+    }
+
+    /**
+     * make this test as a member of a test group;
+     *
+     * @param string group name
+     * @retrun object $this
+     */
+    protected function add_self_to_group($group) {
+        if (!in_array($group, $this->groups)) {
+            $this->groups[] = $group;
+        }
+    }
+
+    /**
+     * Recursively add its parent test to group
+     *
+     * @param string $group group name
+     * @retrun null
+     */
+    protected function add_parent_to_group($group) {
+        if ($this->parent) {
+            $this->parent->add_self_to_group($group);
+            $this->parent->add_parent_to_group($group);
+        }
     }
 
     /**

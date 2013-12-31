@@ -25,13 +25,6 @@ class World {
     protected $testsuite_chain = array();
 
     /**
-     * all test groups
-     *
-     * @var array $groups
-     */
-    protected $groups = array();
-
-    /**
      * Test is running or not.
      *
      * @var bool $running
@@ -44,6 +37,18 @@ class World {
      * @var array $shared_examples array of TestShared objects.
      */
     protected $shared_examples = array();
+
+    /**
+     * Reset the world
+     *
+     * @param null
+     * @retrun null
+     */
+    public function reset() {
+        $this->throw_exception_if_running("current");
+        $this->start_points = array();
+        $this->testsuite_chain = array();
+    }
 
     /**
      * Get current test suite
@@ -103,10 +108,10 @@ class World {
         }
 
         $this->running = true;
-        $tests = $this->filter_test_by_group();
-        $runner = new Runner($tests);
+        $runner = new Runner($this->start_points);
         $results = $runner->run();
         $this->running = false;
+
         return $results;
     }
 
@@ -118,21 +123,12 @@ class World {
      */
     public function groups() {
         $this->throw_exception_if_running("run");
-        return $this->groups;
-    }
 
-    /**
-     * Add a test case/suite to group
-     *
-     * @param object $test TestCase/TestSuite object
-     * @retrun string $group group name
-     */
-    public function add_test_to_group($test, $group) {
-        $this->throw_exception_if_running("add_test_to_group");
-        if(isset($this->groups[$group])) {
-            $this->groups[$group] = array();
+        $groups = array();
+        foreach($this->start_points as $suite) {
+            $groups = array_merge($groups, $suite->groups);
         }
-        $this->groups[$group][] = $test;
+        return array_unique($groups);
     }
 
     /**
@@ -143,7 +139,7 @@ class World {
      * @retrun null
      */
     public function add_shared_example($shared) {
-        $this->throw_exception_if_running("add_test_to_group");
+        $this->throw_exception_if_running("add_shared_example");
         $this->shared_examples[$shared->name()] = $shared;
     }
 
@@ -154,31 +150,11 @@ class World {
      * @retrun object|false shared test
      */
     public function shared_example($name) {
-        $this->throw_exception_if_running("add_test_to_group");
+        $this->throw_exception_if_running("shared_example");
         if (array_key_exists($name, $this->shared_examples)) {
             return $this->shared_examples[$name];
         }
         return null;
-    }
-
-    /**
-     * filter tests by groups which is set in Configuration.
-     *
-     * @param null
-     * @retrun array an array of test object.
-     */
-    private function filter_test_by_group() {
-        if (empty(Preview::$config->test_groups)) {
-            return $this->start_points;
-        }
-
-        $tests = array();
-        foreach(Preview::$config->test_groups as $group) {
-            if(isset($this->groups[$group])) {
-                $tests = array_merge($tests, $this->groups[$group]);
-            }
-        }
-        return array_unique($tests);
     }
 
     /**

@@ -99,14 +99,65 @@ class TestSuite extends TestBase {
     }
 
     /**
-     * Add test child suite/case
+     * Recursively add its children and parent and itself to group.
      *
-     * @param object $suite
+     * @param string $group group name
+     * @retrun null
+     */
+    public function add_to_group($group) {
+        $this->add_self_to_group($group);
+        $this->add_parent_to_group($group);
+        $this->add_children_to_group($group);
+    }
+
+    /**
+     * Recursively add its children to group.
+     *
+     * @param string $group group name
+     * @retrun null
+     */
+    protected function add_children_to_group($group) {
+        foreach($this->suites as $suite) {
+            $suite->add_self_to_group($group);
+            $suite->add_children_to_group($group);
+        }
+
+        foreach($this->cases as $case) {
+            $case->add_self_to_group($group);
+        }
+    }
+
+    /**
+     * Add child test suite/case
+     *
+     * @param object $suite_or_case
      * @retrun object $this
      */
     public function add($suite_or_case) {
         $suite_or_case->set_parent($this);
         return $this;
+    }
+
+    /**
+     * Remove child test suite/case
+     *
+     * @param object $suite_or_case
+     * @retrun object|null when no such test to delete return null.
+     */
+    public function remove($suite_or_case) {
+        if ($suite_or_case instanceof self) {
+            $key = array_search($suite_or_case, $this->suites, true);
+            if ($key !== false) {
+                unset($this->suites[$key]);
+                return $suite_or_case;
+            }
+        } else {
+            $key = array_search($suite_or_case, $this->cases, true);
+            if ($key !== false) {
+                unset($this->cases[$key]);
+                return $suite_or_case;
+            }
+        }
     }
 
     /**
