@@ -38,22 +38,22 @@ class Suite {
     }
 
     public function before($fn) {
-        $this->suite->before($fn);
+        $this->suite->add_before_hook($fn);
         return $this;
     }
 
     public function after($fn) {
-        $this->suite->after($fn);
+        $this->suite->add_after_hook($fn);
         return $this;
     }
 
     public function before_each($fn) {
-        $this->suite->before_each($fn);
+        $this->suite->add_before_each_hook($fn);
         return $this;
     }
 
     public function after_each($fn) {
-        $this->suite->after_each($fn);
+        $this->suite->add_after_each_hook($fn);
         return $this;
     }
 

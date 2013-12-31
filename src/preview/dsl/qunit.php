@@ -51,7 +51,7 @@ function test($title, $fn=null) {
  * @retrun null
  */
 function setup($fn) {
-    Preview::$world->current()->before_each($fn);
+    Preview::$world->current()->add_before_each_hook($fn);
 }
 
 /**
@@ -61,5 +61,5 @@ function setup($fn) {
  * @retrun null
  */
 function teardown($fn) {
-    Preview::$world->current()->before_after($fn);
+    Preview::$world->current()->add_after_each_hook($fn);
 }

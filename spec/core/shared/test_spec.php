@@ -134,10 +134,12 @@ shared_example("having its own hooks to run", function ($hook) {
         it("should run $hook hooks", function () use ($hook) {
             $old_world = Preview::$world;
             $run = false;
-            $this->subject->$hook(function () use (&$run) {
+            $add_hook = "add_{$hook}_hook";
+            $run_hook = "run_{$hook}";
+
+            $this->subject->$add_hook(function () use (&$run) {
                 $run = true;
             });
-            $run_hook = "run_$hook";
             $this->subject->$run_hook();
             Preview::$world = $old_world;
 
@@ -153,15 +155,16 @@ shared_example("having hooks for its children", function ($hook) {
 
             $run = false;
             $parent_run = false;
+            $add_hook = "add_{$hook}_hook";
+            $run_hook = "run_{$hook}";
 
-            $this->parent->$hook(function () use (&$parent_run) {
+            $this->parent->$add_hook(function () use (&$parent_run) {
                 $parent_run = true;
             });
-            $this->subject->$hook( function () use (&$run) {
+            $this->subject->$add_hook( function () use (&$run) {
                 $run = true;
             });
 
-            $run_hook = "run_$hook";
             $context = new \stdClass;
             $this->subject->$run_hook($context);
 

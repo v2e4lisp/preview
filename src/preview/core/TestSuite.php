@@ -223,7 +223,7 @@ class TestSuite extends TestBase {
      * @param function $fn
      * @retrun object $this
      */
-    public function before($fn) {
+    public function add_before_hook($fn) {
         $this->before_hooks[] = $fn;
         return $this;
     }
@@ -234,7 +234,7 @@ class TestSuite extends TestBase {
      * @param function $fn
      * @retrun object $this
      */
-    public function after($fn) {
+    public function add_after_hook($fn) {
         $this->after_hooks[] = $fn;
         return $this;
     }
@@ -245,7 +245,7 @@ class TestSuite extends TestBase {
      * @param function $fn
      * @retrun object $this
      */
-    public function before_each($fn) {
+    public function add_before_each_hook($fn) {
         $this->before_each_hooks[] = $fn;
         return $this;
     }
@@ -256,7 +256,7 @@ class TestSuite extends TestBase {
      * @param function $fn
      * @retrun object $this
      */
-    public function after_each($fn) {
+    public function add_after_each_hook($fn) {
         $this->after_each_hooks[] = $fn;
         return $this;
     }

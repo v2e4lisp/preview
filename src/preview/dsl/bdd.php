@@ -116,7 +116,7 @@ function subject($value) {
  * @retrun null
  */
 function before($fn) {
-    Preview::$world->current()->before($fn);
+    Preview::$world->current()->add_before_hook($fn);
 }
 
 /**
@@ -126,7 +126,7 @@ function before($fn) {
  * @retrun null
  */
 function after($fn) {
-    Preview::$world->current()->after($fn);
+    Preview::$world->current()->add_after_hook($fn);
 }
 
 /**
@@ -136,7 +136,7 @@ function after($fn) {
  * @retrun null
  */
 function before_each($fn) {
-    Preview::$world->current()->before_each($fn);
+    Preview::$world->current()->add_before_each_hook($fn);
 }
 
 /**
@@ -146,7 +146,7 @@ function before_each($fn) {
  * @retrun null
  */
 function after_each($fn) {
-    Preview::$world->current()->before_after($fn);
+    Preview::$world->current()->add_after_each_hook($fn);
 }
 
 /**
