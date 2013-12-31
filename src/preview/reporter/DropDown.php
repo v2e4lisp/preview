@@ -38,11 +38,12 @@ class DropDown extends Base {
     }
 
     public function before_all($results) {
-        echo Util::br(2);
+        echo Util::br();
     }
 
     public function after_all($results) {
         $this->print_summary($this->timespan($results));
+        echo Util::br();
 
         foreach ($this->traces as $i => $t) {
             echo " ".($i + 1).") ";
@@ -51,9 +52,8 @@ class DropDown extends Base {
                 echo Util::color($t[2].Util::br(), "red");
             }
             echo $this->trace_message($t[1].Util::br(2));
+            echo Util::br();
         }
-
-        echo Util::br();
     }
 
     protected function print_summary($time) {
@@ -85,14 +85,14 @@ class DropDown extends Base {
         $msg_list = array_filter(explode(Util::br(), $trace));
         array_pop($msg_list);
         foreach($msg_list as $msg) {
-            if (!$this->preview_file($msg)) {
+            if (!$this->from_preview_file($msg)) {
                 $message .= $msg.Util::br();
             }
         }
         return $message;
     }
 
-    protected function preview_file($path) {
+    protected function from_preview_file($path) {
         $preview_dir = dirname(dirname(__DIR__));
         $preview_bin = dirname($preview_dir).DIRECTORY_SEPARATOR."preview";
         return strpos($path, $preview_dir) !== false or
