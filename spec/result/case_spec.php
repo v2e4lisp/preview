@@ -178,21 +178,19 @@ describe("Result\TestCase", function () {
     });
 
     context("for finished testcase", function () {
-        before(function () {
+        before_each(function () {
             $old_config = Preview::$config;
             Preview::$config = new Configuration;
             Preview::$config->reporter = new BaseReporter;
 
-            $testcase = new TestCase("case-title", function () {});
+            $testcase = new TestCase("--case-title", function () {});
             $testcase->set_parent(new TestSuite("suite-title",
                                                 function() {}));
-            // $testcase->finished = true;
             $testcase->run();
 
             Preview::$config = $old_config;
             $this->testcase = $testcase;
             $this->result = $testcase->result;
-            $this->username = "wenjun.yan";
         });
 
         describe("#finished", function () {

@@ -35,6 +35,7 @@ class Runner {
     public function run() {
         $results = array();
         $tests = $this->filter_tests();
+        shuffle($tests);
 
         foreach($tests as $test) {
             $results[] = $test->result;
@@ -56,6 +57,10 @@ class Runner {
      * @retrun array an array of start_point test suites
      */
     public function filter_tests() {
+        if (empty(Preview::$config->test_groups)) {
+            return $this->start_points;
+        }
+
         $roots = array();
         foreach($this->start_points as $suite) {
             if (!$suite->in_test_group()) {
