@@ -145,7 +145,8 @@ describe("bdd", function () {
 
         it("should have one error test result", function () {
             ok(function () {
-                foreach($this->results as $result) {
+                $results = $this->results[0]->all_cases();
+                foreach($results as $result) {
                     if($result->error()) {
                         return true;
                     }
@@ -155,7 +156,8 @@ describe("bdd", function () {
 
         it("should have one failure test result", function () {
             ok(function () {
-                foreach($this->results as $result) {
+                $results = $this->results[0]->all_cases();
+                foreach($results as $result) {
                     if($result->failed()) {
                         return true;
                     }
@@ -165,7 +167,8 @@ describe("bdd", function () {
 
         it("should have one passed test result", function () {
             ok(function () {
-                foreach($this->results as $result) {
+                $results = $this->results[0]->all_cases();
+                foreach($results as $result) {
                     if($result->passed()) {
                         return true;
                     }
@@ -175,7 +178,8 @@ describe("bdd", function () {
 
         it("should have one skipped test result", function () {
             ok(function () {
-                foreach($this->results as $result) {
+                $results = $this->results[0]->all_cases();
+                foreach($results as $result) {
                     if($result->skipped()) {
                         return true;
                     }
@@ -186,11 +190,13 @@ describe("bdd", function () {
         it("should have two pending test results", function () {
             ok(function () {
                 $total = 0;
-                foreach($this->results as $result) {
+                $results = $this->results[0]->all_cases();
+                foreach($results as $result) {
                     if($result->pending()) {
                         $total++;
                     }
                 }
+                return $total == 2;
             });
         });
     });
