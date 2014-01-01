@@ -27,6 +27,13 @@ class Configuration {
     public $error_exception = true;
 
     /**
+     * Exit program when first failure happened
+     *
+     * @var bool $fail_fast default is false
+     */
+    public $fail_fast = false;
+
+    /**
      * Reporter object.
      *
      * @var object $reporter

@@ -88,5 +88,9 @@ class TestCase extends TestBase {
         }
 
         Preview::$config->reporter->after_case($this->result);
+
+        if (Preview::$config->fail_fast and ($this->error or $this->failure)) {
+            Preview::$world->force_exit(1);
+        }
     }
 }

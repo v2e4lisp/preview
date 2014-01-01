@@ -4,6 +4,7 @@ namespace Preview\DSL\BDD;
 use Preview\Preview;
 use Preview\Configuration;
 use Preview\Runner;
+use Preview\Core\TestSuite;
 use Preview\Reporter\Base as BaseReporter;
 
 require_once 'helper.php';
@@ -21,8 +22,8 @@ describe("Runner", function () {
         });
 
         before_each(function () {
-            $test1 = new \FakeTest("test-1");
-            $test2 = new \FakeTest("test-2");
+            $test1 = new TestSuite("test-1", function () {});
+            $test2 = new TestSuite("test-2", function () {});
             $this->runner = new Runner(array($test1, $test2));
         });
 
@@ -32,7 +33,7 @@ describe("Runner", function () {
             Preview::$config = $this->old_config;
 
             ok(count($results) == 2);
-            ok($results[0]->run and $results[1]->run);
+            ok($results[0]->finished() and $results[1]->finished());
         });
     });
 });

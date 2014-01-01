@@ -69,6 +69,10 @@ $cmd = new Getopt(
             "Disable converting error to exception."
         ),
         array(
+            null, "fail-fast", Getopt::NO_ARGUMENT,
+            "Exit program when first failure or error occurred."
+        ),
+        array(
             null, "list-groups", Getopt::NO_ARGUMENT,
             'List all the test groups.'
         ),
@@ -154,6 +158,10 @@ if (isset($options["no-color"])) {
 
 if (isset($options["with-error"])) {
     Preview::$config->error_exception = false;
+}
+
+if (isset($options["fail-fast"])) {
+    Preview::$config->fail_fast = true;
 }
 
 $files = $cmd->getOperands();

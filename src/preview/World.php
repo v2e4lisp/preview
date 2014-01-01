@@ -39,6 +39,22 @@ class World {
     protected $shared_examples = array();
 
     /**
+     * Test runner object
+     *
+     * @var object $runner
+     */
+    protected $runner = null;
+
+    /**
+     * Constructor
+     *
+     * @param null
+     */
+    public function __construct() {
+        $this->runner = new Runner;
+    }
+
+    /**
      * Reset the world
      *
      * @param null
@@ -108,11 +124,17 @@ class World {
         }
 
         $this->running = true;
-        $runner = new Runner($this->start_points);
-        $results = $runner->run();
+        $this->runner->set_start_points($this->start_points);
+        $results = $this->runner->run();
         $this->running = false;
 
         return $results;
+    }
+
+    public function force_exit($code=1) {
+        $this->running = false;
+        $this->runner->force_stop();
+        exit($code);
     }
 
     /**

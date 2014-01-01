@@ -18,11 +18,28 @@ class Runner {
     public $start_points = array();
 
     /**
+     * test results
+     *
+     * @var array $results array of test results object.
+     */
+    public $results = array();
+
+    /**
      * Constructor
      *
      * @param array $tests array of test suites/cases
      */
-    public function __construct($start_points) {
+    public function __construct($start_points = array()) {
+        $this->start_points = $start_points;
+    }
+
+    /**
+     * Set start point tests
+     *
+     * @param array an array of test suite object.
+     * @retrun null
+     */
+    public function set_start_points($start_points) {
         $this->start_points = $start_points;
     }
 
@@ -33,21 +50,30 @@ class Runner {
      * @retrun array array of test result objects.
      */
     public function run() {
-        $results = array();
         $tests = $this->filter_tests();
         shuffle($tests);
 
         foreach($tests as $test) {
-            $results[] = $test->result;
+            $this->results[] = $test->result;
         }
 
-        Preview::$config->reporter->before_all($results);
+        Preview::$config->reporter->before_all($this->results);
         foreach($tests as $test) {
             $test->run();
         }
-        Preview::$config->reporter->after_all($results);
+        Preview::$config->reporter->after_all($this->results);
+        return $this->results;
+    }
 
-        return $results;
+    /**
+     * Force runner stop running.
+     *
+     * @param null
+     * @retrun array an array of test results object.
+     */
+    public function force_stop() {
+        Preview::$config->reporter->after_all($this->results);
+        return $this->results;
     }
 
     /**
@@ -79,7 +105,7 @@ class Runner {
      * @param string $param
      * @retrun null
      */
-    public function filter_suite($suite) {
+    private function filter_suite($suite) {
         foreach($suite->cases as $child) {
             if (!$child->in_test_group()) {
                 $suite->remove($child);
