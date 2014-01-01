@@ -87,7 +87,12 @@ $br = PHP_EOL;
 $title = $br."    Preview ".Preview::$version.
     " - bdd test framework for php ".$br.$br;
 $cmd->setTitle($title);
-$cmd->parse();
+try {
+    $cmd->parse();
+} catch (Exception $e) {
+    $cmd->showHelp();
+    exit(1);
+}
 $options = $cmd->getOptions();
 
 
