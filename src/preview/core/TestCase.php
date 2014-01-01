@@ -48,11 +48,11 @@ class TestCase extends TestBase {
 
     /**
      * Run the test.
+     *
      * 1. Call Reporter's before_case method
-     * 2. Run all the registered before hooks
-     * 3. Invoke $fn which contains test statements.
-     * 4. All the after hooks
-     * 5. Call Reporter's after_case method
+     * 2. Run real test code
+     * 3. Call Reporter's after_case method
+     * 4. check if fast-fail
      *
      * @param null
      * @return null
@@ -63,33 +63,58 @@ class TestCase extends TestBase {
         if ($this->runnable()) {
             $this->timer->start();
             $this->extend_context_with_parent();
-
-            try {
-                $this->parent->run_before_each($this->context);
-                $this->invoke_closure_with_context($this->fn, $this->context);
-                $this->parent->run_after_each($this->context);
-            } catch (\ErrorException $error) {
-                $this->set_error($error);
-            } catch (\Exception $e) {
-                foreach(Preview::$config->assertion_errors as $klass) {
-                    if ($e instanceof $klass) {
-                        $this->set_failure($e);
-                        break;
-                    }
-                }
-
-                if (!$this->failure) {
-                    $this->set_error($e);
-                }
-            }
-
+            $this->run_test();
             $this->finish();
             $this->timer->stop();
         }
 
         Preview::$config->reporter->after_case($this->result);
 
-        if (Preview::$config->fail_fast and ($this->error or $this->failure)) {
+        if (Preview::$config->fail_fast) {
+            $this->exit_if_error_or_failure();
+        }
+    }
+
+    /**
+     * Run the real test body
+     *
+     * 1. before each hooks
+     * 2. test content itself
+     * 3. after each hooks
+     *
+     * @param null
+     * @retrun null
+     */
+    private function run_test() {
+        try {
+            $this->parent->run_before_each($this->context);
+            $this->invoke_closure_with_context($this->fn,
+                                               $this->context);
+            $this->parent->run_after_each($this->context);
+        } catch (\ErrorException $error) {
+            $this->set_error($error);
+        } catch (\Exception $e) {
+            foreach(Preview::$config->assertion_errors as $klass) {
+                if ($e instanceof $klass) {
+                    $this->set_failure($e);
+                    break;
+                }
+            }
+
+            if (!$this->failure) {
+                $this->set_error($e);
+            }
+        }
+    }
+
+    /**
+     * Exit this test world if error or failure occurred.
+     *
+     * @param null
+     * @retrun null
+     */
+    private function exit_if_erro_or_failure() {
+        if ($this->error or $this->failure) {
             Preview::$world->force_exit(1);
         }
     }
