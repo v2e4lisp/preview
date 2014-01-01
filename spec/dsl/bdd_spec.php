@@ -20,6 +20,135 @@ describe("bdd", function () {
         $this->config->reporter = new \Recorder;
     });
 
+    describe("#before_each_hook", function () {
+        it("should run before test begin", function () {
+            // start new env
+            Preview::$world = $this->world;
+            Preview::$config = $this->config;
+
+            $message = array();
+            describe("sample", function () use (&$message) {
+                before_each(function () use (&$message) {
+                    $message[] = "before_each first";
+                });
+                it("add a new message", function () use (&$message) {
+                    $message[] = "then it";
+                });
+            });
+
+            $this->world->run();
+
+            // end new env
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            ok($message == array("before_each first", "then it"));
+        });
+    });
+
+    describe("#after_each_hook", function () {
+        it("should run after each at last", function () {
+            // start new env
+            Preview::$world = $this->world;
+            Preview::$config = $this->config;
+
+            $message = array();
+            describe("sample", function () use (&$message) {
+                after_each(function () use (&$message) {
+                    $message[] = "then after_each";
+                });
+                it("add a new message", function () use (&$message) {
+                    $message[] = "it first";
+                });
+            });
+            $this->world->run();
+
+            // end new env
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            ok($message == array("it first", "then after_each"));
+        });
+    });
+
+    describe("#before_hook", function () {
+        it("should run before the testsuite", function () {
+            // start new env
+            Preview::$world = $this->world;
+            Preview::$config = $this->config;
+
+            $message = array();
+            $total = 0;
+            describe("sample", function () use (&$message, &$total) {
+                before(function () use (&$message, &$total) {
+                    $message[] = "before";
+                    $total++;
+                });
+
+                before_each(function () use (&$message) {
+                    $message[] = "before_each first";
+                });
+
+                it("add a new message", function () use (&$message) {
+                    $message[] = "then it";
+                });
+
+                it("add a new message", function () use (&$message) {
+                    $message[] = "then it";
+                });
+            });
+
+            $this->world->run();
+
+            // end new env
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            ok($message[0] == "before");
+            ok($total == 1);
+        });
+    });
+
+
+    describe("#after_hook", function () {
+        it("should run after the testsuite", function () {
+            // start new env
+            Preview::$world = $this->world;
+            Preview::$config = $this->config;
+
+            $message = array();
+            $total = 0;
+
+            describe("sample", function () use (&$message, &$total) {
+                after(function () use (&$message, &$total) {
+                    $message[] = "after";
+                    $total++;
+                });
+
+                after_each(function () use (&$message) {
+                    $message[] = "then after_each";
+                });
+
+                it("add a new message", function () use (&$message) {
+                    $message[] = "it first";
+                });
+
+                it("add a new message", function () use (&$message) {
+                    $message[] = "it first";
+                });
+            });
+
+            $this->world->run();
+
+            // end new env
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            ok(end($message) == "after");
+            ok($total == 1);
+        });
+    });
+
     describe("test structure", function () {
         before_each(function () {
             // start new env
