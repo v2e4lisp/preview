@@ -113,7 +113,7 @@ class TestCase extends TestBase {
      * @param null
      * @retrun null
      */
-    private function exit_if_erro_or_failure() {
+    private function exit_if_error_or_failure() {
         if ($this->error or $this->failure) {
             Preview::$world->force_exit(1);
         }
