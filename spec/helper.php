@@ -1,7 +1,7 @@
 <?php
 
 function ok($expr, $msg="") {
-    if ($msg instanceof Closure) {
+    if ($expr instanceof Closure) {
         $expr = $expr->__invoke();
     }
 
