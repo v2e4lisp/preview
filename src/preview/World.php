@@ -64,6 +64,8 @@ class World {
         $this->throw_exception_if_running("current");
         $this->start_points = array();
         $this->testsuite_chain = array();
+        $this->shared_examples = array();
+        $this->runner = new Runner;
     }
 
     /**
