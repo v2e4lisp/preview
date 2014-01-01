@@ -264,7 +264,7 @@ class TestSuite extends TestBase {
         }
 
         foreach ($this->after_each_hooks as $after) {
-            $this->invoke_closure_with_context($after, $this->context);
+            $this->invoke_closure_with_context($after, $context);
         }
     }
 
