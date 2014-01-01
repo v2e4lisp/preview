@@ -26,7 +26,6 @@ describe("Result\TestSuite", function () {
 
     describe("#filename", function () {
         it("should return current file name", function () {
-            print_r($this->result->filename());
             ok($this->result->filename() == __FILE__);
         });
     });
