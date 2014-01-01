@@ -244,7 +244,8 @@ class TestBase {
 
     /**
      * Check if the test is runnable.
-     * Test Suite is runnable if test is neither finished, skipped nor pending.
+     * Test Suite is runnable if test is neither finished,
+     * skipped nor pending.
      *
      * @param null
      * @return bool
@@ -292,15 +293,17 @@ class TestBase {
     }
 
     /**
-     * Merge current context with parent context if it has a parent testsuite.
+     * Merge current context with parent context
+     * if it has a parent testsuite.
      *
      * @param null
      * @retrun stdClass current context;
      */
     protected function extend_context_with_parent() {
         if ($this->parent) {
-            $this->context = (object) array_merge((array) $this->parent->context,
-                                                  (array) $this->context);
+            $this->context =
+                (object) array_merge((array) $this->parent->context,
+                                     (array) $this->context);
         }
         return $this->context;
     }

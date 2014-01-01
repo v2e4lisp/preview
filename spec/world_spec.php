@@ -4,6 +4,8 @@ namespace Preview\DSL\BDD;
 use Preview\Preview;
 use Preview\World;
 use Preview\Core\TestShared;
+use Preview\Core\TestCase;
+use Preview\Core\TestSuite;
 use Preview\Configuration;
 use Preview\Reporter\Base as BaseReporter;
 
@@ -62,13 +64,6 @@ describe("World", function () {
         });
     });
 
-    describe("#add_test_to_group", function () {
-        it("should add test to group", function () {
-            $this->world->add_test_to_group("a-test", "a-group");
-            ok($this->world->groups() == array("a-group" => array("a-test")));
-        });
-    });
-
     describe("#shared_example", function () {
         context("when no such test", function () {
             it ("should return null", function () {
@@ -96,8 +91,8 @@ describe("World", function () {
         });
 
         before_each(function () {
-            $this->test1 = new \FakeTest("test-1");
-            $this->test2 = new \FakeTest("test-2");
+            $this->test1 = new TestSuite("test-1", function (){});
+            $this->test2 = new TestSuite("test-2", function (){});
         });
 
         context("when no test groups specified", function () {
@@ -118,7 +113,8 @@ describe("World", function () {
         context("when test groups specified", function () {
             before_each(function () {
                 $this->config->test_groups = array("group-1");
-                $this->world->add_test_to_group($this->test1, "group-1");
+                $this->test1->add_to_group("group-1");
+                // $this->world->add_test_to_group($this->test1, "group-1");
             });
 
             it("should only run tests in the test groups", function () {
@@ -132,7 +128,7 @@ describe("World", function () {
                 Preview::$config = $this->test_config;
 
                 ok(count($results) == 1);
-                ok($results[0]->title == "test-1");
+                ok($results[0]->title() == "test-1");
             });
         });
     });
