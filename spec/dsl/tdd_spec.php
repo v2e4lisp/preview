@@ -1,5 +1,7 @@
 <?php
 
+namespace Preview\DSL\BDD;
+
 describe("tdd", function () {
     describe("#suite", function () {
         it("alias for bdd#describe");
