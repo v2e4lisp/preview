@@ -22,9 +22,9 @@ class Configuration {
      * Convert php error to an ErrorException
      * so that can be handled by test.
      *
-     * @var bool $error_exception default true.
+     * @var bool $convert_error_to_exception default true.
      */
-    public $error_exception = true;
+    public $convert_error_to_exception = true;
 
     /**
      * Exit program when first failure happened

@@ -15,6 +15,10 @@ describe("Configuration", function () {
             ok($this->config->assertion_errors == array("\\Exception"));
         });
 
+        it("conver error to exception should be true", function () {
+            ok($this->config->convert_error_to_exception === true);
+        });
+
         it("reporter should not be set", function () {
             ok(!isset($this->config->reportor));
         });
