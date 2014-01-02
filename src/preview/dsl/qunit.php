@@ -18,7 +18,7 @@ use \Preview\DSL\TestAPI;
  * start a test suite
  *
  * @param string $title
- * @retrun object testsuite object.
+ * @retrun object TestAPI object.
  */
 function suite($title) {
     $desc = new TestSuite($title, function(){});
@@ -35,7 +35,7 @@ function suite($title) {
  *
  * @param string $title
  * @param function|null $fn
- * @retrun object testcase object
+ * @return object TestAPI object
  */
 function test($title, $fn=null) {
     if (empty($fn) and $title instanceof \Closure) {
@@ -62,7 +62,7 @@ function setup($fn) {
  * A hook to be called after running each test case
  * in current test suite.
  *
- * @param string $param
+ * @param function $fn
  * @retrun null
  */
 function teardown($fn) {
