@@ -19,7 +19,7 @@ describe("bdd[test state]", function () {
         $this->config->reporter = new \Recorder;
     });
 
-    describe("sample test case", function () {
+    describe("sample", function () {
         before_each(function () {
             // start new env
             Preview::$world = $this->world;
@@ -53,66 +53,50 @@ describe("bdd[test state]", function () {
             Preview::$config = $this->test_config;
         });
 
+
         it("should have 1 testsuite result and 6 testcase", function () {
             ok(count($this->results) == 1);
             ok(count($this->results[0]->all_cases()) == 6);
         });
 
         it("should have one error test result", function () {
-            ok(function () {
-                $results = $this->results[0]->all_cases();
-                foreach($results as $result) {
-                    if($result->error()) {
-                        return true;
-                    }
-                }
+            $all = $this->results[0]->all_cases();
+            $result = array_filter($all, function ($case) {
+                return $case->error();
             });
+            ok(count($result) == 1);
         });
 
         it("should have one failure test result", function () {
-            ok(function () {
-                $results = $this->results[0]->all_cases();
-                foreach($results as $result) {
-                    if($result->failed()) {
-                        return true;
-                    }
-                }
+            $all = $this->results[0]->all_cases();
+            $result = array_filter($all, function ($case) {
+                return $case->failed();
             });
+            ok(count($result) == 1);
         });
 
         it("should have one passed test result", function () {
-            ok(function () {
-                $results = $this->results[0]->all_cases();
-                foreach($results as $result) {
-                    if($result->passed()) {
-                        return true;
-                    }
-                }
+            $all = $this->results[0]->all_cases();
+            $result = array_filter($all, function ($case) {
+                return $case->passed();
             });
+            ok(count($result) == 1);
         });
 
         it("should have one skipped test result", function () {
-            ok(function () {
-                $results = $this->results[0]->all_cases();
-                foreach($results as $result) {
-                    if($result->skipped()) {
-                        return true;
-                    }
-                }
+            $all = $this->results[0]->all_cases();
+            $result = array_filter($all, function ($case) {
+                return $case->skipped();
             });
+            ok(count($result) == 1);
         });
 
         it("should have two pending test results", function () {
-            ok(function () {
-                $total = 0;
-                $results = $this->results[0]->all_cases();
-                foreach($results as $result) {
-                    if($result->pending()) {
-                        $total++;
-                    }
-                }
-                return $total == 2;
+            $all = $this->results[0]->all_cases();
+            $result = array_filter($all, function ($case) {
+                return $case->pending();
             });
+            ok(count($result) == 2);
         });
     });
 });
