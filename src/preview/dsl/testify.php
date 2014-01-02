@@ -17,24 +17,14 @@ use \Preview\DSL\TestAPI;
 class Suite {
     private $suite;
 
+    private $children = array();
+
+    private $loaded = false;
+
     public function __construct($title) {
-        $suite = new TestSuite($title, function(){});
-        Preview::$world->pop();
-        Preview::$world->push($suite);
-        $this->suite = $suite;
-    }
-
-    public function skip() {
-        $this->suite->skip();
-        return $this;
-    }
-
-    public function group() {
         $groups = func_get_args();
-        foreach($groups as $group) {
-            $this->suite->group($group);
-        }
-        return $this;
+        array_shift($groups);
+        $this->suite = $this->create_suite($title, $groups);
     }
 
     public function before($fn) {
@@ -57,13 +47,68 @@ class Suite {
         return $this;
     }
 
-    public function test($title, $fn=null) {
-        if (empty($fn) and $title instanceof \Closure) {
-            $fn = $title;
-            $title = "";
-        }
+    public function test() {
+        $args = func_get_args();
+        list($title, $groups, $fn) =
+            $this->title_groups_and_callback($args);
+
         $case = new TestCase($title, $fn);
         $this->suite->add($case);
-        return new TestAPI($case);
+        $this->add_test_to_groups_and_maybe_skip($case, $groups);
+        return $this;
+    }
+
+    public function add_child_suite($suite) {
+        $suite->__set_parent_test_suite($this->suite);
+        return $this;
+    }
+
+    public function __set_parent_test_suite($testsuite) {
+        $testsuite->add($this->suite);
+        return $this;
+    }
+
+    public function load() {
+        if ($this->loaded) {
+            return false;
+        }
+        $this->loaded = true;
+        Preview::$world->push($this->suite);
+        Preview::$world->pop();
+    }
+
+    private function create_suite($title, $groups) {
+        $suite = new TestSuite($title, function(){});
+        $this->add_test_to_groups_and_maybe_skip($suite, $groups);
+        return $suite;
+    }
+
+    private function add_test_to_groups_and_maybe_skip($test, $groups) {
+        foreach($groups as $group) {
+            if ($group == "skip") {
+                $test->skip();
+            } else {
+                $test->add_to_group($group);
+            }
+        }
+    }
+
+    private function title_groups_and_callback($params) {
+        if (count($params) == 1) {
+            if ($params[0] instanceof \Closure) {
+                return array("", array(), $params[0]);
+            }
+            return array($params[0], array(), null);
+        }
+
+        $fn = end($params);
+        if ($fn instanceof \Closure) {
+            array_pop($params);
+        } else {
+            $fn = null;
+        }
+
+        $title = array_shift($params);
+        return array($title, $params, $fn);
     }
 }
