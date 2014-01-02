@@ -29,6 +29,9 @@ function suite($title) {
 
 /**
  * create a test case
+ * $title is optional. if first param is a closure,
+ * $title will be set to empty string
+ * and $fn will be that closure.
  *
  * @param string $title
  * @param function|null $fn
@@ -45,7 +48,8 @@ function test($title, $fn=null) {
 }
 
 /**
- * A hook to be called before running each test case in current test suite.
+ * A hook to be called before running each test case
+ * in current test suite.
  *
  * @param function $fn
  * @retrun null
@@ -55,7 +59,8 @@ function setup($fn) {
 }
 
 /**
- * A hook to be called after running each test case in current test suite.
+ * A hook to be called after running each test case
+ * in current test suite.
  *
  * @param string $param
  * @retrun null
