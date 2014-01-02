@@ -19,7 +19,7 @@ use \Preview\DSL\TestAPI;
  *
  * @param string $title A string to describe this test suite.
  * @param function $fn Default is null(which means suite is pending).
- * @return object TestSuite object
+ * @return object TestAPI object
  */
 function suite($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
@@ -35,7 +35,7 @@ function suite($title, $fn=null) {
  *
  * @param string $title A string to describe this test case.
  * @param function $fn Default is null(which means testcase is pending).
- * @return object TestCase object.
+ * @return object TestAPI object.
  */
 function test($title, $fn=null) {
     $case = new TestCase($title, $fn);
@@ -44,7 +44,8 @@ function test($title, $fn=null) {
 }
 
 /**
- * Current test suite first run this hook before any test cases/suites.
+ * Current test suite first run this hook
+ * before any test cases/suites.
  *
  * @param function $fn
  * @retrun null
@@ -64,7 +65,8 @@ function suite_teardown($fn) {
 }
 
 /**
- * A hook to be called before running each test case in current test suite.
+ * A hook to be called before running each test case
+ * in current test suite.
  *
  * @param function $fn
  * @retrun null
@@ -74,9 +76,10 @@ function setup($fn) {
 }
 
 /**
- * A hook to be called after running each test case in current test suite.
+ * A hook to be called after running each test case
+ * in current test suite.
  *
- * @param string $param
+ * @param function $fn
  * @retrun null
  */
 function teardown($fn) {
