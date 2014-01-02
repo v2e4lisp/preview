@@ -32,6 +32,11 @@ describe("bdd[test state]", function () {
                     ok(false);
                 });
             });
+            describe("sample suite", function () {
+                it("error", function () {
+                    $a->value;
+                });
+            });
             describe("sample suite", function () {})->skip();
             describe("sample suite");
             describe("sample suite")->skip();
@@ -42,10 +47,10 @@ describe("bdd[test state]", function () {
             // and go back to our normal test env
             Preview::$world = $this->test_world;
             Preview::$config = $this->test_config;
-        });   
+        });
 
-        it("sample should have 5 results", function () {
-            ok(count($this->results) == 5);
+        it("sample should have 6 results", function () {
+            ok(count($this->results) == 6);
         });
         
         it("sample should have 1 passed suite", function () {
@@ -60,6 +65,14 @@ describe("bdd[test state]", function () {
             $all = $this->results;
             $result = array_filter($all, function ($suite) {
                 return $suite->failed();
+            });
+            ok(count($result) == 1);
+        });
+
+        it("sample should have 1 error suite", function () {
+            $all = $this->results;
+            $result = array_filter($all, function ($suite) {
+                return $suite->error();
             });
             ok(count($result) == 1);
         });
