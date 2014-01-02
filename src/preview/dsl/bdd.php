@@ -173,6 +173,10 @@ function shared_example($name, $fn) {
  * @retrun null
  */
 function it_behaves_like($name) {
+    if (!Preview::$world->current()) {
+        throw new \ErrorException("should be called in test suite");
+    }
+
     $args = func_get_args();
     array_shift($args);
     $shared = Preview::$world->shared_example($name);
