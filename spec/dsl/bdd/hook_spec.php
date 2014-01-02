@@ -7,7 +7,7 @@ use Preview\Configuration;
 
 require_once __DIR__.'/../../helper.php';
 
-describe("bdd", function () {
+describe("bdd[hook]", function () {
     before_each(function () {
         $this->test_world = Preview::$world;
         $this->test_config = Preview::$config;
@@ -20,7 +20,7 @@ describe("bdd", function () {
     });
 
     describe("#before_each_hook", function () {
-        it("should run before test begin", function () {
+        it("should run before test at first", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;

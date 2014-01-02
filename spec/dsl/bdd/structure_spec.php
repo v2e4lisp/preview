@@ -7,7 +7,7 @@ use Preview\Configuration;
 
 require_once __DIR__.'/../../helper.php';
 
-describe("bdd", function () {
+describe("bdd[test structure]", function () {
     before_each(function () {
         $this->test_world = Preview::$world;
         $this->test_config = Preview::$config;
@@ -19,7 +19,7 @@ describe("bdd", function () {
         $this->config->reporter = new \Recorder;
     });
 
-    describe("test structure", function () {
+    context("sample test suite", function () {
         before_each(function () {
             // start new env
             Preview::$world = $this->world;
@@ -64,7 +64,7 @@ describe("bdd", function () {
             ok(count($suites[0]->suites()) == 0);
         });
 
-        describe("reporter hook", function () {
+        describe("reporter", function () {
             describe("#before_all", function () {
                 it("should be called once", function () {
                     ok($this->config->reporter->before_all == 1);

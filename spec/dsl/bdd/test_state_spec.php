@@ -7,7 +7,7 @@ use Preview\Configuration;
 
 require_once __DIR__.'/../../helper.php';
 
-describe("bdd", function () {
+describe("bdd[test state]", function () {
     before_each(function () {
         $this->test_world = Preview::$world;
         $this->test_config = Preview::$config;
@@ -19,7 +19,7 @@ describe("bdd", function () {
         $this->config->reporter = new \Recorder;
     });
 
-    describe("test case state", function () {
+    describe("sample test case", function () {
         before_each(function () {
             // start new env
             Preview::$world = $this->world;
