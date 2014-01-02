@@ -20,7 +20,7 @@ use \Preview\DSL\TestAPI;
  *
  * @param string $title A string to describe this test suite.
  * @param function $fn Default is null(which means pending).
- * @return object TestSuite object
+ * @return object TestAPI object
  */
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
@@ -37,7 +37,7 @@ function describe($title, $fn=null) {
  * @param string $title A string to describe a certain situation,
  *                      typically starts with 'when'.
  * @param function $fn Default is null(which means pending).
- * @return object TestSuite object.
+ * @return object TestAPI object.
  */
 function context($title, $fn=null) {
     return describe($title, $fn);
@@ -48,7 +48,7 @@ function context($title, $fn=null) {
  *
  * @param string $title A string to describe this test case.
  * @param function $fn Default is null(which means pending).
- * @return object TestCase object.
+ * @return object TestAPI object.
  */
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
@@ -146,7 +146,7 @@ function before_each($fn) {
  * A hook to be called after running each test case
  * in current test suite.
  *
- * @param string $param
+ * @param function $fn
  * @retrun null
  */
 function after_each($fn) {
@@ -169,7 +169,7 @@ function shared_example($name, $fn) {
 /**
  * Invoke a shared test
  *
- * @param string $name
+ * @param string $name name for shared_example.
  * @retrun null
  */
 function it_behaves_like($name) {
