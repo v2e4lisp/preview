@@ -111,23 +111,6 @@ class TestSuite extends TestBase {
     }
 
     /**
-     * Recursively add its children to group.
-     *
-     * @param string $group group name
-     * @retrun null
-     */
-    protected function add_children_to_group($group) {
-        foreach($this->suites as $suite) {
-            $suite->add_self_to_group($group);
-            $suite->add_children_to_group($group);
-        }
-
-        foreach($this->cases as $case) {
-            $case->add_self_to_group($group);
-        }
-    }
-
-    /**
      * Add child test suite/case
      *
      * @param object $suite_or_case
@@ -332,6 +315,22 @@ class TestSuite extends TestBase {
         return $this;
     }
 
+    /**
+     * Recursively add its children to group.
+     *
+     * @param string $group group name
+     * @retrun null
+     */
+    protected function add_children_to_group($group) {
+        foreach($this->suites as $suite) {
+            $suite->add_self_to_group($group);
+            $suite->add_children_to_group($group);
+        }
+
+        foreach($this->cases as $case) {
+            $case->add_self_to_group($group);
+        }
+    }
 
     /**
      * Remove case/suite from $this->cases/$this->suites
@@ -340,7 +339,7 @@ class TestSuite extends TestBase {
      * @param array &$collection $this->suites/$this->cases passed by ref.
      * @retrun object|null removed case/suite or null
      */
-    private function remove_from($suite_or_case, &$collection) {
+    protected function remove_from($suite_or_case, &$collection) {
         $key = array_search($suite_or_case, $collection, true);
         if ($key !== false) {
             unset($collection[$key]);
