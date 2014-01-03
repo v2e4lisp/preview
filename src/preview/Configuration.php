@@ -43,9 +43,9 @@ class Configuration {
     /**
      * Use color for terminal report
      *
-     * @var bool $color_support default is true.
+     * @var bool $color_support if tty default is true otherwise false.
      */
-    public $color_support = true;
+    public $color_support = null;
 
     /**
      * Specify the test groups to run.
@@ -94,6 +94,10 @@ class Configuration {
             if (in_array($key, $attrs)) {
                 $this->$key = $value;
             }
+        }
+
+        if (is_null($this->color_support)) {
+            $this->color_support = Preview::is_tty();
         }
     }
 
