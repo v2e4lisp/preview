@@ -133,6 +133,12 @@ class World {
         return $results;
     }
 
+    /**
+     * Force to exit.
+     *
+     * @param int $code exit code default is 1.
+     * @retrun null
+     */
     public function force_exit($code=1) {
         $this->running = false;
         $this->runner->force_stop();
