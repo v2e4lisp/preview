@@ -19,7 +19,7 @@ describe("bdd[hook]", function () {
         $this->config->reporter = new \Recorder;
     });
 
-    describe("#before_each_hook", function () {
+    describe("#before_each", function () {
         it("should run before test at first", function () {
             // start new env
             Preview::$world = $this->world;
@@ -45,7 +45,7 @@ describe("bdd[hook]", function () {
         });
     });
 
-    describe("#after_each_hook", function () {
+    describe("#after_each", function () {
         it("should run after each at last", function () {
             // start new env
             Preview::$world = $this->world;
@@ -70,7 +70,7 @@ describe("bdd[hook]", function () {
         });
     });
 
-    describe("#before_hook", function () {
+    describe("#before", function () {
         it("should run before the testsuite", function () {
             // start new env
             Preview::$world = $this->world;
@@ -109,7 +109,7 @@ describe("bdd[hook]", function () {
     });
 
 
-    describe("#after_hook", function () {
+    describe("#after", function () {
         it("should run after the testsuite", function () {
             // start new env
             Preview::$world = $this->world;
