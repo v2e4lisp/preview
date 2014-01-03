@@ -13,6 +13,10 @@ describe("error", function () {
         trigger_error("This event WILL fire", E_USER_NOTICE);
         ok(true);
     });
+
+    it("should fail", function () {
+        ok(true === false);
+    });
 });
 
 
