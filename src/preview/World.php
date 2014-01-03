@@ -198,9 +198,9 @@ class World {
         if ($this->running) {
             throw new \ErrorException("You can't call World#$name ".
                                       "while test world is running. ".
-                                      "This error occures when you try to ".
-                                      "create a test suite or new test case".
-                                      "in test case context.");
+                                      "This error occures probably because ".
+                                      "you try to create a new test ".
+                                      "in a test case context.");
         }
     }
 }
