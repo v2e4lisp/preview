@@ -113,19 +113,7 @@ if (isset($options["config"])) {
 
 $config_file = realpath($config_file);
 if (is_file($config_file)) {
-    Preview::$config = Configuration::load_from_file($config_file);
-}
-
-// default reporter
-if (!Preview::$config->reporter) {
-    Preview::$config->reporter = new SpecReporter;
-}
-
-// Since for PHP version < 5.4 $this is not available for closure,
-// We can't use this feature, instead we explicitly pass
-// the context object as an argument to callback.
-if (Preview::php_version_is_53()) {
-    Preview::$config->use_implicit_context = false;
+    Preview::$config->load_from_file($config_file);
 }
 
 if (isset($options["help"])) {

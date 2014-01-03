@@ -217,6 +217,11 @@ class TestSuite extends TestBase {
      * @return null
      */
     public function run_before() {
+        if (Preview::$config->before_hook instanceof \Closure) {
+            $this->invoke_closure_with_context(
+                Preview::$config->before_hook, $this->context);
+        }
+
         foreach ($this->before_hooks as $before) {
             $this->invoke_closure_with_context($before, $this->context);
         }
@@ -226,12 +231,21 @@ class TestSuite extends TestBase {
      * Run children cases' before hooks
      * This method should be called only by its children test cases.
      *
-     * @param null
+     * @param stdClass $context case context object
+     * @param bool $global whether run config->before_each_hook,
+     *                     default true
      * @return null
      */
-    public function run_before_each($context) {
+    public function run_before_each($context, $global=true) {
+        if ($global) {
+            if (Preview::$config->before_each_hook instanceof \Closure) {
+                $this->invoke_closure_with_context(
+                    Preview::$config->before_each_hook, $context);
+            }
+        }
+
         if ($this->parent) {
-            $this->parent->run_before_each($context);
+            $this->parent->run_before_each($context, false);
         }
 
         foreach ($this->before_each_hooks as $before) {
@@ -246,6 +260,11 @@ class TestSuite extends TestBase {
      * @return null
      */
     public function run_after() {
+        if (Preview::$config->after_hook instanceof \Closure) {
+            $this->invoke_closure_with_context(
+                Preview::$config->after_hook, $this->context);
+        }
+
         foreach ($this->after_hooks as $after) {
             $this->invoke_closure_with_context($after, $this->context);
         }
@@ -255,12 +274,22 @@ class TestSuite extends TestBase {
      * Run children test cases' after hooks
      * This method should be called only by its children test cases.
      *
-     * @param null
+     *
+     * @param stdClass $context case context object
+     * @param bool $global whether run config->before_each_hook,
+     *                     default true
      * @return null
      */
-    public function run_after_each($context) {
+    public function run_after_each($context, $global=true) {
+        if ($global) {
+            if (Preview::$config->after_each_hook instanceof \Closure) {
+                $this->invoke_closure_with_context(
+                    Preview::$config->after_each_hook, $context);
+            }
+        }
+
         if ($this->parent) {
-            $this->parent->run_after_each($context);
+            $this->parent->run_after_each($context, false);
         }
 
         foreach ($this->after_each_hooks as $after) {
@@ -272,7 +301,7 @@ class TestSuite extends TestBase {
      * add before hooks.
      *
      * @param function $fn
-     * @retrun object $this
+     * @retrun $this
      */
     public function add_before_hook($fn) {
         $this->before_hooks[] = $fn;
@@ -283,7 +312,7 @@ class TestSuite extends TestBase {
      * add after hooks.
      *
      * @param function $fn
-     * @retrun object $this
+     * @retrun $this
      */
     public function add_after_hook($fn) {
         $this->after_hooks[] = $fn;
@@ -294,7 +323,7 @@ class TestSuite extends TestBase {
      * add before_each hooks.
      *
      * @param function $fn
-     * @retrun object $this
+     * @retrun $this
      */
     public function add_before_each_hook($fn) {
         $this->before_each_hooks[] = $fn;
@@ -305,7 +334,7 @@ class TestSuite extends TestBase {
      * add after_each hooks.
      *
      * @param function $fn
-     * @retrun object $this
+     * @retrun $this
      */
     public function add_after_each_hook($fn) {
         $this->after_each_hooks[] = $fn;
