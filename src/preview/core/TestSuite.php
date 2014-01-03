@@ -141,23 +141,14 @@ class TestSuite extends TestBase {
     /**
      * Remove child test suite/case
      *
-     * @param object $suite_or_case
+     * @param object $suite_or_case TestSuite/TestCase object
      * @retrun object|null when no such test to delete return null.
      */
     public function remove($suite_or_case) {
         if ($suite_or_case instanceof self) {
-            $key = array_search($suite_or_case, $this->suites, true);
-            if ($key !== false) {
-                unset($this->suites[$key]);
-                return $suite_or_case;
-            }
-        } else {
-            $key = array_search($suite_or_case, $this->cases, true);
-            if ($key !== false) {
-                unset($this->cases[$key]);
-                return $suite_or_case;
-            }
+            return $this->remove_from($suite_or_case, $this->suites);
         }
+        return $this->remove_from($suite_or_case, $this->cases);
     }
 
     /**
@@ -339,5 +330,21 @@ class TestSuite extends TestBase {
     public function add_after_each_hook($fn) {
         $this->after_each_hooks[] = $fn;
         return $this;
+    }
+
+
+    /**
+     * Remove case/suite from $this->cases/$this->suites
+     *
+     * @param object $suite_or_case TestSuite/TestCase object
+     * @param array &$collection $this->suites/$this->cases passed by ref.
+     * @retrun object|null removed case/suite or null
+     */
+    private function remove_from($suite_or_case, &$collection) {
+        $key = array_search($suite_or_case, $collection, true);
+        if ($key !== false) {
+            unset($collection[$key]);
+            return $suite_or_case;
+        }
     }
 }
