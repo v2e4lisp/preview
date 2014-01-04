@@ -6,7 +6,7 @@ require_once 'ok.php';
 
 $suite = new Suite("array functions");
 $child = new Suite("String functions");
-$suite->add_child_suite($child);
+$suite->add_child($child);
 
 $child->test(function () {
     ok(true);
