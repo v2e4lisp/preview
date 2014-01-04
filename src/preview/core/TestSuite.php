@@ -85,6 +85,31 @@ class TestSuite extends TestBase {
     }
 
     /**
+     * Recursively force itself and its children suites/cases
+     * in error state.
+     *
+     * @param string $param
+     * @retrun null
+     */
+    public function force_error($error) {
+        if (!$error) {
+            return;
+        }
+
+        $this->reset_state();
+        $this->finished = true;
+        $this->error = $error;
+
+        foreach($this->suites as $suite) {
+            $suite->force_error($error);
+        }
+
+        foreach($this->cases as $case) {
+            $case->force_error($error);
+        }
+    }
+
+    /**
      * set parent test suite.
      *
      * @param object|null $suite: parent test suite
@@ -164,22 +189,36 @@ class TestSuite extends TestBase {
     public function run() {
         Preview::$config->reporter->before_suite($this->result);
 
-        if ($this->runnable()) {
-            $this->timer->start();
-
-            $this->extend_context_with_parent();
-            $this->run_before();
-            foreach ($this->cases as $case) {
-                $case->run();
-            }
-            foreach ($this->suites as $suite) {
-                $suite->run();
-            }
-            $this->run_after();
-            $this->finish();
-
-            $this->timer->stop();
+        if (!$this->runnable()) {
+            return;
         }
+
+        $this->timer->start();
+
+        // run before hooks if error occured
+        // force all its children tests set to error.
+        try {
+            $this->run_before();
+            $this->extend_context_with_parent();
+        } catch (\Exception $e) {
+            $this->force_error($e);
+        }
+
+        // no error then run all its children test cases/suites.
+        foreach ($this->cases as $case) {
+            $case->run();
+        }
+        foreach ($this->suites as $suite) {
+            $suite->run();
+        }
+
+        // run after hooks.
+        // do not handle any exceptions,
+        // since reporter has printed results out.
+        $this->run_after();
+        $this->finish();
+
+        $this->timer->stop();
 
         Preview::$config->reporter->after_suite($this->result);
     }

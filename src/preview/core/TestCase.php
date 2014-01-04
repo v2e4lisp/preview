@@ -47,6 +47,23 @@ class TestCase extends TestBase {
     }
 
     /**
+     * force test to be in error state
+     *
+     * @param object $error an exception object
+     * @retrun null
+     */
+    public function force_error($error) {
+        if (!$error) {
+            return;
+        }
+
+        $this->reset_state();
+        $this->finished = true;
+        $this->error = $error;
+        return $error;
+    }
+
+    /**
      * Run the test.
      *
      * 1. Call Reporter's before_case method
