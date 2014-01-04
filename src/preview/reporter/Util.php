@@ -44,6 +44,8 @@ class Util {
         'light_gray'   => '47',
     );
 
+    private static $source = array();
+
     public static function br($n=1) {
         return str_repeat(PHP_EOL, $n);
     }
@@ -62,5 +64,33 @@ class Util {
         }
         $colored .=  $string . "\033[0m";
         return $colored;
+    }
+
+    public static function source_lines($file, $startline, $endline) {
+        if (!is_file($file)) {
+            return array();
+        }
+
+        if (!isset(self::$source[$file])) {
+            self::$source[$file] = file($file);
+        }
+
+        $lines = array();
+        for($i = $startline; $i < $endline + 1; $i++) {
+            if(!isset(self::$source[$file][$i])) {
+                break;
+            }
+
+            $lines[] = self::$source[$file][$i];
+        }
+        return $lines;
+    }
+
+    public static function source_line($file, $line) {
+        $lines = self::source_lines($file, $line, $line);
+        if (count($lines) === 0) {
+            return null;
+        }
+        return $lines[0];
     }
 }
