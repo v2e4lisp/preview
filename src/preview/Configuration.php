@@ -154,7 +154,7 @@ class Configuration {
             }
         }
 
-        $this->set_default();
+        $this->set_default_if_not_initialized();
     }
 
     /**
@@ -163,7 +163,7 @@ class Configuration {
      * @param null
      * @retrun null
      */
-    public function set_default () {
+    public function set_default_if_not_initialized () {
         if (is_null($this->color_support)) {
             $this->color_support = Preview::is_tty();
         }
