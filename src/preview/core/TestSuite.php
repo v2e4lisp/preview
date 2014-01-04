@@ -204,7 +204,7 @@ class TestSuite extends TestBase {
             $this->force_error($e);
         }
 
-        // no error then run all its children test cases/suites.
+        // run all its children test cases/suites.
         foreach ($this->cases as $case) {
             $case->run();
         }
