@@ -121,7 +121,7 @@ class Suite {
      * @param object $suite Testify\Suite object
      * @retrun $this
      */
-    public function add_child_suite($suite) {
+    public function add_child($suite) {
         $suite->__set_parent_test_suite($this->suite);
         return $this;
     }
