@@ -92,6 +92,9 @@ describe("World", function () {
 
         before_each(function () {
             $this->test1 = new TestSuite("test-1", function (){});
+            $this->test1->add(new TestCase("case-1", function () {}));
+            $this->case2 = new TestCase("case-2", function () {});
+            $this->test1->add($this->case2);
             $this->test2 = new TestSuite("test-2", function (){});
         });
 
@@ -106,15 +109,22 @@ describe("World", function () {
 
                 Preview::$config = $this->test_config;
 
+                $case_total = 0;
+                foreach($results as $suite) {
+                    $case_total += count($suite->cases());
+                }
+
                 ok(count($results) == 2);
+                ok($case_total == 2);
             });
         });
 
         context("when test groups specified", function () {
             before_each(function () {
                 $this->config->test_groups = array("group-1");
-                $this->test1->add_to_group("group-1");
-                // $this->world->add_test_to_group($this->test1, "group-1");
+                $this->test3 = new TestSuite("test-3", function (){});
+                $this->test3->add_to_group("group-1");
+                $this->case2->add_to_group("group-1");
             });
 
             it("should only run tests in the test groups", function () {
@@ -123,12 +133,19 @@ describe("World", function () {
                 $this->world->push($this->test1);
                 $this->world->pop();
                 $this->world->push($this->test2);
+                $this->world->pop();
+                $this->world->push($this->test3);
                 $results = $this->world->run();
 
                 Preview::$config = $this->test_config;
 
-                ok(count($results) == 1);
-                ok($results[0]->title() == "test-1");
+                $case_total = 0;
+                foreach($results as $suite) {
+                    $case_total += count($suite->cases());
+                }
+
+                ok(count($results) == 2);
+                ok($case_total == 1);
             });
         });
     });
