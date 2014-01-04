@@ -141,6 +141,20 @@ class TestBase {
     }
 
     /**
+     * reset test state
+     *
+     * @param null
+     * @retrun null
+     */
+    public function reset_state() {
+        $this->failure = null;
+        $this->error = null;
+        $this->skipped = false;
+        $this->pending = false;
+        $this->finished = false;
+    }
+
+    /**
      * run test
      *
      * @param null
@@ -158,6 +172,7 @@ class TestBase {
 
     /**
      * set failure object for failed test.
+     * if any parent , also setup its parent failure
      *
      * @param object $error
      * @retrun null
@@ -175,6 +190,7 @@ class TestBase {
 
     /**
      * set error object for error test.
+     * if any parent , also setup its parent error
      *
      * @param object $error
      * @retrun null
