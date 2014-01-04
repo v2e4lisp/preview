@@ -189,36 +189,34 @@ class TestSuite extends TestBase {
     public function run() {
         Preview::$config->reporter->before_suite($this->result);
 
-        if (!$this->runnable()) {
-            return;
+        if ($this->runnable()) {
+            $this->timer->start();
+            $this->extend_context_with_parent();
+
+            // run before hooks if error occured
+            // force all its children tests set to error.
+            try {
+                $this->run_before();
+            } catch (\Exception $e) {
+                $this->force_error($e);
+            }
+
+            // run all its children test cases/suites.
+            foreach ($this->cases as $case) {
+                $case->run();
+            }
+            foreach ($this->suites as $suite) {
+                $suite->run();
+            }
+
+            // run after hooks.
+            // do not handle any exceptions,
+            // since reporter has printed results out.
+            $this->run_after();
+            $this->finish();
+
+            $this->timer->stop();
         }
-
-        $this->timer->start();
-        $this->extend_context_with_parent();
-
-        // run before hooks if error occured
-        // force all its children tests set to error.
-        try {
-            $this->run_before();
-        } catch (\Exception $e) {
-            $this->force_error($e);
-        }
-
-        // run all its children test cases/suites.
-        foreach ($this->cases as $case) {
-            $case->run();
-        }
-        foreach ($this->suites as $suite) {
-            $suite->run();
-        }
-
-        // run after hooks.
-        // do not handle any exceptions,
-        // since reporter has printed results out.
-        $this->run_after();
-        $this->finish();
-
-        $this->timer->stop();
 
         Preview::$config->reporter->after_suite($this->result);
     }
