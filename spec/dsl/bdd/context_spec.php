@@ -26,25 +26,28 @@ describe("bdd[context]", function () {
             Preview::$config = $this->config;
             $tmp = null;
 
-            describe("sample suite", function () use (&$tmp) {
-                before(function () use (&$tmp) {
-                    // $this->user = "wenjun.yan";
+            try {
+                describe("sample suite", function () use (&$tmp) {
+                    before(function () use (&$tmp) {
+                        $tmp = $this;
+                        $this->user = "wenjun.yan";
+                    });
+
+                    it("context diff from suite context", function () use (&$tmp) {
+                        ok($this !== $tmp);
+                    });
+
+                    after(function () use (&$tmp) {
+                        ok($this === $tmp);
+                    });
                 });
+                $results = Preview::$world->run();
+            } finally {
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
 
-                it("context diff from suite context", function () use ($tmp) {
-                    ok($this !== $tmp);
-                });
-
-                after(function () use ($tmp) {
-                    // ok($this === $tmp);
-                });
-
-            });
-            $results = Preview::$world->run();
-
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
             $result = $results[0];
             ok($result->passed());
         });
@@ -54,26 +57,28 @@ describe("bdd[context]", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
-            describe("parent suite", function () {
-                before(function () {
-                    $this->user = "wenjun.yan";
-                });
-
-                describe("sample suite", function () {
+            try {
+                describe("parent suite", function () {
                     before(function () {
-                        $this->shared = ($this->user == "wenjun.yan");
+                        $this->user = "wenjun.yan";
                     });
 
-                    it("access suite context", function () {
-                        ok($this->shared);
+                    describe("sample suite", function () {
+                        before(function () {
+                            $this->shared = ($this->user == "wenjun.yan");
+                        });
+
+                        it("access suite context", function () {
+                            ok($this->shared);
+                        });
                     });
                 });
-            });
-            $results = Preview::$world->run();
-
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
+                $results = Preview::$world->run();
+            } finally {
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
             $result = $results[0];
             ok($result->passed());
         });
@@ -86,25 +91,27 @@ describe("bdd[context]", function () {
             Preview::$config = $this->config;
             $context_tmp = null;
 
-            describe("context sample", function () use (&$context_tmp) {
-                before_each(function () use (&$context_tmp) {
-                    $this->user = "wenjun.yan";
-                    $context_tmp = $this;
-                });
+            try {
+                describe("context sample", function () use (&$context_tmp) {
+                    before_each(function () use (&$context_tmp) {
+                        $this->user = "wenjun.yan";
+                        $context_tmp = $this;
+                    });
 
-                it("should have a user", function () use (&$context_tmp) {
-                    ok($this === $context_tmp);
-                });
+                    it("should have a user", function () use (&$context_tmp) {
+                        ok($this === $context_tmp);
+                    });
 
-                after_each(function () use (&$context_tmp) {
-                    ok($this === $context_tmp);
+                    after_each(function () use (&$context_tmp) {
+                        ok($this === $context_tmp);
+                    });
                 });
-            });
-            $results = Preview::$world->run();
-
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
+                $results = Preview::$world->run();
+            } finally {
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
 
             $suite_result = $results[0];
             $cases_result = $suite_result->cases();
@@ -119,28 +126,30 @@ describe("bdd[context]", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
-            describe("context sample", function () {
-                before(function () {
-                    $this->user = "wenjun.yan";
-                });
+            try {
+                describe("context sample", function () {
+                    before(function () {
+                        $this->user = "wenjun.yan";
+                    });
 
-                before_each(function () {
-                    ok($this->user == "wenjun.yan");
-                });
+                    before_each(function () {
+                        ok($this->user == "wenjun.yan");
+                    });
 
-                it("should have a user", function () {
-                    ok($this->user == "wenjun.yan");
-                });
+                    it("should have a user", function () {
+                        ok($this->user == "wenjun.yan");
+                    });
 
-                after_each(function () {
-                    ok($this->user == "wenjun.yan");
+                    after_each(function () {
+                        ok($this->user == "wenjun.yan");
+                    });
                 });
-            });
-            $results = Preview::$world->run();
-
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
+                $results = Preview::$world->run();
+            } finally {
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
 
             $result = $results[0];
             ok($result->passed());
