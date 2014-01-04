@@ -194,12 +194,12 @@ class TestSuite extends TestBase {
         }
 
         $this->timer->start();
+        $this->extend_context_with_parent();
 
         // run before hooks if error occured
         // force all its children tests set to error.
         try {
             $this->run_before();
-            $this->extend_context_with_parent();
         } catch (\Exception $e) {
             $this->force_error($e);
         }
