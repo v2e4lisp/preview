@@ -3,98 +3,103 @@
 namespace Preview\Reporter;
 
 class Spec extends Base {
-    private $failed_cases = 0;
-    private $passed_cases = 0;
-    private $skipped_cases = 0;
-    private $traces = array();
+    private $failed_cases = array();
+    private $passed_cases = array();
+    private $skipped_cases = array();
 
     public function after_case($case) {
         if($err = $case->error_or_failed()) {
-            $this->failed_cases += 1;
-            $this->traces[] = array(
-                $case->full_title(),
-                $err->getTraceAsString(),
-                $err->getMessage(),
-            );
-            echo Util::color(". ", "red");
+            $this->failed_cases[] = $case;
+            echo Util::color("F", "red");
 
-        } else if($case->passed()) {
-            $this->passed_cases += 1;
-            echo Util::color(". ", "green");
+        } else if($case->skipped_or_pending()) {
+            $this->skipped_cases[] = $case;
+            echo Util::color("*", "yellow");
 
         } else {
-            $this->skipped_cases += 1;
-            echo Util::color(". ", "yellow");
+            $this->passed_cases[] = $case;
+            echo Util::color(".", "green");
+
         }
     }
 
     public function after_suite($suite) {
         if ($suite->skipped()) {
-            $num = count($suite->all_cases());
-            echo Util::color(str_repeat(". ", $num), "yellow");
-            $this->skipped_cases += $num;
+            $skipped = $suite->all_cases();
+            $this->skipped_cases = array_merge($this->skipped_cases, $skipped);
+            echo Util::color(str_repeat("*", count($skipped)), "yellow");
         }
     }
 
     public function before_all($results) {
-        echo Util::br(2)."    ";
+        echo Util::br();
     }
 
     public function after_all($results) {
-        $this->print_summary($this->timespan($results));
+        echo Util::br();
+        $this->print_pending();
+        $this->print_failure();
+        $time = $this->timespan($results);
+        $this->print_summary($time);
+    }
 
-        foreach ($this->traces as $i => $t) {
-            echo " ".($i + 1).") ";
-            echo Util::color($t[0].Util::br(), "red");
-            if (!empty($t[2])) {
-                echo Util::color($t[2].Util::br(), "red");
+    protected function print_pending() {
+        if (empty($this->skipped_cases)) {
+            return;
+        }
+
+        echo Util::br();
+        echo "Pending:";
+        echo Util::br();
+        foreach($this->skipped_cases as $case) {
+            echo Util::color("  ".$case->full_title().Util::br(), "yellow");
+            $info = "    #".$case->filename().":".$case->startline().Util::br();
+            echo Util::color($info, "cyan");
+            echo Util::br();
+        }
+    }
+
+    protected function print_failure() {
+        if (empty($this->failed_cases)) {
+            return;
+        }
+
+        echo Util::br();
+        echo "Failures:".Util::br();
+        foreach($this->failed_cases as $i =>$case) {
+            $i++;
+            $err = $case->error_or_failed();
+            $msg = $err->getMessage();
+            $trace = $this->trace_message($err->getTraceAsString());
+            echo "  $i) ".$case->full_title().Util::br();
+            if (!empty($msg)) {
+                echo Util::color("    Failure/Error: ".$msg, "red").Util::br();
             }
-            echo $this->trace_message($t[1].Util::br(2));
+            echo Util::color("    ".$trace, "cyan");
             echo Util::br();
         }
     }
 
     protected function print_summary($time) {
-        echo Util::br(2);
-        echo Util::color("        passed: ", "green");
-        echo $this->passed_cases;
-        echo Util::color("  failed: ", "red");
-        echo $this->failed_cases;
-        echo Util::color("  skipped: ", "cyan");
-        echo $this->skipped_cases;
         echo Util::br();
-        echo Util::color("        running time: ". $time. " seconds", "dark_gray");
+        echo "Finished in $time seconds".Util::br();
+        $failed_total = count($this->failed_cases);
+        $passed_total = count($this->passed_cases);
+        $skipped_total = count($this->skipped_cases);
+        $total = $failed_total + $passed_total + $skipped_total;
+
+        $message = "$total tests, $failed_total failures, ".
+            "$skipped_total pending";
+
+        if($failed_total > 0) {
+            $color = "red";
+        } else if ($passed_total > 0) {
+            $color = "yellow";
+        } else {
+            $color = "green";
+        }
+
+        echo Util::color($message, $color);
         echo Util::br(2);
-    }
-
-    public function timespan($results) {
-        $time = 0;
-        foreach($results as $result) {
-            $time += $result->time();
-        }
-        return $time;
-    }
-
-
-    /**
-     * format trace message
-     */
-    protected function trace_message($trace) {
-        $message = "";
-        $msg_list = array_filter(explode(Util::br(), $trace));
-        array_pop($msg_list);
-        foreach($msg_list as $msg) {
-            if (!$this->from_preview_file($msg)) {
-                $message .= $msg.Util::br();
-            }
-        }
-        return $message;
-    }
-
-    protected function from_preview_file($path) {
-        $preview_dir = dirname(dirname(__DIR__));
-        $preview_bin = dirname($preview_dir).DIRECTORY_SEPARATOR."preview";
-        return strpos($path, $preview_dir) !== false or
-            strpos($path, $preview_bin) !== false;
     }
 }

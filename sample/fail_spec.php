@@ -9,8 +9,10 @@ describe("error", function () {
         ok(false);
     });
     it("should be fail", function () {
-        throw new \Exception("fail.............");
+        ok(false, "error message");
     });
+
+    it("should pending");
 });
 
 
