@@ -13,6 +13,7 @@ use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\DSL\TestAPI;
+use \Preview\DSL\Util;
 
 class Suite {
     /**
@@ -110,6 +111,9 @@ class Suite {
             $this->title_groups_and_callback($args);
 
         $case = new TestCase($title, $fn);
+        if (!$fn) {
+            Util::set_default_filename_and_lineno($case, debug_backtrace());
+        }
         $this->suite->add($case);
         $this->add_test_to_groups_and_maybe_skip($case, $groups);
         return $this;
@@ -164,6 +168,7 @@ class Suite {
      */
     private function create_suite($title, $groups) {
         $suite = new TestSuite($title, function(){});
+        Util::set_default_filename_and_lineno($suite, debug_backtrace());
         $this->add_test_to_groups_and_maybe_skip($suite, $groups);
         return $suite;
     }

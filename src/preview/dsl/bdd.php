@@ -14,6 +14,7 @@ use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\Core\TestShared;
 use \Preview\DSL\TestAPI;
+use \Preview\DSL\Util;
 
 /**
  * Start a test suite.
@@ -24,6 +25,9 @@ use \Preview\DSL\TestAPI;
  */
 function describe($title, $fn=null) {
     $desc = new TestSuite($title, $fn);
+    if (!$fn) {
+        Util::set_default_filename_and_lineno($desc, debug_backtrace());
+    }
     $desc->set_parent(Preview::$world->current());
     Preview::$world->push($desc);
     $desc->setup();
@@ -52,6 +56,9 @@ function context($title, $fn=null) {
  */
 function it($title, $fn=null) {
     $case = new TestCase($title, $fn);
+    if (!$fn) {
+        Util::set_default_filename_and_lineno($case, debug_backtrace());
+    }
     Preview::$world->current()->add($case);
     return new TestAPI($case);
 }

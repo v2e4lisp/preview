@@ -13,6 +13,7 @@ use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
 use \Preview\DSL\TestAPI;
+use \Preview\DSL\Util;
 
 /**
  * start a test suite
@@ -22,6 +23,7 @@ use \Preview\DSL\TestAPI;
  */
 function suite($title) {
     $desc = new TestSuite($title, function(){});
+    Util::set_default_filename_and_lineno($desc, debug_backtrace());
     Preview::$world->pop();
     Preview::$world->push($desc);
     return new TestAPI($desc);
@@ -43,6 +45,9 @@ function test($title, $fn=null) {
         $title = "";
     }
     $case = new TestCase($title, $fn);
+    if (!$fn) {
+        Util::set_default_filename_and_lineno($case, debug_backtrace());
+    }
     $case->set_parent(Preview::$world->current());
     return new TestAPI($case);
 }

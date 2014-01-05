@@ -93,7 +93,7 @@ class Spec extends Base {
 
         if($failed_total > 0) {
             $color = "red";
-        } else if ($passed_total > 0) {
+        } else if ($skipped_total > 0) {
             $color = "yellow";
         } else {
             $color = "green";
