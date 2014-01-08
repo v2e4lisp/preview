@@ -12,10 +12,12 @@ namespace Preview\DSL\Export;
 use \Preview\Preview;
 use \Preview\Core\TestSuite;
 use \Preview\Core\TestCase;
+use \Preview\DSL\Util;
 
 function export ($title, $options) {
     $suite = new TestSuite($title, function() {});
-    $suite->set_parent(Preview::$world->current());
+    Util::set_default_filename_and_lineno($suite, debug_backtrace());
+    Preview::$world->pop();
     Preview::$world->push($suite);
 
     // add hooks
@@ -35,21 +37,9 @@ function export ($title, $options) {
     }
 
     // add tests
-    if (isset($options["tests"])) {
-        $tests = $options["tests"];
-        foreach($tests as $key => $fn) {
-            $suite->add(new TestCase($key, $fn));
+    foreach ($options as $title => $fn) {
+        if (!in_array($title, $hook_names)) {
+            $suite->add(new TestCase($title, $fn));
         }
     }
-
-    // export suites
-    $keywords = $hook_names;
-    $keywords[] = "tests";
-    foreach ($options as $key => $opt) {
-        if (!in_array($key, $keywords)) {
-            export($key, $opt);
-        }
-    }
-
-    Preview::$world->pop();
 }
