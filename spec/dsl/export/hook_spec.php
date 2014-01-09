@@ -5,11 +5,10 @@ use Preview\Preview;
 use Preview\World;
 use Preview\Configuration;
 use Preview\DSL\Export;
-use Preview\DSL\Qunit;
 
 require_once __DIR__.'/../../helper.php';
 
-describe("qunit", function () {
+describe("export[hook]", function () {
     before_each(function () {
         $this->test_world = Preview::$world;
         $this->test_config = Preview::$config;
