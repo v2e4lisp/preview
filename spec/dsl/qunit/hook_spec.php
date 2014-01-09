@@ -8,7 +8,7 @@ use Preview\DSL\qunit;
 
 require_once __DIR__.'/../../helper.php';
 
-describe("qunit", function () {
+describe("qunit[hook]", function () {
     before_each(function () {
         $this->test_world = Preview::$world;
         $this->test_config = Preview::$config;
@@ -26,28 +26,30 @@ describe("qunit", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
-            $message = array();
-            qunit\suite("sample suite");
+            try {
+                $message = array();
+                qunit\suite("sample suite");
 
-            qunit\setup(function () use (&$message) {
-                $message[] = "setup first";
-            });
+                qunit\setup(function () use (&$message) {
+                    $message[] = "setup first";
+                });
 
-            qunit\test(function () use (&$message) {
-                $message[] = "then test";
-            });
+                qunit\test(function () use (&$message) {
+                    $message[] = "then test";
+                });
 
-            qunit\test(function () use (&$message) {
-                $message[] = "then test";
-            });
-            $this->world->run();
+                qunit\test(function () use (&$message) {
+                    $message[] = "then test";
+                });
+                $this->world->run();
+            } finally {
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
 
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
-
-            ok($message == array("setup first", "then test",
-                                 "setup first", "then test"));
+                ok($message == array("setup first", "then test",
+                                     "setup first", "then test"));
+            }
         });
     });
 
@@ -57,25 +59,28 @@ describe("qunit", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
-            $message = array();
-            qunit\suite("sample suite");
+            try {
+                $message = array();
+                qunit\suite("sample suite");
 
-            qunit\teardown(function () use (&$message) {
-                $message[] = "then teardown";
-            });
+                qunit\teardown(function () use (&$message) {
+                    $message[] = "then teardown";
+                });
 
-            qunit\test(function () use (&$message) {
-                $message[] = "test first";
-            });
+                qunit\test(function () use (&$message) {
+                    $message[] = "test first";
+                });
 
-            qunit\test(function () use (&$message) {
-                $message[] = "test first";
-            });
-            $this->world->run();
+                qunit\test(function () use (&$message) {
+                    $message[] = "test first";
+                });
+                $this->world->run();
+            } finally {
 
-            // end new env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
+                // end new env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
 
             ok($message == array("test first", "then teardown",
                                  "test first", "then teardown"));
