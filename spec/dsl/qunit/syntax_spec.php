@@ -35,7 +35,7 @@ describe("qunit[syntax]", function () {
 
         it("accept an string as an argument ".
            "an create a pending test");
-    });
+    })
 
     describe("#setup", function () {
         it("accept an closure as argument");
