@@ -154,8 +154,8 @@ class Suite {
             return false;
         }
         $this->loaded = true;
-        Preview::$world->push($this->suite);
         Preview::$world->pop();
+        Preview::$world->push($this->suite);
     }
 
     /**
