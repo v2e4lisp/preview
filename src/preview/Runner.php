@@ -51,7 +51,10 @@ class Runner {
      */
     public function run() {
         $tests = $this->filter_tests();
-        shuffle($tests);
+
+        if (!Preview::$config->order) {
+            shuffle($tests);
+        }
 
         foreach($tests as $test) {
             $this->results[] = $test->result;
@@ -62,6 +65,7 @@ class Runner {
             $test->run();
         }
         Preview::$config->reporter->after_all($this->results);
+
         return $this->results;
     }
 

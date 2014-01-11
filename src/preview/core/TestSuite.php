@@ -171,8 +171,10 @@ class TestSuite extends TestBase {
         }
 
         $this->fn->__invoke();
-        shuffle($this->cases);
-        shuffle($this->suites);
+        if (!Preview::$config->order) {
+            shuffle($this->cases);
+            shuffle($this->suites);
+        }
     }
 
     /**

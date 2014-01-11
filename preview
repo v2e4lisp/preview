@@ -57,6 +57,10 @@ $cmd = new Getopt(
             "Load config file. Default './preview.config.php'."
         ),
         array(
+            null, "order", Getopt::NO_ARGUMENT,
+            'Test are run in order.'
+        ),
+        array(
             null, "no-this", Getopt::NO_ARGUMENT,
             'Disable using $this as an implicit context. PHP 5.4 only.'
         ),
@@ -155,6 +159,10 @@ if (isset($options["with-error"])) {
 
 if (isset($options["fail-fast"])) {
     Preview::$config->fail_fast = true;
+}
+
+if (isset($options["order"])) {
+    Preview::$config->order = true;
 }
 
 $files = $cmd->getOperands();

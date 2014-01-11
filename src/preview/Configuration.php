@@ -49,6 +49,13 @@ class Configuration {
     public $color_support = null;
 
     /**
+     * Test run in order
+     *
+     * @var bool $order default is false, shuffle the tests before run;
+     */
+    public $order = false;
+
+    /**
      * Specify the test groups to run.
      * Default is all which means run all the tests.
      *
