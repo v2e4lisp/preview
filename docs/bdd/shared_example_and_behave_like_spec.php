@@ -1,7 +1,7 @@
 <?php
 namespace Preview\DSL\BDD;
 
-require_once __DIR__.'/../../ok.php';
+require_once __DIR__.'/../ok.php';
 
 shared_example("to share test", function () {
     it("will use the caller's context", function () {

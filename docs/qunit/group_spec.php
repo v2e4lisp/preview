@@ -1,7 +1,7 @@
 <?php
 namespace Preview\DSL\Qunit;
 
-require_once __DIR__.'/../../ok.php';
+require_once __DIR__.'/../ok.php';
 
 suite("A grouped test suite")->group("sample group");
 

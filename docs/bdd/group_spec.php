@@ -1,7 +1,7 @@
 <?php
 namespace Preview\DSL\BDD;
 
-require_once __DIR__.'/../../ok.php';
+require_once __DIR__.'/../ok.php';
 
 
 describe("add this test suite to groups", function () {
