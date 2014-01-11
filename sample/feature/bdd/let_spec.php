@@ -3,7 +3,7 @@ namespace Preview\DSL\BDD;
 
 require_once __DIR__.'/../../ok.php';
 
-describe("An sample test suite", function () {
+describe("let", function () {
     let("usage", "run before each test case");
 
     let("note", "let statements are run in order");

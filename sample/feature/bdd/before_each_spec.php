@@ -3,7 +3,7 @@ namespace Preview\DSL\BDD;
 
 require_once __DIR__.'/../../ok.php';
 
-describe("An sample test suite", function () {
+describe("before_each", function () {
     before_each(function () {
         $this->usage = "run before each test case";
     });

@@ -3,7 +3,7 @@ namespace Preview\DSL\BDD;
 
 require_once __DIR__.'/../../ok.php';
 
-describe("An sample test suite", function () {
+describe("before", function () {
     before(function () {
         $this->usage = "run before the current test suite";
     });
@@ -28,7 +28,7 @@ describe("An sample test suite", function () {
         $this->ref->name = null;
     });
 
-    it("before hooks are run only once in current test suite", function () {
+    it("before hooks run only once in current test suite", function () {
         /*
          * run tests in order, this will pass.
          */
