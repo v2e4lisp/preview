@@ -1,4 +1,8 @@
 <?php
+/*
+ * How to use before_each.
+ */
+
 namespace Preview\DSL\BDD;
 
 require_once __DIR__.'/../ok.php';
