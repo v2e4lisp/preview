@@ -17,8 +17,10 @@ setup(function () {
     $this->note_2 = "setup functions are run in order";
 });
 
-test("Run a test", function () {
-    ok(true);
+test("have access to vars defined in setups", function () {
+    ok($this->note_1);
+    ok($this->note_2);
+    ok($this->note_3);
 });
 
 test("Run a another test", function () {
