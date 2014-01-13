@@ -9,7 +9,7 @@ describe("before_each", function () {
     });
 
     before_each(function () {
-        $this->note = "before_each hooks are run in order";
+        $this->note_1 = "before_each hooks are run in order";
     });
 
     before_each(function () {
@@ -19,8 +19,8 @@ describe("before_each", function () {
     });
 
     it("can access the variable set in before_each hooks", function () {
-        ok($this->usage);
-        ok($this->note);
+        ok($this->note_1);
+        ok($this->note_2);
         ok($this->value);
         ok($this->ref->name);
 
@@ -32,5 +32,10 @@ describe("before_each", function () {
         // $this-value and $this->ref are reassigned.
         ok($this->value); // string is passed by value
         ok($this->ref->name); // object is passed by "ref".
+    });
+
+    before_each(function () {
+        $this->note_2 = "wherever you put the before each hook, ".
+            "it will run before each test case";
     });
 });
