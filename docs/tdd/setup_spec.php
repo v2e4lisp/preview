@@ -1,4 +1,8 @@
 <?php
+/*
+ * How to use setup.
+ */
+
 namespace Preview\DSL\TDD;
 
 require_once __DIR__.'/../ok.php';
