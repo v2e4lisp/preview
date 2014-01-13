@@ -134,7 +134,7 @@ class TestBase {
             $this->filename = $ref->getFileName();
             $this->startline = $ref->getStartLine();
             $this->endline = $ref->getEndLine();
-            if (!Preview::php_version_is_53()) {
+            if (!Preview::is_php53()) {
                 $this->fn = $ref->getClosure();
             }
         }

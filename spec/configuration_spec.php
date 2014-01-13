@@ -11,8 +11,9 @@ describe("Configuration", function () {
     });
 
     context("with default value", function() {
-        it("assertion errors should be Exception", function () {
-            ok($this->config->assertion_errors == array("\\Exception"));
+        it("assertion exceptions should be Exception", function () {
+            ok($this->config->assertion_exceptions ==
+               array("\\Exception"));
         });
 
         it("conver error to exception should be true", function () {

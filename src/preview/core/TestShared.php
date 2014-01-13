@@ -35,7 +35,7 @@ class TestShared {
     public function __construct($name, $fn) {
         $this->fn = $fn;
         $this->name = $name;
-        if (!Preview::php_version_is_53()) {
+        if (!Preview::is_php53()) {
             $ref = new \ReflectionFunction($fn);
             $this->fn = $ref->getClosure();
         }

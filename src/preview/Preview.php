@@ -36,7 +36,7 @@ class Preview {
      * @param null
      * @retrun bool
      */
-    public static function php_version_is_53() {
+    public static function is_php53() {
         return version_compare(phpversion(), '5.4', '<');
     }
 

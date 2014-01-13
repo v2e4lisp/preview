@@ -111,7 +111,7 @@ class TestCase extends TestBase {
         } catch (\ErrorException $error) {
             $this->set_error($error);
         } catch (\Exception $e) {
-            foreach(Preview::$config->assertion_errors as $klass) {
+            foreach(Preview::$config->assertion_exceptions as $klass) {
                 if ($e instanceof $klass) {
                     $this->set_failure($e);
                     break;
