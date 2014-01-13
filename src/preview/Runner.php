@@ -1,4 +1,6 @@
 <?php
+namespace Preview;
+
 /**
  * Test Runner class
  *
@@ -6,9 +8,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview;
-
 class Runner {
     /**
      * test objects (suites or cases)

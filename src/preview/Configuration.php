@@ -1,4 +1,7 @@
 <?php
+
+namespace Preview;
+
 /**
  * Configuration for preview
  *
@@ -6,9 +9,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview;
-
 class Configuration {
     /**
      * Exception types which will be catched

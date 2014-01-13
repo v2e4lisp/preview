@@ -1,4 +1,7 @@
 <?php
+
+namespace Preview;
+
 /**
  * Loader class to load test files
  *
@@ -6,9 +9,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview;
-
 class Loader {
     /**
      * Load test file(s) or dir(s) by path

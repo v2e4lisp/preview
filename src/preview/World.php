@@ -1,4 +1,7 @@
 <?php
+
+namespace Preview;
+
 /**
  * Test World class
  *
@@ -6,9 +9,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview;
-
 class World {
     /**
      * Array of test suite objects without parent
