@@ -151,7 +151,7 @@ class Configuration {
             // For example, if we call load_from_file method
             // the hooks defined in config file will be bound to
             // the current configuration object($this).
-            // So we Unbound hook closure.
+            // So we unbind hook closure.
             $hooks = array(
                 "before_hook",
                 "after_hook",
