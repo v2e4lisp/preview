@@ -8,16 +8,15 @@
  */
 
 namespace Preview;
-use Preview\Reporter\Spec as SpecReporter;
 
 class Configuration {
     /**
      * Exception types which will be catched
      * as a test failure object.
      *
-     * @var array $assertion_errors default is array("\\Exception")
+     * @var array $assertion_exceptions default is array("\\Exception")
      */
-    public $assertion_errors = array("\\Exception");
+    public $assertion_exceptions = array("\\Exception");
 
     /**
      * Convert php error to an ErrorException
@@ -39,14 +38,14 @@ class Configuration {
      *
      * @var object $reporter
      */
-    public $reporter = null;
+    public $reporter = "\\Preview\\Reporter\\Spec";
 
     /**
      * Use color for terminal report
      *
      * @var bool $color_support if tty default is true otherwise false.
      */
-    public $color_support = null;
+    public $color_support = true;
 
     /**
      * Test run in order
@@ -145,54 +144,8 @@ class Configuration {
         }
 
         $this->update($options);
-    }
 
-    /**
-     * update the config
-     *
-     * @param array $options
-     * @return null
-     */
-    public function update ($options) {
-        $attrs = array_keys(get_object_vars($this));
-        foreach ($options as $key => $value) {
-            if (in_array($key, $attrs)) {
-                $this->$key = $value;
-            }
-        }
-
-        $this->set_default_if_not_initialized();
-    }
-
-    /**
-     * set default config
-     *
-     * @param null
-     * @retrun null
-     */
-    public function set_default_if_not_initialized () {
-        if (is_null($this->color_support)) {
-            $this->color_support = Preview::is_tty();
-        }
-
-        if (is_null($this->reporter)) {
-            $this->reporter = new SpecReporter;
-        }
-
-        if (is_string($this->reporter)) {
-            $this->reporter = new $this->reporter;
-        }
-
-        /*
-         * php version specific config
-         */
-        if (Preview::php_version_is_53()) {
-            // Since for PHP version < 5.4 $this is not available for closure,
-            // We can't use this feature, instead we explicitly pass
-            // the context object as an argument to callback.
-            $this->use_implicit_context = false;
-
-        } else {
+        if (!Preview::is_php53()) {
             // PHP 5.4 and above will automatically
             // bind current $this (if any) to closure.
             // For example, if we call load_from_file method
@@ -206,11 +159,43 @@ class Configuration {
                 "after_each_hook",
             );
             foreach($hooks as $hook) {
-                if(!is_null($this->$hook)) {
+                if($this->$hook) {
                     $ref = new \ReflectionFunction($this->$hook);
                     $this->$hook = $ref->getClosure();
                 }
             }
+        }
+    }
+
+    /**
+     * Update
+     *
+     * @param array $options
+     * @return null
+     */
+    public function update ($options) {
+        $attrs = array_keys(get_object_vars($this));
+        foreach ($options as $key => $value) {
+            if (in_array($key, $attrs)) {
+                $this->$key = $value;
+            }
+        }
+
+        if (is_string($this->reporter)) {
+            $this->reporter = new $this->reporter;
+        }
+
+        /*
+         * Since for PHP version < 5.4 $this is not available for closure,
+         * We can't use this feature, instead we explicitly pass
+         * the context object as an argument to callback.
+         */
+        if(Preview::is_php53()) {
+            $this->use_implicit_context = false;
+        }
+
+        if(!Preview::is_tty()) {
+            $this->color_support = false;
         }
     }
 }
