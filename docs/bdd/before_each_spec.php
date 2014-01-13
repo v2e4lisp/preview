@@ -28,7 +28,7 @@ describe("before_each", function () {
         $this->ref->name = null;
     });
 
-    it("before_each hooks are run before current test", function () {
+    it("before_each hooks are run before each test case", function () {
         // $this-value and $this->ref are reassigned.
         ok($this->value); // string is passed by value
         ok($this->ref->name); // object is passed by "ref".
