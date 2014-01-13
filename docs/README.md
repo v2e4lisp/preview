@@ -7,6 +7,41 @@ specify a config file by (-c, --config file)
 
 - [default config](./preview.config.php)
 
+## Assertion
+
+Preview do not provide any assertion statement. Which means you can use any
+assertion lib you want, if it throws an exception.
+Preview will catch any exception as failure or error object(you can specify
+which kind of exception to be catched as failure in [config file](./preview.config.php)
+Other exceptions will be treated as error.
+
+This is a simple assertion function.
+```php
+function ok($expr, $msg="") {
+    if ($msg instanceof Closure) {
+        $expr = $expr->__invoke();
+    }
+
+    if (!$expr) {
+        throw new \Exception($msg);
+    }
+}
+```
+
+## Exception
+
+Exception will be catched in `before_each`, `after_each`, `before` hooks
+Exceptions in `after` won't be handled.
+
+## PHP error
+
+Preview by default use `set_error_handler` to convert error to ErrorException,
+and catch it as an test error.
+Notice here, PHP fatal error cannot be catched.
+
+Preview do not `register_shutdown_function`. So if tests crash down,
+Preview won't be able handle it.
+
 ## dsl syntax
 
 - [bdd](./bdd)
