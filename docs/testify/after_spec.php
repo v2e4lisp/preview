@@ -1,4 +1,8 @@
 <?php
+/*
+ * How to use after hooks.
+ */
+
 namespace Preview\DSL\Testify;
 
 require_once __DIR__.'/../ok.php';
