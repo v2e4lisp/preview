@@ -42,7 +42,7 @@ Notice here, PHP fatal error cannot be catched.
 Preview do not `register_shutdown_function`. So if tests crash down,
 Preview won't be able handle it.
 
-## dsl syntax
+## DSL syntax
 
 - [bdd](./bdd)
   * [#describe & #it](./bdd/basic_spec.php)
@@ -91,6 +91,24 @@ Preview won't be able handle it.
   * [skip](./testify/skip_spec.php)
   * [pending](./testify/pending_spec.php)
   * [group](./testify/group_spec.php)
+
+
+## Reporter
+
+#### spec
+![spec](./images/spec.png spec)
+
+#### line
+![line](./images/line.png line)
+
+#### dot
+![dot](./images/dot.png dot)
+
+#### dropdown
+![dropdown](./images/dropdown.png dropdown)
+
+#### blank
+![blank](./images/blank.png blank)
 
 
 ## Command Line Options
