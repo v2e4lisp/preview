@@ -96,19 +96,19 @@ Preview won't be able handle it.
 ## Reporter
 
 #### spec
-![spec](./images/spec.png spec)
+![spec](./images/spec.png)
 
 #### line
-![line](./images/line.png line)
+![line](./images/line.png)
 
 #### dot
-![dot](./images/dot.png dot)
+![dot](./images/dot.png)
 
 #### dropdown
-![dropdown](./images/dropdown.png dropdown)
+![dropdown](./images/dropdown.png)
 
 #### blank
-![blank](./images/blank.png blank)
+![blank](./images/blank.png)
 
 
 ## Command Line Options
