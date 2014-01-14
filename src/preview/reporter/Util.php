@@ -29,7 +29,7 @@ class Util {
         'light_purple' => '1;35',
         'brown'        => '0;33',
         'yellow'       => '1;33',
-        'light_gray'   => '0;37',
+        'light_gray'   => '0;90',
         'white'        => '1;37',
     );
 

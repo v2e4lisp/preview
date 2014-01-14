@@ -19,7 +19,7 @@ class DropDown extends Base {
 
         } else {
             $this->skipped_cases[] = $case;
-            echo Util::color("  - ".$title.Util::br(), "dark_gray");
+            echo Util::color("  - ".$title.Util::br(), "light_gray");
         }
     }
 
@@ -29,7 +29,7 @@ class DropDown extends Base {
             $this->skipped_cases = array_merge($this->skipped_cases, $skipped);
             foreach($skipped as $case) {
                 $this->skipped_cases[] = $case;
-                echo Util::color("  - ".$title.Util::br(), "dark_gray");
+                echo Util::color("  - ".$title.Util::br(), "light_gray");
             }
         }
     }
@@ -51,7 +51,7 @@ class DropDown extends Base {
                 echo Util::color($message.Util::br(), "red");
             }
             $trace = $this->trace_message($error->getTraceAsString());
-            echo Util::color($trace, "dark_gray").Util::br();
+            echo Util::color($trace, "light__gray").Util::br();
         }
     }
 
@@ -61,7 +61,7 @@ class DropDown extends Base {
         echo Util::color("  failed: ", "red").count($this->failed_cases);
         echo Util::color("  skipped: ", "yellow").count($this->skipped_cases);
         echo Util::br();
-        echo Util::color("        running time: ". $time. " seconds", "dark_gray");
+        echo Util::color("        running time: ". $time. " seconds", "light_gray");
         echo Util::br(2);
     }
 }
