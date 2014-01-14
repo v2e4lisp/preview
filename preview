@@ -131,7 +131,13 @@ if (isset($options["help"])) {
 
 if (isset($options["list-reporters"])) {
     echo $title;
-    $reporters = array("spec (defualt)", "dropdown", "dot", "line");
+    $reporters = array(
+        "spec (defualt)",
+        "dropdown",
+        "dot",
+        "line",
+        "blank"
+    );
     foreach ($reporters as $index => $reporter) {
         $index = $index + 1;
         echo "    $index) $reporter$br";
