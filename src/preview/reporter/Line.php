@@ -4,7 +4,6 @@ namespace Preview\Reporter;
 
 class Line extends Dot {
     public function after_case($case) {
-        $title = $case->full_title();
         if ($case->passed()) {
             $this->passed_cases[] = $case;
             echo Util::color("-", "light_gray");
