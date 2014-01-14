@@ -9,6 +9,8 @@
 
 namespace Preview\Reporter;
 
+use Preview\Preview;
+
 class Base {
     /**
      * A hook to be called before each test case
@@ -86,6 +88,10 @@ class Base {
      * @retrun string
      */
     protected function trace_message($trace) {
+        if (Preview::$config->full_backtrace) {
+            return trim($trace).Util::br();
+        }
+
         $message = "";
         $msg_list = array_filter(explode(Util::br(), $trace));
         array_pop($msg_list);

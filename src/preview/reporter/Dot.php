@@ -2,69 +2,27 @@
 
 namespace Preview\Reporter;
 
-class Dot extends Base {
-    private $failed_cases = 0;
-    private $passed_cases = 0;
-    private $skipped_cases = 0;
-    private $traces = array();
-
+class Dot extends DropDown {
     public function after_case($case) {
-        if($err = $case->error_or_failed()) {
-            $this->failed_cases += 1;
-            $this->traces[] = array(
-                $case->full_title(),
-                $err->getTraceAsString(),
-                $err->getMessage(),
-            );
-            echo Util::color(". ", "red");
-
-        } else if($case->passed()) {
-            $this->passed_cases += 1;
+        $title = $case->full_title();
+        if ($case->passed()) {
+            $this->passed_cases[] = $case;
             echo Util::color(". ", "green");
-
+        } else if ($case->error_or_failed()) {
+            $this->failed_cases[] = $case;
+            echo Util::color(". ", "red");
         } else {
-            $this->skipped_cases += 1;
+            $this->skipped_cases[] = $case;
             echo Util::color(". ", "yellow");
         }
     }
 
-    public function after_suite($suite) {
-        if ($suite->skipped()) {
-            $num = count($suite->all_cases());
-            echo Util::color(str_repeat(". ", $num), "yellow");
-            $this->skipped_cases += $num;
-        }
-    }
-
     public function before_all($results) {
-        echo Util::br(2)."    ";
+        echo Util::br()."    ";
     }
 
     public function after_all($results) {
-        $this->print_summary($this->timespan($results));
-
-        foreach ($this->traces as $i => $t) {
-            echo " ".($i + 1).") ";
-            echo Util::color($t[0].Util::br(), "red");
-            if (!empty($t[2])) {
-                echo Util::color($t[2].Util::br(), "red");
-            }
-            echo $this->trace_message($t[1].Util::br(2));
-            echo Util::br();
-        }
-    }
-
-    protected function print_summary($time) {
-        echo Util::br(2);
-        echo Util::color("        passed: ", "green");
-        echo $this->passed_cases;
-        echo Util::color("  failed: ", "red");
-        echo $this->failed_cases;
-        echo Util::color("  skipped: ", "cyan");
-        echo $this->skipped_cases;
         echo Util::br();
-        echo Util::color("        running time: ". $time. " seconds", "dark_gray");
-        echo Util::br(2);
+        parent::after_all($results);
     }
-
 }
