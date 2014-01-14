@@ -124,6 +124,7 @@ Options:
 -r, --reporter <arg>    Set reporter.
 -g, --group <arg>       Test group(s). use comma(,) to seperate groups.
 -c, --config <arg>      Load config file. Default './preview.config.php'.
+-b, --backtrace         Print out full backtrace.
 --order                 Test are run in order.
 --no-this               Disable using $this as an implicit context. PHP 5.4 only.
 --no-color              Disable color output.
