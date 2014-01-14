@@ -57,6 +57,10 @@ $cmd = new Getopt(
             "Load config file. Default './preview.config.php'."
         ),
         array(
+            "b", "backtrace", Getopt::NO_ARGUMENT,
+            "Print out full backtrace."
+        ),
+        array(
             null, "order", Getopt::NO_ARGUMENT,
             'Test are run in order.'
         ),
@@ -127,7 +131,7 @@ if (isset($options["help"])) {
 
 if (isset($options["list-reporters"])) {
     echo $title;
-    $reporters = array("spec", "dropdown");
+    $reporters = array("spec (defualt)", "dropdown", "dot");
     foreach ($reporters as $index => $reporter) {
         $index = $index + 1;
         echo "    $index) $reporter$br";
@@ -139,6 +143,10 @@ if (isset($options["list-reporters"])) {
 if (isset($options["reporter"])) {
     $reporter = "\\Preview\\Reporter\\{$options['reporter']}";
     Preview::$config->reporter = new $reporter;
+}
+
+if (isset($options["backtrace"])) {
+    Preview::$config->full_backtrace = true;
 }
 
 if (isset($options["group"])) {

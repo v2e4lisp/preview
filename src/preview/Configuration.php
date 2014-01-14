@@ -55,6 +55,13 @@ class Configuration {
     public $order = false;
 
     /**
+     * Let reporter print out full backtrace
+     *
+     * @var bool $full_backtrace default is false
+     */
+    public $full_backtrace = false;
+
+    /**
      * Specify the test groups to run.
      * Default is all which means run all the tests.
      *

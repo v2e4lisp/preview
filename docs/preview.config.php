@@ -48,6 +48,13 @@ return array(
     "order" => false,
 
     /*
+     * print out full backtrace
+     * cli option:
+     *     -b, --backtrace
+     */
+    "full_backtrace" => false,
+
+    /*
      * run test groups
      * cli option:
      *    -g, --groups [test groups]
