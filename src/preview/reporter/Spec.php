@@ -41,6 +41,9 @@ class Spec extends Base {
         $this->print_failure();
         $time = $this->timespan($results);
         $this->print_summary($time);
+        if (!empty($this->failed_cases)) {
+            $this->print_failed_test_info();
+        }
     }
 
     protected function print_pending() {
@@ -81,7 +84,6 @@ class Spec extends Base {
     }
 
     protected function print_summary($time) {
-        echo Util::br();
         echo "Finished in $time seconds".Util::br();
         $failed_total = count($this->failed_cases);
         $passed_total = count($this->passed_cases);
@@ -101,5 +103,15 @@ class Spec extends Base {
 
         echo Util::color($message, $color);
         echo Util::br(2);
+    }
+
+    protected function print_failed_test_info() {
+        echo "Failed test:".Util::br(2);
+        foreach($this->failed_cases as $failed) {
+            $file_and_line = " ".$failed->filename().":".$failed->startline();
+            echo Util::color($file_and_line, "red");
+            echo Util::color(" # ".$failed->full_title(), "cyan");
+            echo Util::br();
+        }
     }
 }
