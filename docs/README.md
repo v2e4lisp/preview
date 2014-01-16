@@ -45,14 +45,16 @@ Preview won't be able handle it.
 ## DSL syntax
 
 - [bdd](./bdd)
-  * [#describe & #it](./bdd/basic_spec.php)
+  * [#describe](./bdd/basic_spec.php)
+  * [#it](./bdd/basic_spec.php)
   * [#before](./bdd/before_spec.php)
   * [#before_each](./bdd/before_each_spec.php)
   * [#after](./bdd/after_spec.php)
   * [#after_each](./bdd/after_each_spec.php)
   * [#let](./bdd/let_spec.php)
   * [#subject](./bdd/let_spec.php)
-  * [#shared_example & #it_behaves_like](./bdd/shared_example_and_behave_spec.php)
+  * [#shared_example](./bdd/shared_example_and_behave_like_spec.php)
+  * [#it_behaves_like](./bdd/shared_example_and_behave_like_spec.php)
   * [skip](./bdd/skip_spec.php)
   * [pending](./bdd/pending_spec.php)
   * [group](./bdd/group_spec.php)
