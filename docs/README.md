@@ -56,7 +56,7 @@ The rules are:
 * `before`/`after` hook is invoked in current test suite context.
 * Test suite itself is invoked without any context
 
-That is to say the following code is not valid
+That is to say the following code is invalid.
 ```php
 describe("sample suite", function () {
     $this->username = "me";
@@ -78,6 +78,55 @@ describe("sample suite", function () {
         ok($this->username);
     });
 });
+```
+
+## PHP 5.3
+
+Since closure binding is not supported by PHP 5.3, you can use `$this` as an context object.
+In this case, Preview will pass the context object to closure as an argument.
+Said you cannot write test like this.
+```php
+describe("sample for PHP5.4", function () {
+    before(function () {
+        $this->username = "me";
+    });
+    it("username should be set", function () {
+        ok($this->username);
+    });
+});
+```
+Write it this way instead.
+```php
+// Because test suite is not invoked in any context, no arg is needed here.
+describe("sample for PHP5.3", function () {
+    before(function ($self) {
+        $self->username = "me";
+    });
+    it("username should be set", function ($self) {
+        ok($self->username);
+    });
+});
+```
+
+Preview use the following code to invoke a closure.
+```php
+    /**
+     * Invoke a closure with context(explicitly or implicitly)
+     * if Preview::$config->use_implicit_context is set to true,
+     * the closure will be bound to the context object.
+     * Otherwise context will be passed to closure as an argument.
+     *
+     * @param function $fn
+     * @param object context object (new stdClass)
+     * @retrun mixed
+     */
+    protected function invoke_closure_with_context($fn, $context) {
+        if (Preview::$config->use_implicit_context) {
+            return $fn->bindTo($context, $context)->__invoke();
+        } else {
+            return $fn->__invoke($context);
+        }
+    }
 ```
 
 ## DSL syntax
