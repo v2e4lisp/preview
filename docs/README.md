@@ -42,6 +42,44 @@ Notice here, PHP fatal error cannot be catched.
 Preview do not `register_shutdown_function`. So if tests crash down,
 Preview won't be able handle it.
 
+## Context or variable scope
+
+Context is an object of `stdClass`.
+
+Both test case(`it`) and test Suite(`describe`) has its own context.
+
+Closure will be bound to its corresponding context(if there is one) and invoked.
+
+The rules are:
+
+* `before_each`/`after_each` hook and test case itself is invoked in current test case context.
+* `before`/`after` hook is invoked in current test suite context.
+* Test suite itself is invoked without any context
+
+That is to say the following code is not valid
+```php
+describe("sample suite", function () {
+    $this->username = "me";
+    it("username should be set", function () {
+        ok($this->username);
+    });
+});
+```
+This is invalid because the body of the test suite is not invoked in any context.
+So you do not have an `$this`. Regarding to the example above, instead of
+assignments right in the test suite's body, you can write it in a before hook like this.
+
+```php
+describe("sample suite", function () {
+    before(function () {
+        $this->username = "me";
+    });
+    it("username should be set", function () {
+        ok($this->username);
+    });
+});
+```
+
 ## DSL syntax
 
 - [bdd](./bdd)
