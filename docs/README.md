@@ -82,7 +82,7 @@ describe("sample suite", function () {
 
 ## PHP 5.3
 
-Since closure binding is not supported by PHP 5.3, you can use `$this` as an context object.
+Since closure binding is not supported by PHP 5.3, you cannot use `$this` as an context object.
 In this case, Preview will pass the context object to closure as an argument.
 Said you cannot write test like this.
 ```php
