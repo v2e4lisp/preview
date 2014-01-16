@@ -3,6 +3,8 @@
 namespace Preview\Reporter;
 
 class Line extends Dot {
+    protected static $mark = "-";
+
     public function after_case($case) {
         if ($case->passed()) {
             $this->passed_cases[] = $case;

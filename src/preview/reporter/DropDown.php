@@ -29,6 +29,7 @@ class DropDown extends Base {
             $this->skipped_cases = array_merge($this->skipped_cases, $skipped);
             foreach($skipped as $case) {
                 $this->skipped_cases[] = $case;
+                $title = $case->full_title();
                 echo Util::color("  - ".$title.Util::br(), "light_gray");
             }
         }

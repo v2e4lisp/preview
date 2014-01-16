@@ -3,6 +3,7 @@
 namespace Preview\Reporter;
 
 class Blank extends Dot {
+    protected static $mark = " ";
     protected $row = 0;
     protected $total_cases = 0;
 
@@ -23,6 +24,17 @@ class Blank extends Dot {
         } else {
             $this->skipped_cases[] = $case;
             echo Util::color(" ", null, "yellow");
+        }
+    }
+
+    public function after_suite($suite) {
+        if ($suite->skipped()) {
+            $skipped = $suite->all_cases();
+            $this->skipped_cases = array_merge($this->skipped_cases, $skipped);
+            foreach($skipped as $case) {
+                $this->skipped_cases[] = $case;
+                echo Util::color(static::$mark, null, "yellow");
+            }
         }
     }
 
