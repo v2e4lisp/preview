@@ -181,9 +181,9 @@ shared_example("failed test result", function () {
         });
     });
 
-    describe("#failed_or_error", function () {
+    describe("#error_or_failed", function () {
         it("should return failure exception", function () {
-            $e = $this->result->failed();
+            $e = $this->result->error_or_failed();
             ok($e instanceof \Exception);
         });
     });
@@ -197,9 +197,9 @@ shared_example("error test result", function () {
         });
     });
 
-    describe("#failed_or_error", function () {
+    describe("#error_or_failed", function () {
         it("should return failure exception", function () {
-            $e = $this->result->error();
+            $e = $this->result->error_or_failed();
             ok($e instanceof \ErrorException);
         });
     });
