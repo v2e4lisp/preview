@@ -1,4 +1,10 @@
 <?php
+
+namespace Preview\Core;
+
+use Preview\Preview;
+use Preview\Result\TestSuite as TestSuiteResult;
+
 /**
  * Test suite class
  * It contains children test cases and test suites.
@@ -8,12 +14,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview\Core;
-
-use Preview\Preview;
-use Preview\Result\TestSuite as TestSuiteResult;
-
 class TestSuite extends TestBase {
     /**
      * before hooks for itself.

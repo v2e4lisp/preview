@@ -1,4 +1,10 @@
 <?php
+
+namespace Preview\Core;
+
+use \Preview\Preview;
+use \Preview\Result\TestCase as TestCaseResult;
+
 /**
  * Test Case class
  *
@@ -6,12 +12,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview\Core;
-
-use \Preview\Preview;
-use \Preview\Result\TestCase as TestCaseResult;
-
 class TestCase extends TestBase {
     /**
      * constructor

@@ -1,4 +1,10 @@
 <?php
+
+namespace Preview\Core;
+
+use Preview\Timer;
+use Preview\Preview;
+
 /**
  * TestBase class
  * Base class for TestCase and TestSuite
@@ -7,12 +13,6 @@
  * @author Wenjun Yan
  * @email mylastnameisyan@gmail.com
  */
-
-namespace Preview\Core;
-
-use Preview\Timer;
-use Preview\Preview;
-
 class TestBase {
     /**
      * Parent test suite object
