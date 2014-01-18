@@ -195,6 +195,7 @@ Preview use the following code to invoke a closure.
 
 #### dropdown
 ![dropdown](./images/dropdown.png)
+<img src="./images/dropdown.png" alt="dropdown" style="width: 200px;"/>
 
 #### blank
 ![blank](./images/blank.png)
