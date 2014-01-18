@@ -1,5 +1,24 @@
 # Intro
 
+## Install
+
+Use composer to install preview.
+
+composer.json
+
+```php
+{
+    "require": {
+        "v2e4lisp/preview": "*"
+    }
+}
+```
+
+```bash
+composer install
+```
+
+
 ## Config
 
 `preview.config.php` in current dir will be autoloaded, if you do not
