@@ -214,7 +214,7 @@ if (isset($options["list-groups"])) {
  */
 $results = Preview::$world->run();
 foreach($results as $result) {
-    if ($result->error()) {
+    if ($result->error_or_failed()) {
         exit(1);
     }
 }
