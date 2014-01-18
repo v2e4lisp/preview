@@ -4,6 +4,7 @@
 
 Use composer to install preview.
 
+### Local
 composer.json
 
 ```php
@@ -18,6 +19,23 @@ composer.json
 composer install
 ```
 
+show help message
+
+```
+php vendor/bin/preview -h
+```
+
+### Global
+
+```bash
+composer global require 'v2e4lisp/preview:*'
+```
+
+show help message
+
+```
+preview -h
+```
 
 ## Config
 
