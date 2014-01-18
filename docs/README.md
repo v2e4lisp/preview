@@ -192,6 +192,7 @@ Preview use the following code to invoke a closure.
 
 #### dot
 ![dot](./images/dot.png)
+<img src="./images/dot.png" alt="dot" style="width: 200px;"/>
 
 #### dropdown
 ![dropdown](./images/dropdown.png)
