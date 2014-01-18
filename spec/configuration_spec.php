@@ -2,11 +2,14 @@
 namespace Preview\DSL\BDD;
 
 use Preview\Configuration;
+use Preview\Preview;
+use Preview\Core\TestSuite;
+use Preview\Core\TestCase;
 
 require_once 'helper.php';
 
 describe("Configuration", function () {
-    before(function () {
+    before_each(function () {
         $this->config = new Configuration;
     });
 
@@ -16,16 +19,17 @@ describe("Configuration", function () {
                array("\\Exception"));
         });
 
-        it("conver error to exception should be true", function () {
+        it("convert error to exception should be true", function () {
             ok($this->config->convert_error_to_exception === true);
         });
 
-        it("reporter should not be set", function () {
-            ok(!isset($this->config->reportor));
+        it("reporter should be spec", function () {
+            ok("Preview\\Reporter\\Spec" ==
+               get_class($this->config->reporter));
         });
 
-        it("color support should be turned on", function () {
-            ok($this->config->color_support);
+        it("color should be set according current stdout", function () {
+            ok($this->config->color_support == Preview::is_tty());
         });
 
         it("test groups should be empty", function () {
@@ -42,6 +46,112 @@ describe("Configuration", function () {
 
         it("spec_file_regexp should be _spec.php", function () {
             ok($this->config->spec_file_regexp == '/_spec\.php/');
+        });
+
+        it("fail_fast should be false", function () {
+            ok($this->config->fail_fast === false);
+        });
+
+        it("order should be false", function () {
+            ok($this->config->order === false);
+        });
+
+        it("full_backtrace should be false", function () {
+            ok($this->config->full_backtrace === false);
+        });
+
+        it("before_each_hook should be null", function () {
+            ok(is_null($this->config->before_each_hook));
+        });
+
+        it("before_hook should be null", function () {
+            ok(is_null($this->config->before_hook));
+        });
+
+        it("after_each_hook should be null", function () {
+            ok(is_null($this->config->after_each_hook));
+        });
+
+        it("after_hook should be null", function () {
+            ok(is_null($this->config->after_hook));
+        });
+    });
+
+    describe("before_hook", function () {
+        it("should run before every test suite", function () {
+            $run = false;
+            $this->config->before_hook = function () use (&$run) {
+                $run = true;
+            };
+            $old_config = Preview::$config;
+            Preview::$config = $this->config;
+            $suite = new TestSuite("sample suite", function () {});
+            $suite->run();
+
+            try {
+                ok($run);
+            } finally {
+                Preview::$config = $old_config;
+            }
+        });
+    });
+
+    describe("after_hook", function () {
+        it("should run after every test suite", function () {
+            $run = false;
+            $this->config->after_hook = function () use (&$run) {
+                $run = true;
+            };
+            $old_config = Preview::$config;
+            Preview::$config = $this->config;
+            $suite = new TestSuite("sample suite", function () {});
+            $suite->run();
+
+            try {
+                ok($run);
+            } finally {
+                Preview::$config = $old_config;
+            }
+        });
+    });
+
+    describe("before_each_hook", function () {
+        it("should run before every test case", function () {
+            $run = false;
+            $this->config->before_each_hook = function () use (&$run) {
+                $run = true;
+            };
+            $old_config = Preview::$config;
+            Preview::$config = $this->config;
+            $suite = new TestSuite("sample suite", function () {});
+            $suite->add(new TestCase("sample case", function () {}));
+            $suite->run();
+
+            try {
+                ok($run);
+            } finally {
+                Preview::$config = $old_config;
+            }
+        });
+    });
+
+    describe("after_each_hook", function () {
+        it("should run after every test case", function () {
+            $run = false;
+            $this->config->after_each_hook = function () use (&$run) {
+                $run = true;
+            };
+            $old_config = Preview::$config;
+            Preview::$config = $this->config;
+            $suite = new TestSuite("sample suite", function () {});
+            $suite->add(new TestCase("sample case", function () {}));
+            $suite->run();
+
+            try {
+                ok($run);
+            } finally {
+                Preview::$config = $old_config;
+            }
         });
     });
 });
