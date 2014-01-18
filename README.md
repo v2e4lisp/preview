@@ -6,7 +6,7 @@ BDD test for php.
 Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
 and [Rspec](https://github.com/rspec)
 
-[Document](./docs)
+## [Document](./docs)
 
 ## Sample Code
 ### BDD rspec-like syntax
