@@ -47,16 +47,30 @@ shared_example("skipped test", function () {
 });
 
 shared_example("finished test", function () {
+    it("finished is set to true", function () {
+        ok($this->subject->finished);
+    });
+
     describe("#runnable", function () {
         it ("should return false", function () {
             ok(!$this->subject->runnable());
         });
     });
+});
 
-    describe("#time", function () {
-        it("should return numeric value", function () {
-            ok(is_numeric($this->subject->time()));
-        });
+shared_example("failed test", function () {
+    it_behaves_like("finished test");
+
+    it("failure is set", function () {
+        ok($this->subject->failure);
+    });
+});
+
+shared_example("error test", function () {
+    it_behaves_like("finished test");
+
+    it("error is set", function () {
+        ok($this->subject->error);
     });
 });
 
@@ -128,6 +142,7 @@ shared_example("groupable test", function () {
         });
     });
 });
+
 
 shared_example("having its own hooks to run", function ($hook) {
     describe("#run_$hook", function () use ($hook) {

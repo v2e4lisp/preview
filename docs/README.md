@@ -30,8 +30,8 @@ function ok($expr, $msg="") {
 
 ## Exception
 
-Exception will be catched in `before_each`, `after_each`, `before` hooks.
-Exceptions in `after` won't be handled.
+Exception will be catched in `before_each`, `before` hooks.
+Exceptions in `after_each`, `after` won't be handled.
 
 ## PHP error
 

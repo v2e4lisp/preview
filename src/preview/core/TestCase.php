@@ -107,7 +107,6 @@ class TestCase extends TestBase {
             $this->parent->run_before_each($this->context);
             $this->invoke_closure_with_context($this->fn,
                                                $this->context);
-            $this->parent->run_after_each($this->context);
         } catch (\ErrorException $error) {
             $this->set_error($error);
         } catch (\Exception $e) {
@@ -121,6 +120,8 @@ class TestCase extends TestBase {
             if (!$this->failure) {
                 $this->set_error($e);
             }
+        } finally {
+            $this->parent->run_after_each($this->context);
         }
     }
 
