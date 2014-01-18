@@ -3,9 +3,9 @@
 ## Config
 
 `preview.config.php` in current dir will be autoloaded, if you do not
-specify a config file by (-c, --config file)
+specify a config file (`-c, --config [file]`)
 
-- [default config](./preview.config.php)
+[default config](./preview.config.php)
 
 ## Assertion
 
