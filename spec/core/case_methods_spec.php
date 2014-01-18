@@ -19,6 +19,7 @@ describe("TestCase", function () {
     describe("#set_parent", function () {
         it("set parent test suite", function () {
             ok($this->suite->cases == array($this->test));
+            ok($this->suite == $this->test->parent);
         });
     });
 
@@ -31,14 +32,12 @@ describe("TestCase", function () {
     });
 
     describe("#force_error", function () {
-        context("when arg is an error object", function () {
-            before_each(function () {
-                $this->test->force_error(new \ErrorException("error"));
-                $this->subject = $this->test;
-            });
-
-            it_behaves_like("error test");
+        before_each(function () {
+            $this->test->force_error(new \ErrorException("error"));
+            $this->subject = $this->test;
         });
+
+        it_behaves_like("error test");
     });
 
     describe("#set_error", function () {
