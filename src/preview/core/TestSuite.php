@@ -98,7 +98,7 @@ class TestSuite extends TestBase {
 
         $this->reset_state();
         $this->finished = true;
-        $this->error = $error;
+        $this->set_error($error);
 
         foreach($this->suites as $suite) {
             $suite->force_error($error);
