@@ -5,6 +5,7 @@ use Preview\Configuration;
 use Preview\Preview;
 use Preview\Core\TestSuite;
 use Preview\Core\TestCase;
+use Preview\Reporter\Base as BaseReporter;
 
 require_once 'helper.php';
 
@@ -80,6 +81,7 @@ describe("Configuration", function () {
     describe("before_hook", function () {
         it("should run before every test suite", function () {
             $run = false;
+            $this->config->reporter = new BaseReporter;
             $this->config->before_hook = function () use (&$run) {
                 $run = true;
             };
@@ -99,6 +101,7 @@ describe("Configuration", function () {
     describe("after_hook", function () {
         it("should run after every test suite", function () {
             $run = false;
+            $this->config->reporter = new BaseReporter;
             $this->config->after_hook = function () use (&$run) {
                 $run = true;
             };
@@ -118,6 +121,7 @@ describe("Configuration", function () {
     describe("before_each_hook", function () {
         it("should run before every test case", function () {
             $run = false;
+            $this->config->reporter = new BaseReporter;
             $this->config->before_each_hook = function () use (&$run) {
                 $run = true;
             };
@@ -138,6 +142,7 @@ describe("Configuration", function () {
     describe("after_each_hook", function () {
         it("should run after every test case", function () {
             $run = false;
+            $this->config->reporter = new BaseReporter;
             $this->config->after_each_hook = function () use (&$run) {
                 $run = true;
             };
