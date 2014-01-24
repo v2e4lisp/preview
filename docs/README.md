@@ -195,10 +195,10 @@ Preview use the following code to invoke a closure.
   * [group](./tdd/group_spec.php)
 
 - [qunit](./qunit)
-  * [#suite](./tdd/basic_spec.php)
-  * [#test](./tdd/basic_spec.php)
-  * [#setup](./tdd/setup_spec.php)
-  * [#teardown](./tdd/teardown_spec.php)
+  * [#suite](./qunit/basic_spec.php)
+  * [#test](./qunit/basic_spec.php)
+  * [#setup](./qunit/setup_spec.php)
+  * [#teardown](./qunit/teardown_spec.php)
   * [skip](./qunit/skip_spec.php)
   * [pending](./qunit/pending_spec.php)
 
