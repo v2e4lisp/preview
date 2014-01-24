@@ -134,6 +134,7 @@ if (isset($options["list-reporters"])) {
     $reporters = array(
         "spec (defualt)",
         "dropdown",
+        "tree",
         "dot",
         "line",
         "blank"

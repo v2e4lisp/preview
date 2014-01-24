@@ -236,6 +236,9 @@ Preview use the following code to invoke a closure.
 #### blank
 ![blank](./images/blank.png)
 
+#### tree
+![tree](./images/tree.png)
+
 
 ## Command Line Options
 
