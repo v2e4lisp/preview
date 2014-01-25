@@ -11,6 +11,10 @@ $suite = array(
     "after" => function () {
         $this->usage = "run after current test suite.";
     },
+
+    "ok" => function () {
+        ok(true);
+    },
 );
 
 export("[after]", $suite);

@@ -11,6 +11,10 @@ $suite = array(
     "after each" => function () {
         $this->usage = "run after each test case.";
     },
+
+    "ok" => function () {
+        ok(true);
+    },
 );
 
-export("[after]", $suite);
+export("[after each]", $suite);
