@@ -74,6 +74,10 @@ class TestBase {
      * @return string
      */
     public function title() {
+        if(empty($this->test->title)) {
+            return "No description";
+        }
+
         return $this->test->title;
     }
 
