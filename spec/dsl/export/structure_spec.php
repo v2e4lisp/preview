@@ -27,19 +27,18 @@ describe("export[test structure]", function () {
             Preview::$config = $this->config;
 
             // ------ test -------
-            $suite1 = [
+            $suite = [
                 "c1" => function () {},
                 "c2" => function () {},
                 "c3" => function () {},
-            ];
 
-            $suite2 = [
-                "c1" => function () {},
-                "c2" => function () {},
-                "c3" => function () {},
+                "sub test suite" => [
+                    "s1" => function () {},
+                    "s2" => function () {},
+                    "s3" => function () {},
+                ],
             ];
-            Export\export($suite1);
-            Export\export($suite2);
+            Export\export($suite);
             $this->results = $this->world->run();
             // ------ end test -------
 
@@ -49,16 +48,22 @@ describe("export[test structure]", function () {
             Preview::$config = $this->test_config;
         });
 
-        it("should have 2 suite", function () {
-            ok(count($this->results) == 2);
+        it("should have one child suite", function () {
+            ok(count($this->results) == 1);
         });
 
-        it("first suite should have 3 test cases", function ()  {
+        it("should have 3 test cases", function ()  {
             ok(count($this->results[0]->cases()) == 3);
         });
 
-        it("second suite should have 3 test cases", function () {
-            ok(count($this->results[1]->cases()) == 3);
+        it("child suite should contain 3 cases", function () {
+            $suites = $this->results[0]->suites();
+            ok(count($suites[0]->cases()) == 3);
+        });
+
+        it("child suite should contain no suite", function () {
+            $suites = $this->results[0]->suites();
+            ok(count($suites[0]->suites()) == 0);
         });
 
         describe("reporter", function () {

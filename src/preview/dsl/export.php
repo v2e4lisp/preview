@@ -30,7 +30,9 @@ function export ($title, $options=null) {
 
     $suite = new TestSuite($title, function() {});
     Util::set_default_filename_and_lineno($suite, debug_backtrace());
-    Preview::$world->pop();
+
+    // step into test suite.
+    $suite->set_parent(Preview::$world->current());
     Preview::$world->push($suite);
 
     // add hooks
@@ -49,10 +51,19 @@ function export ($title, $options=null) {
         }
     }
 
-    // add tests
+    // add tests and child test suites.
     foreach ($options as $title => $fn) {
-        if (!in_array($title, $hook_names)) {
+        if (in_array($title, $hook_names)) {
+            continue;
+        }
+
+        if (is_array($fn)) {
+            export($title, $fn);
+        } else {
             $suite->add(new TestCase($title, $fn));
         }
     }
+
+    // step out test suite
+    Preview::$world->pop();
 }
