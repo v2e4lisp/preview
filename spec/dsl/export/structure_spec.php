@@ -26,26 +26,29 @@ describe("export[test structure]", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
-            // ------ test -------
-            $suite = [
-                "c1" => function () {},
-                "c2" => function () {},
-                "c3" => function () {},
+            try {
+                // ------ test -------
+                $suite = [
+                    "c1" => function () {},
+                    "c2" => function () {},
+                    "c3" => function () {},
 
-                "sub test suite" => [
-                    "s1" => function () {},
-                    "s2" => function () {},
-                    "s3" => function () {},
-                ],
-            ];
-            Export\export($suite);
-            $this->results = $this->world->run();
-            // ------ end test -------
+                    "sub test suite" => [
+                        "s1" => function () {},
+                        "s2" => function () {},
+                        "s3" => function () {},
+                    ],
+                ];
+                Export\export($suite);
+                $this->results = $this->world->run();
+                // ------ end test -------
+            } finally {
 
-            // end new env
-            // and go back to our normal test env
-            Preview::$world = $this->test_world;
-            Preview::$config = $this->test_config;
+                // end new env
+                // and go back to our normal test env
+                Preview::$world = $this->test_world;
+                Preview::$config = $this->test_config;
+            }
         });
 
         it("should have one child suite", function () {
