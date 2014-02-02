@@ -1,0 +1,11 @@
+language: php
+php:
+  - 5.5
+before_install:
+  - composer self-update
+  - composer install
+branches:
+  only:
+    - travis-ci
+script:
+  - php preview ./spec/

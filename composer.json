@@ -23,11 +23,11 @@
         },
 
         "files": [
-            "src/preview/dsl/bdd.php",
-            "src/preview/dsl/tdd.php",
-            "src/preview/dsl/qunit.php",
-            "src/preview/dsl/testify.php",
-            "src/preview/dsl/export.php"
+            "src/Preview/DSL/bdd.php",
+            "src/Preview/DSL/tdd.php",
+            "src/Preview/DSL/qunit.php",
+            "src/Preview/DSL/testify.php",
+            "src/Preview/DSL/export.php"
         ]
     },
 
