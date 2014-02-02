@@ -13,8 +13,8 @@
     ],
 
     "require": {
-        "php": ">=5.3",
-        "ulrichsg/getopt-php": "*"
+        "php": ">=5.5",
+        "ulrichsg/getopt-php": "1.4.*"
     },
 
     "autoload": {
