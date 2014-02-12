@@ -103,7 +103,7 @@ describe("bdd[test state]", function () {
             // below is our test
             describe("sample suite", function () {
                 it("error", function () {
-                    $a->value();
+                    $a->value;
                 });
 
                 it("failed", function () {
