@@ -105,7 +105,7 @@ describe("bdd[test state]", function () {
                 $suite = new Suite("sample suite");
                 $suite
                     ->test("error", function () {
-                        $a->value();
+                        $a->value;
                     })
                     ->test("failed", function () {
                         ok(false);
