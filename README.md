@@ -194,3 +194,6 @@ $suite->before_each(function () {
 })->load();
 ```
 
+## Contributors
+* Yan Wenjun(@v2e4lisp)
+* Noritaka Horio(@holyshared)
