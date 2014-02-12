@@ -87,14 +87,23 @@ describe("Configuration", function () {
             };
             $old_config = Preview::$config;
             Preview::$config = $this->config;
-            $suite = new TestSuite("sample suite", function () {});
-            $suite->run();
 
+            $exception_in_sample_code = null;
             try {
-                ok($run);
-            } finally {
-                Preview::$config = $old_config;
+                $suite = new TestSuite("sample suite", function () {});
+                $suite->run();
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
             }
+
+            Preview::$config = $old_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
+            ok($run);
+
         });
     });
 
@@ -110,11 +119,22 @@ describe("Configuration", function () {
             $suite = new TestSuite("sample suite", function () {});
             $suite->run();
 
+
+            $exception_in_sample_code = null;
             try {
-                ok($run);
-            } finally {
-                Preview::$config = $old_config;
+                $suite = new TestSuite("sample suite", function () {});
+                $suite->run();
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
             }
+
+            Preview::$config = $old_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
+            ok($run);
         });
     });
 
@@ -127,15 +147,24 @@ describe("Configuration", function () {
             };
             $old_config = Preview::$config;
             Preview::$config = $this->config;
-            $suite = new TestSuite("sample suite", function () {});
-            $suite->add(new TestCase("sample case", function () {}));
-            $suite->run();
 
+            $exception_in_sample_code = null;
             try {
-                ok($run);
-            } finally {
-                Preview::$config = $old_config;
+                $suite = new TestSuite("sample suite", function () {});
+                $suite->add(new TestCase("sample case", function () {}));
+                $suite->run();
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
             }
+
+            Preview::$config = $old_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
+            ok($run);
+
         });
     });
 
@@ -148,15 +177,23 @@ describe("Configuration", function () {
             };
             $old_config = Preview::$config;
             Preview::$config = $this->config;
-            $suite = new TestSuite("sample suite", function () {});
-            $suite->add(new TestCase("sample case", function () {}));
-            $suite->run();
 
+            $exception_in_sample_code = null;
             try {
-                ok($run);
-            } finally {
-                Preview::$config = $old_config;
+                $suite = new TestSuite("sample suite", function () {});
+                $suite->add(new TestCase("sample case", function () {}));
+                $suite->run();
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
             }
+
+            Preview::$config = $old_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
+            ok($run);
         });
     });
 });

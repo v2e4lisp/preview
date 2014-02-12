@@ -120,9 +120,9 @@ class TestCase extends TestBase {
             if (!$this->failure) {
                 $this->set_error($e);
             }
-        } finally {
-            $this->parent->run_after_each($this->context);
         }
+
+        $this->parent->run_after_each($this->context);
     }
 
     /**

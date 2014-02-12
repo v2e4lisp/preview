@@ -130,12 +130,10 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
+                    Preview::$config->reporter = $this->old_reporter;
 
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    ok($exception_thrown);
+
                 });
             });
         });
@@ -187,11 +185,8 @@ describe("TestCase", function () {
                         $exception_thrown = true;
                     }
 
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    Preview::$config->reporter = $this->old_reporter;
+                    ok($exception_thrown);
                 });
             });
 
@@ -211,11 +206,10 @@ describe("TestCase", function () {
                         $exception_thrown = true;
                     }
 
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    Preview::$config->reporter = $this->old_reporter;
+
+                    ok($exception_thrown);
+
                 });
 
             });

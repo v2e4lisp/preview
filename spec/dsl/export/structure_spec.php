@@ -42,13 +42,11 @@ describe("export[test structure]", function () {
                 Export\export($suite);
                 $this->results = $this->world->run();
                 // ------ end test -------
-            } finally {
+            } catch (\Exception $e) {}
 
-                // end new env
-                // and go back to our normal test env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
-            }
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
         });
 
         it("should have one child suite", function () {

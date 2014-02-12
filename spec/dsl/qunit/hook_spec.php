@@ -25,7 +25,7 @@ describe("qunit[hook]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
-
+            $exception_in_sample_code = null;
             try {
                 $message = array();
                 qunit\suite("sample suite");
@@ -42,14 +42,21 @@ describe("qunit[hook]", function () {
                     $message[] = "then test";
                 });
                 $this->world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
-
-                ok($message == array("setup first", "then test",
-                                     "setup first", "then test"));
             }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
+            ok($message == array("setup first", "then test",
+                                 "setup first", "then test"));
+
         });
     });
 
@@ -58,6 +65,7 @@ describe("qunit[hook]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 $message = array();
@@ -75,11 +83,16 @@ describe("qunit[hook]", function () {
                     $message[] = "test first";
                 });
                 $this->world->run();
-            } finally {
-
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
 
             ok($message == array("test first", "then teardown",

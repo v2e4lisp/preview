@@ -24,26 +24,40 @@ describe("export[syntax]", function () {
         it("accept 2 params(title and options)", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 Export\export("title", array());
-            } finally {
-                // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
             }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
         });
 
         it("accept 1 param which is an array containing all tests", function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
 
+            $exception_in_sample_code = null;
+
             try {
                 Export\export(array());
-            } finally {
-                // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
         });
     });
@@ -52,6 +66,7 @@ describe("export[syntax]", function () {
         it("before/after before each, after each are keys for hooks",function () {
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 Export\export("title", array(
@@ -62,10 +77,16 @@ describe("export[syntax]", function () {
                                   "this one is test" => function () {}
                               ));
                 $results = Preview::$world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
 
             ok(count($results[0]->cases()) == 1);

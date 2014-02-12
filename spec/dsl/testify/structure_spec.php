@@ -29,6 +29,7 @@ describe("testify[test structure]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             // ------ test -------
             try {
@@ -49,11 +50,16 @@ describe("testify[test structure]", function () {
 
                 $this->results = $this->world->run();
                 // ------ end test -------
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                // and go back to our normal test env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
         });
 
