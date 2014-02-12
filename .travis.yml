@@ -6,6 +6,6 @@ before_install:
   - composer install
 branches:
   only:
-    - travis-ci
+    - master
 script:
   - php preview ./spec/
