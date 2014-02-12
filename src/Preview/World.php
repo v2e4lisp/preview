@@ -121,7 +121,7 @@ class World {
         // setup error handler
         if (Preview::$config->convert_error_to_exception) {
             set_error_handler(function ($no, $str, $file, $line) {
-                throw new \ErrorException($str, $no, 0, $file, $line);
+                throw new \ErrorException($str, 0, $no, $file, $line);
             });
         }
 
