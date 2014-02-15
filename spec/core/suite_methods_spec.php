@@ -76,18 +76,6 @@ describe("TestSuite", function () {
         it("add itself to group", function () {
             ok($this->subject->in_group($this->group));
         });
-
-        it("add its parent suite to group", function () {
-            ok($this->subject->parent->in_group($this->group));
-        });
-
-        it("add its children suites to group", function () {
-            ok($this->subject->suites[0]->in_group($this->group));
-        });
-
-        it("add its children cases to group", function () {
-            ok($this->subject->cases[0]->in_group($this->group));
-        });
     });
 
     describe("#remove", function () {

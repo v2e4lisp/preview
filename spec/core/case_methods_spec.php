@@ -24,10 +24,9 @@ describe("TestCase", function () {
     });
 
     describe("#add_to_group", function () {
-        it("add itself and its parent to group", function () {
+        it("add itself to group", function () {
             $this->test->add_to_group("sample group");
             ok($this->test->in_group("sample group"));
-            ok($this->suite->in_group("sample group"));
         });
     });
 

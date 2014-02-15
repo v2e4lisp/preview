@@ -53,6 +53,14 @@ $cmd = new Getopt(
             "Test group(s). use comma(,) to seperate groups."
         ),
         array(
+            "G", "exclude-group", Getopt::REQUIRED_ARGUMENT,
+            "Exclude group(s). use comma(,) to seperate groups."
+        ),
+        array(
+            "t", "title", Getopt::REQUIRED_ARGUMENT,
+            "Title regexp. Filter out test whose title dosen't match."
+        ),
+        array(
             "c", "config", Getopt::REQUIRED_ARGUMENT,
             "Load config file. Default './preview.config.php'."
         ),
@@ -156,10 +164,6 @@ if (isset($options["backtrace"])) {
     Preview::$config->full_backtrace = true;
 }
 
-if (isset($options["group"])) {
-    Preview::$config->test_groups = explode(",", $options["group"]);
-}
-
 if (isset($options["no-this"])) {
     Preview::$config->use_implicit_context = false;
 }
@@ -179,6 +183,11 @@ if (isset($options["fail-fast"])) {
 if (isset($options["order"])) {
     Preview::$config->order = true;
 }
+
+if (isset($options["group"])) {
+    Preview::$config->test_groups = explode(",", $options["group"]);
+}
+
 
 $files = $cmd->getOperands();
 

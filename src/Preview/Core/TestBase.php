@@ -207,22 +207,15 @@ class TestBase {
     }
 
     /**
-     * Check if the test is in test groups
+     * make this test as a member of a test group;
      *
-     * @param null
-     * @retrun bool
+     * @param string group name
+     * @retrun object $this
      */
-    public function in_test_group() {
-        if (empty(Preview::$config->test_groups)) {
-            return true;
+    public function add_to_group($group) {
+        if (!in_array($group, $this->groups)) {
+            $this->groups[] = $group;
         }
-
-        foreach (Preview::$config->test_groups as $group) {
-            if ($this->in_group($group)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -281,31 +274,6 @@ class TestBase {
     protected function finish() {
         $this->finished = true;
         return $this;
-    }
-
-    /**
-     * make this test as a member of a test group;
-     *
-     * @param string group name
-     * @retrun object $this
-     */
-    protected function add_self_to_group($group) {
-        if (!in_array($group, $this->groups)) {
-            $this->groups[] = $group;
-        }
-    }
-
-    /**
-     * Recursively add its parent test to group
-     *
-     * @param string $group group name
-     * @retrun null
-     */
-    protected function add_parent_to_group($group) {
-        if ($this->parent) {
-            $this->parent->add_self_to_group($group);
-            $this->parent->add_parent_to_group($group);
-        }
     }
 
     /**

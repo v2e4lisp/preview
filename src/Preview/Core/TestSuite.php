@@ -124,18 +124,6 @@ class TestSuite extends TestBase {
     }
 
     /**
-     * Recursively add its children and parent and itself to group.
-     *
-     * @param string $group group name
-     * @retrun null
-     */
-    public function add_to_group($group) {
-        $this->add_self_to_group($group);
-        $this->add_parent_to_group($group);
-        $this->add_children_to_group($group);
-    }
-
-    /**
      * Add child test suite/case
      *
      * @param object $suite_or_case
@@ -171,10 +159,6 @@ class TestSuite extends TestBase {
         }
 
         $this->fn->__invoke();
-        if (!Preview::$config->order) {
-            shuffle($this->cases);
-            shuffle($this->suites);
-        }
     }
 
     /**
@@ -352,23 +336,6 @@ class TestSuite extends TestBase {
     public function add_after_each_hook($fn) {
         $this->after_each_hooks[] = $fn;
         return $this;
-    }
-
-    /**
-     * Recursively add its children to group.
-     *
-     * @param string $group group name
-     * @retrun null
-     */
-    protected function add_children_to_group($group) {
-        foreach($this->suites as $suite) {
-            $suite->add_self_to_group($group);
-            $suite->add_children_to_group($group);
-        }
-
-        foreach($this->cases as $case) {
-            $case->add_self_to_group($group);
-        }
     }
 
     /**
