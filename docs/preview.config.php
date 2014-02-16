@@ -41,13 +41,6 @@ return array(
     "color_support" => Preview::is_tty(),
 
     /*
-     * run tests in order
-     * cli option:
-     *     --order set to true
-     */
-    "order" => false,
-
-    /*
      * print out full backtrace
      * cli option:
      *     -b, --backtrace
@@ -57,9 +50,37 @@ return array(
     /*
      * run test groups
      * cli option:
-     *    -g, --groups [test groups]
+     *    -g, --group [test groups]
      */
     "test_groups" => array(),
+
+    /*
+     * filter out tests in groups
+     * cli option:
+     *   -G, --exclude-group [test groups]
+     */
+    "exclude_groups" => array(),
+
+    /*
+     * only run tests whose title match the title regexp
+     * cli option:
+     *  -t, --title [title regexp]
+     */
+    "title" => null,
+
+    /*
+     * run tests in order
+     * cli option:
+     *     --order set to true
+     */
+    "order" => false,
+
+    /*
+     * custom filters run before executing tests
+     * Option 'title', 'order', "test_groups", "exclude_groups"
+     * are built in filters
+     */
+    "custom_filters" => array(),
 
     /*
      * Use $this as an implict context.
