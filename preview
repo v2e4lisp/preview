@@ -25,6 +25,4 @@ if (!$installed) {
 }
 
 $command = new Command;
-$command->run();
-
-
+$command->run($argv);

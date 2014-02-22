@@ -84,11 +84,15 @@ class Command {
     }
 
 
-    public function run() {
+    public function run($args=null) {
+        if (!$args) {
+            $args = $argv;
+        }
+
         // parse options
         $padding = 30;
         $br = PHP_EOL;
-        $this->parse();
+        $this->parse($args);
         $options = $this->cmd->getOptions();
 
         // setup loader and test config, test world
@@ -195,9 +199,9 @@ class Command {
         $this->execute();
     }
 
-    protected function parse() {
+    protected function parse($args) {
         try {
-            $this->cmd->parse();
+            $this->cmd->parse($args);
         } catch (Exception $e) {
             $this->cmd->showHelp($padding);
             exit(1);
