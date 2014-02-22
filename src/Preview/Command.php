@@ -85,10 +85,6 @@ class Command {
 
 
     public function run($args=null) {
-        if (!$args) {
-            $args = $argv;
-        }
-
         // parse options
         $padding = 30;
         $br = PHP_EOL;
