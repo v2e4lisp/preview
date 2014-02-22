@@ -3,6 +3,7 @@
 namespace Preview\DSL\BDD;
 
 use Preview\Preview;
+use Preview\Configuration;
 use Preview\Core\TestCase;
 use Preview\Core\TestSuite;
 use Preview\Reporter\Base as BaseReporter;
@@ -68,17 +69,20 @@ describe("TestCase", function () {
     });
 
     describe("#run", function () {
-        before_each(function () {
-            $this->old_reporter = Preview::$config->reporter;
-            Preview::$config->reporter = new BaseReporter;
+        before(function () {
+            $this->old_config = Preview::$config;
+        });
 
+        before_each(function () {
+            Preview::$config = new Configuration;
+            Preview::$config->reporter = new BaseReporter;
         });
 
         context("when passed", function () {
             before_each(function () {
                 $this->subject = $this->test;
                 $this->subject->run();
-                Preview::$config->reporter = $this->old_reporter;
+                Preview::$config = $this->old_config;
             });
 
             it_behaves_like("finished test");
@@ -93,7 +97,7 @@ describe("TestCase", function () {
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("failed test");
@@ -108,7 +112,7 @@ describe("TestCase", function () {
                         ok(false);
                     });
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("failed test");
@@ -129,7 +133,7 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
 
                     ok($exception_thrown);
 
@@ -147,7 +151,7 @@ describe("TestCase", function () {
                         ok(false);
                     });
                     $this->suite->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("error test");
@@ -162,7 +166,7 @@ describe("TestCase", function () {
                         $a->user;
                     });
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("error test");
@@ -183,8 +187,7 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
-
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                     ok($exception_thrown);
                 });
             });
@@ -204,13 +207,9 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
-
-                    Preview::$config->reporter = $this->old_reporter;
-
+                    Preview::$config = $this->old_config;
                     ok($exception_thrown);
-
                 });
-
             });
         });
     });
