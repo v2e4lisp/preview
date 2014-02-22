@@ -30,7 +30,7 @@ return array(
      * cli option:
      *     --fail-fast
      */
-    "fail_fast" => true,
+    "fail_fast" => false,
 
     /*
      * output with color
