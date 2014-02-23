@@ -164,6 +164,14 @@ class Command {
             Preview::$config->test_groups = explode(",", $options["group"]);
         }
 
+        if (isset($options["exclude-group"])) {
+            Preview::$config->exclude_groups =
+                explode(",", $options["exclude-group"]);
+        }
+
+        if (isset($options["title"])) {
+            Preview::$config->title = $options["title"];
+        }
 
         $files = $this->cmd->getOperands();
 
