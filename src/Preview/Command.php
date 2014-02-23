@@ -12,10 +12,12 @@ use Ulrichsg\Getopt;
  * @email mylastnameisyan@gmail.com
  */
 class Command {
+
     /*
      * setup command line parser
      */
     public function __construct() {
+        $this->padding = 30;
         $this->cmd = new Getopt(
             array(
                 array(
@@ -86,7 +88,6 @@ class Command {
 
     public function run($args=null) {
         // parse options
-        $padding = 30;
         $br = PHP_EOL;
         $this->parse($args);
         $options = $this->cmd->getOptions();
@@ -108,7 +109,7 @@ class Command {
         }
 
         if (isset($options["help"])) {
-            $this->cmd->showHelp($padding);
+            $this->cmd->showHelp($this->padding);
             exit(0);
         }
 
@@ -168,7 +169,7 @@ class Command {
 
         // default help message
         if (empty($options) and empty($files)) {
-            $this->cmd->showHelp($padding);
+            $this->cmd->showHelp($this->padding);
             exit(0);
         }
 
@@ -198,8 +199,8 @@ class Command {
     protected function parse($args) {
         try {
             $this->cmd->parse($args);
-        } catch (Exception $e) {
-            $this->cmd->showHelp($padding);
+        } catch (\Exception $e) {
+            $this->cmd->showHelp($this->padding);
             exit(1);
         }
     }
