@@ -228,7 +228,7 @@ class Configuration {
     }
 
     public function filters() {
-        $filters = [];
+        $filters = array();
 
         if (!empty($this->test_groups)) {
             $filters[] = new Filter\GroupIncluded($this->test_groups);
