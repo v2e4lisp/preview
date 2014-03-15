@@ -14,7 +14,7 @@ class Preview {
      *
      * @var string $version
      */
-    public static $version = "1.0";
+    public static $version = "2.0";
 
     /**
      * Test world object.
