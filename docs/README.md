@@ -241,24 +241,25 @@ Preview use the following code to invoke a closure.
 ## Command Line Options
 
 ```
--> % php preview --help
 
-    Preview 1.0 - bdd test framework for php
+    Preview 2.0 - bdd test framework for php
 
 Usage: preview [options] [operands]
 Options:
--h, --help              Show this help message.
--r, --reporter <arg>    Set reporter.
--g, --group <arg>       Test group(s). use comma(,) to seperate groups.
--c, --config <arg>      Load config file. Default './preview.config.php'.
--b, --backtrace         Print out full backtrace.
---order                 Test are run in order.
---no-this               Disable using $this as an implicit context. PHP 5.4 only.
---no-color              Disable color output.
---with-error            Disable converting error to exception.
---fail-fast             Exit program when first failure or error occurred.
---list-groups           List all the test groups.
---list-reporters        List available reporters.
+  -h, --help                   Show this help message.
+  -r, --reporter <arg>         Set reporter.
+  -g, --group <arg>            Test group(s). use comma(,) to seperate groups.
+  -G, --exclude-group <arg>    Exclude group(s). use comma(,) to seperate groups.
+  -t, --title <arg>            Filter out test title regexp.
+  -c, --config <arg>           Load config file. Default './preview.config.php'.
+  -b, --backtrace              Print out full backtrace.
+  --order                      Test are run in order.
+  --no-this                    Disable using $this as an implicit context(PHP 5.4).
+  --no-color                   Disable color output.
+  --with-error                 Disable converting error to exception.
+  --fail-fast                  Exit program when first failure or error occurred.
+  --list-groups                List all the test groups.
+  --list-reporters             List available reporters.
 ```
 
 ## Related projects
