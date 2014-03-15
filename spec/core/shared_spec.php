@@ -5,9 +5,11 @@ namespace Preview\DSL\BDD;
 use Preview\Core\TestShared;
 
 describe("TestShared", function () {
-    subject(new TestShared("foo", function ($message, $obj) {
-        $obj->message = $message;
-    }));
+    before_each(function () {
+        $this->subject = new TestShared("foo", function ($message, $obj) {
+            $obj->message = $message;
+        });
+    });
 
     describe("#name", function () {
         it ("should return the name", function () {

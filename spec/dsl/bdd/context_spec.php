@@ -143,8 +143,6 @@ describe("bdd[context]", function () {
             ok($cases_result[0]->passed());
         });
 
-        it("share the context with subject and let");
-
         it("should extend test suite context", function () {
             // start new env
             Preview::$world = $this->world;

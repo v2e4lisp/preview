@@ -10,10 +10,9 @@ use Preview\Reporter\Base as BaseReporter;
 
 describe("TestCase", function () {
 
-    let("test", new TestCase("sample test case", function () {}));
-    let("suite", new TestSuite("sample test suite", function () {}));
-
     before_each(function () {
+        $this->suite = new TestSuite("sample test suite", function () {});
+        $this->test = new TestCase("sample test case", function () {});
         $this->test->set_parent($this->suite);
     });
 
@@ -90,9 +89,11 @@ describe("TestCase", function () {
 
         context("when failed", function () {
             context("in test body", function () {
-                subject(new TestCase("sample case", function () {
-                    ok(false);
-                }));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {
+                        ok(false);
+                    });
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
@@ -104,9 +105,8 @@ describe("TestCase", function () {
             });
 
             context("in before_each", function () {
-                subject(new TestCase("sample case", function () {}));
-
                 before_each(function () {
+                    $this->subject = new TestCase("sample case", function () {});
                     $this->subject->set_parent($this->suite);
                     $this->suite->add_before_each_hook(function () {
                         ok(false);
@@ -119,9 +119,12 @@ describe("TestCase", function () {
             });
 
             context("in after_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
+
                     $this->subject->set_parent($this->suite);
                     $this->suite->add_after_each_hook(function () {
                         ok(false);
@@ -143,7 +146,9 @@ describe("TestCase", function () {
 
         context("when error occured", function () {
             context("in before", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
@@ -158,7 +163,9 @@ describe("TestCase", function () {
             });
 
             context("in before_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
@@ -173,7 +180,9 @@ describe("TestCase", function () {
             });
 
             context("in after_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
                     $this->subject->set_parent($this->suite);
@@ -193,7 +202,9 @@ describe("TestCase", function () {
             });
 
             context("in after", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
                     $this->subject->set_parent($this->suite);

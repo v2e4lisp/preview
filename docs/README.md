@@ -175,8 +175,6 @@ Preview use the following code to invoke a closure.
   * [#before_each](./bdd/before_each_spec.php)
   * [#after](./bdd/after_spec.php)
   * [#after_each](./bdd/after_each_spec.php)
-  * [#let](./bdd/let_spec.php)
-  * [#subject](./bdd/let_spec.php)
   * [#shared_example](./bdd/shared_example_and_behave_like_spec.php)
   * [#it_behaves_like](./bdd/shared_example_and_behave_like_spec.php)
   * [skip](./bdd/skip_spec.php)
