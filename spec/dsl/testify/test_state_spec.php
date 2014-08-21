@@ -25,6 +25,7 @@ describe("bdd[test state]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 // below is our test
@@ -42,11 +43,16 @@ describe("bdd[test state]", function () {
                     $s->load();
                 }
                 $this->results = $this->world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                // and go back to our normal test env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
         });
 
@@ -92,13 +98,14 @@ describe("bdd[test state]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             // below is our test
             try {
                 $suite = new Suite("sample suite");
                 $suite
                     ->test("error", function () {
-                        $a->value();
+                        $a->value;
                     })
                     ->test("failed", function () {
                         ok(false);
@@ -107,11 +114,16 @@ describe("bdd[test state]", function () {
                     ->test("skipped", "skip", function () {})
                     ->load();
                 $this->results = $this->world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                // and go back to our normal test env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
         });
 

@@ -121,7 +121,7 @@ class World {
         // setup error handler
         if (Preview::$config->convert_error_to_exception) {
             set_error_handler(function ($no, $str, $file, $line) {
-                throw new \ErrorException($str, $no, 0, $file, $line);
+                throw new \ErrorException($str, 0, $no, $file, $line);
             });
         }
 
@@ -156,7 +156,8 @@ class World {
 
         $groups = array();
         foreach($this->start_points as $suite) {
-            $groups = array_merge($groups, $suite->groups);
+            $groups = array_merge($groups,
+                                  $this->all_groups_from_suite($suite));
         }
         return array_unique($groups);
     }
@@ -185,6 +186,26 @@ class World {
             return $this->shared_examples[$name];
         }
         return null;
+    }
+
+    /**
+     * Get suite groups and recursively get all its children's groups
+     *
+     * @param object $suite TestSuite object
+     * @retrun array array of group
+     */
+    private function all_groups_from_suite($suite) {
+        $groups = $suite->groups;
+        foreach ($suite->cases as $case) {
+            $groups = array_merge($groups, $case->groups);
+        }
+
+        foreach ($suite->suites as $child_suite) {
+            $groups = array_merge($groups,
+                                  $this->all_groups_from_suite($child_suite));
+        }
+
+        return array_unique($groups);
     }
 
     /**

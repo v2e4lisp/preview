@@ -8,8 +8,8 @@ use Preview\Core\TestSuite;
 use Preview\Reporter\Base as BaseReporter;
 
 describe("TestCase", function () {
-    subject(function () {
-        return new TestCase("test case", function () {});
+    before_each (function () {
+        $this->subject = new TestCase("test case", function () {});
     });
 
     it_behaves_like("groupable test");
@@ -23,7 +23,9 @@ describe("TestCase", function () {
     });
 
     context("when pending", function () {
-        subject(new TestCase("test case", null));
+        before_each (function () {
+            $this->subject = new TestCase("test case", null);
+        });
         it_behaves_like("pending test");
     });
 

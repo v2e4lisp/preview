@@ -7,8 +7,8 @@ use Preview\Core\TestCase;
 use Preview\Reporter\Base as BaseReporter;
 
 describe("TestSuite", function () {
-    subject(function () {
-        return new TestSuite("test suite", function () {});
+    before_each (function () {
+        $this->subject = new TestSuite("test suite", function () {});
     });
 
     it_behaves_like("groupable test");
@@ -26,16 +26,16 @@ describe("TestSuite", function () {
         it_behaves_like("skipped test");
 
         describe("children cases", function () {
-            subject(function () {
-                return $this->subject->cases[0];
+            before_each (function () {
+                $this->subject = $this->subject->cases[0];
             });
 
             it_behaves_like("skipped test");
         });
 
         describe("children suites", function () {
-            subject(function () {
-                return $this->subject->suites[0];
+            before_each (function () {
+                $this->subject = $this->subject->suites[0];
             });
 
             it_behaves_like("skipped test");
@@ -43,7 +43,9 @@ describe("TestSuite", function () {
     });
 
     context("when pending", function () {
-        subject(new TestSuite("test suite", null));
+        before_each (function () {
+            $this->subject = new TestSuite("test suite", null);
+        });
         it_behaves_like("pending test");
     });
 
@@ -62,11 +64,11 @@ describe("TestSuite", function () {
     it_behaves_like("having its own hooks to run", "before");
 
     context("with parent", function () {
-        let("parent", function () {
-            $parent = new TestSuite("parent suite", function () {});
-            $parent->add($this->subject);
-            return $parent;
+        before_each (function () {
+            $this->parent = new TestSuite("parent suite", function () {});
+            $this->parent->add($this->subject);
         });
+
         it_behaves_like("having hooks for its children", "after_each");
         it_behaves_like("having hooks for its children", "before_each");
     });

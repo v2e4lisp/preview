@@ -6,8 +6,8 @@ use Preview\Core\TestSuite;
 use Preview\Core\TestCase;
 
 describe("TestSuite", function () {
-    subject(function () {
-        return new TestSuite("test suite", function () {});
+    before_each (function () {
+        $this->subject = new TestSuite("test suite", function () {});
     });
 
     describe("#force_error", function () {
@@ -20,16 +20,16 @@ describe("TestSuite", function () {
         it_behaves_like("error test");
 
         describe("children cases", function () {
-            subject(function () {
-                return $this->subject->cases[0];
+            before_each (function () {
+                $this->subject = $this->subject->cases[0];
             });
 
             it_behaves_like("error test");
         });
 
         describe("children suites", function () {
-            subject(function () {
-                return $this->subject->suites[0];
+            before_each(function () {
+                $this->subject = $this->subject->suites[0];
             });
 
             it_behaves_like("error test");
@@ -75,18 +75,6 @@ describe("TestSuite", function () {
 
         it("add itself to group", function () {
             ok($this->subject->in_group($this->group));
-        });
-
-        it("add its parent suite to group", function () {
-            ok($this->subject->parent->in_group($this->group));
-        });
-
-        it("add its children suites to group", function () {
-            ok($this->subject->suites[0]->in_group($this->group));
-        });
-
-        it("add its children cases to group", function () {
-            ok($this->subject->cases[0]->in_group($this->group));
         });
     });
 

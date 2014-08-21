@@ -21,7 +21,8 @@ suite("array_pop", function () {
 
     // skip this case
     test("return null for empty string", function () {
-        ok(empty(array_pop(array())));
+        $tmp = array_pop(array());
+        ok(empty($tmp));
     })->skip();
 
     // pending test case

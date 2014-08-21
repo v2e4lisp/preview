@@ -48,13 +48,6 @@ class Configuration {
     public $color_support = true;
 
     /**
-     * Test run in order
-     *
-     * @var bool $order default is false, shuffle the tests before run;
-     */
-    public $order = false;
-
-    /**
      * Let reporter print out full backtrace
      *
      * @var bool $full_backtrace default is false
@@ -62,12 +55,40 @@ class Configuration {
     public $full_backtrace = false;
 
     /**
-     * Specify the test groups to run.
-     * Default is all which means run all the tests.
+     * Test run in order
      *
-     * @var array $test_groups default is empty array
+     * @var bool $order default is false, shuffle the tests before run;
+     */
+    public $order = false;
+
+    /**
+     * Specify the test groups to run.
+     *
+     * @var array $test_groups default is an empty array
      */
     public $test_groups = array();
+
+    /**
+     * Group blacklist.
+     *
+     * @var array $exclude_groups default is an empty array
+     */
+    public $exclude_groups = array();
+
+    /**
+     * title regexp
+     * only tests whose title matched this regexp will be run
+     *
+     * @var regexp $title
+     */
+    public $title = null;
+
+    /**
+     * Custom filters to filter out test objects.
+     *
+     * @var array $custom_filters array of Filter object
+     */
+    public $custom_filters = array();
 
     /**
      * If this property set to true,
@@ -204,5 +225,27 @@ class Configuration {
         if(!Preview::is_tty()) {
             $this->color_support = false;
         }
+    }
+
+    public function filters() {
+        $filters = array();
+
+        if (!empty($this->test_groups)) {
+            $filters[] = new Filter\GroupIncluded($this->test_groups);
+        }
+
+        if (!empty($this->exclude_groups)) {
+            $filters[] = new Filter\GroupExcluded($this->exclude_groups);
+        }
+
+        if (!$this->order) {
+            $filters[] = new Filter\Randomized;
+        }
+
+        if ($this->title) {
+            $filters[] = new Filter\TitleMatched($this->title);
+        }
+
+        return array_merge($filters, $this->custom_filters);
     }
 }

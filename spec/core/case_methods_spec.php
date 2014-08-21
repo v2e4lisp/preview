@@ -3,16 +3,16 @@
 namespace Preview\DSL\BDD;
 
 use Preview\Preview;
+use Preview\Configuration;
 use Preview\Core\TestCase;
 use Preview\Core\TestSuite;
 use Preview\Reporter\Base as BaseReporter;
 
 describe("TestCase", function () {
 
-    let("test", new TestCase("sample test case", function () {}));
-    let("suite", new TestSuite("sample test suite", function () {}));
-
     before_each(function () {
+        $this->suite = new TestSuite("sample test suite", function () {});
+        $this->test = new TestCase("sample test case", function () {});
         $this->test->set_parent($this->suite);
     });
 
@@ -24,10 +24,9 @@ describe("TestCase", function () {
     });
 
     describe("#add_to_group", function () {
-        it("add itself and its parent to group", function () {
+        it("add itself to group", function () {
             $this->test->add_to_group("sample group");
             ok($this->test->in_group("sample group"));
-            ok($this->suite->in_group("sample group"));
         });
     });
 
@@ -69,17 +68,20 @@ describe("TestCase", function () {
     });
 
     describe("#run", function () {
-        before_each(function () {
-            $this->old_reporter = Preview::$config->reporter;
-            Preview::$config->reporter = new BaseReporter;
+        before(function () {
+            $this->old_config = Preview::$config;
+        });
 
+        before_each(function () {
+            Preview::$config = new Configuration;
+            Preview::$config->reporter = new BaseReporter;
         });
 
         context("when passed", function () {
             before_each(function () {
                 $this->subject = $this->test;
                 $this->subject->run();
-                Preview::$config->reporter = $this->old_reporter;
+                Preview::$config = $this->old_config;
             });
 
             it_behaves_like("finished test");
@@ -87,38 +89,42 @@ describe("TestCase", function () {
 
         context("when failed", function () {
             context("in test body", function () {
-                subject(new TestCase("sample case", function () {
-                    ok(false);
-                }));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {
+                        ok(false);
+                    });
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("failed test");
             });
 
             context("in before_each", function () {
-                subject(new TestCase("sample case", function () {}));
-
                 before_each(function () {
+                    $this->subject = new TestCase("sample case", function () {});
                     $this->subject->set_parent($this->suite);
                     $this->suite->add_before_each_hook(function () {
                         ok(false);
                     });
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("failed test");
             });
 
             context("in after_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
+
                     $this->subject->set_parent($this->suite);
                     $this->suite->add_after_each_hook(function () {
                         ok(false);
@@ -130,19 +136,19 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
+                    Preview::$config = $this->old_config;
 
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    ok($exception_thrown);
+
                 });
             });
         });
 
         context("when error occured", function () {
             context("in before", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
@@ -150,14 +156,16 @@ describe("TestCase", function () {
                         ok(false);
                     });
                     $this->suite->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("error test");
             });
 
             context("in before_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 before_each(function () {
                     $this->subject->set_parent($this->suite);
@@ -165,14 +173,16 @@ describe("TestCase", function () {
                         $a->user;
                     });
                     $this->subject->run();
-                    Preview::$config->reporter = $this->old_reporter;
+                    Preview::$config = $this->old_config;
                 });
 
                 it_behaves_like("error test");
             });
 
             context("in after_each", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
                     $this->subject->set_parent($this->suite);
@@ -186,17 +196,15 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
-
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    Preview::$config = $this->old_config;
+                    ok($exception_thrown);
                 });
             });
 
             context("in after", function () {
-                subject(new TestCase("sample case", function () {}));
+                before_each (function () {
+                    $this->subject = new TestCase("sample case", function () {});
+                });
 
                 it("should throw the exception", function () {
                     $this->subject->set_parent($this->suite);
@@ -210,14 +218,9 @@ describe("TestCase", function () {
                     } catch (\Exception $e) {
                         $exception_thrown = true;
                     }
-
-                    try {
-                        ok($exception_thrown);
-                    } finally {
-                        Preview::$config->reporter = $this->old_reporter;
-                    }
+                    Preview::$config = $this->old_config;
+                    ok($exception_thrown);
                 });
-
             });
         });
     });

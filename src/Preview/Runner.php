@@ -49,11 +49,7 @@ class Runner {
      * @retrun array array of test result objects.
      */
     public function run() {
-        $tests = $this->filter_tests();
-
-        if (!Preview::$config->order) {
-            shuffle($tests);
-        }
+        $tests = $this->filter($this->start_points);
 
         foreach($tests as $test) {
             $this->results[] = $test->result;
@@ -80,47 +76,17 @@ class Runner {
     }
 
     /**
-     * filter out unrelated tests according to $config->test_groups.
+     * filter out tests
      *
-     * @param null
-     * @retrun array an array of start_point test suites
+     * @param array array of TestSuite object.
+     * @retrun array array of TestSuite object.
      */
-    public function filter_tests() {
-        if (empty(Preview::$config->test_groups)) {
-            return $this->start_points;
+    private function filter($tests) {
+        $filters = Preview::$config->filters();
+        foreach ($filters as $filter) {
+            $tests = $filter->run($tests);
         }
 
-        $roots = array();
-        foreach($this->start_points as $suite) {
-            if (!$suite->in_test_group()) {
-                continue;
-            }
-
-            $roots[] = $suite;
-            $this->filter_suite($suite);
-        }
-        return $roots;
-    }
-
-    /**
-     * Recursively filter out unrelated test for one test suite.
-     *
-     * @param string $param
-     * @retrun null
-     */
-    private function filter_suite($suite) {
-        foreach($suite->cases as $child) {
-            if (!$child->in_test_group()) {
-                $suite->remove($child);
-            }
-        }
-
-        foreach($suite->suites as $child) {
-            if (!$child->in_test_group()) {
-                $suite->remove($child);
-            }
-
-            $this->filter_suite($child);
-        }
+        return $tests;
     }
 }

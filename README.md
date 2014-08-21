@@ -1,5 +1,6 @@
 # Preview
 [![Stories in Ready](https://badge.waffle.io/v2e4lisp/preview.png?label=ready)](http://waffle.io/v2e4lisp/preview)
+[![Build Status](https://travis-ci.org/v2e4lisp/preview.png?branch=master)](https://travis-ci.org/v2e4lisp/preview)
 
 BDD test for php.
 
@@ -194,3 +195,6 @@ $suite->before_each(function () {
 })->load();
 ```
 
+## Contributors
+* Yan Wenjun(@v2e4lisp)
+* Noritaka Horio(@holyshared)

@@ -64,59 +64,6 @@ function it($title, $fn=null) {
 }
 
 /**
- * Assign value to var.
- * This is shorthand for assignment in before each hook.
- *
- * before_each(function () {
- *     $this->somevar = value
- * })
- *
- * let("somevar", value);
- *
- * If value is an object it will first be cloned
- * and the copy will be assigned to $name for every case.
- * And if it's an closure it will be invoked and
- * the return value will be used.
- *
- * @param string $name
- * @param mixed $value
- * @retrun null
- */
-
-function let($name, $value) {
-    if (Preview::$config->use_implicit_context) {
-        before_each(function () use ($name, $value) {
-            if ($value instanceof \Closure) {
-                $value = $value->bindTo($this, $this)->__invoke();
-            } else if (is_object($value)) {
-                $value = clone $value;
-            }
-            $this->$name = $value;
-        });
-    } else {
-        before_each(function ($self) use ($name, $value) {
-            if ($value instanceof \Closure) {
-                $value = $value->__invoke($self);
-            } else if (is_object($value)) {
-                $value = clone $value;
-            }
-            $self->$name = $value;
-        });
-    }
-}
-
-/**
- * Assign value to subject
- * It is short hand for let("subject", $value);
- *
- * @param mixed $value
- * @retrun null
- */
-function subject($value) {
-    let("subject", $value);
-}
-
-/**
  * Current test suite first run this hook
  * before any test cases/suites.
  *

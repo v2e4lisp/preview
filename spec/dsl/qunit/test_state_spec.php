@@ -29,7 +29,7 @@ describe("qunit[test state]", function () {
             // below is our test
             qunit\suite("error suite");
             qunit\test("error", function () {
-                $a->value();
+                $a->value;
             });
 
             qunit\suite("passed suite");
@@ -96,7 +96,7 @@ describe("qunit[test state]", function () {
             qunit\suite("sample suite");
 
             qunit\test("error", function () {
-                $a->value();
+                $a->value;
             });
             qunit\test("failed", function () {
                 ok(false);

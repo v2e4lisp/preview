@@ -9,7 +9,6 @@ use Preview\Reporter\Base as BaseReporter;
 
 require_once 'helper.php';
 
-
 describe("Runner", function () {
     describe("#run", function () {
         before_each(function () {

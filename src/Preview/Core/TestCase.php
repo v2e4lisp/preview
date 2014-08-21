@@ -36,17 +36,6 @@ class TestCase extends TestBase {
     }
 
     /**
-     * Recursively add its parent and itself to group.
-     *
-     * @param string $group
-     * @retrun null
-     */
-    public function add_to_group($group) {
-        $this->add_self_to_group($group);
-        $this->add_parent_to_group($group);
-    }
-
-    /**
      * force test to be in error state
      *
      * @param object $error an exception object
@@ -120,9 +109,9 @@ class TestCase extends TestBase {
             if (!$this->failure) {
                 $this->set_error($e);
             }
-        } finally {
-            $this->parent->run_after_each($this->context);
         }
+
+        $this->parent->run_after_each($this->context);
     }
 
     /**

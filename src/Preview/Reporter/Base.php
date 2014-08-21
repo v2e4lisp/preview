@@ -18,8 +18,7 @@ class Base {
      * @param object A test case result object.
      * @retrun null
      */
-    public function before_case($case) {
-    }
+    public function before_case($case) {}
 
     /**
      * A hook to be called after each test case
@@ -27,8 +26,7 @@ class Base {
      * @param object A test case result object.
      * @retrun null
      */
-    public function after_case($case) {
-    }
+    public function after_case($case) {}
 
     /**
      * A hook to be called before each test suite
@@ -36,8 +34,7 @@ class Base {
      * @param object A test suite result object.
      * @retrun null
      */
-    public function before_suite($suit) {
-    }
+    public function before_suite($suit) {}
 
     /**
      * A hook to be called after each test suite
@@ -45,8 +42,7 @@ class Base {
      * @param object A test suite result object.
      * @retrun null
      */
-    public function after_suite($suite) {
-    }
+    public function after_suite($suite) {}
 
     /**
      * A hook to be called before all test suites/cases.
@@ -54,8 +50,7 @@ class Base {
      * @param array array of test suite result objects.
      * @retrun null
      */
-    public function before_all($results) {
-    }
+    public function before_all($results) {}
 
     /**
      * A hook to be called after all test suite/cases.
@@ -63,8 +58,7 @@ class Base {
      * @param array array of test suites/cases result objects.
      * @retrun null
      */
-    public function after_all($results) {
-    }
+    public function after_all($results) {}
 
     /**
      * Get total time

@@ -24,6 +24,8 @@ describe("bdd[context]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+
+            $exception_in_sample_code = null;
             $tmp = null;
 
             try {
@@ -42,10 +44,16 @@ describe("bdd[context]", function () {
                     });
                 });
                 $results = Preview::$world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
 
             $result = $results[0];
@@ -56,6 +64,7 @@ describe("bdd[context]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 describe("parent suite", function () {
@@ -74,11 +83,18 @@ describe("bdd[context]", function () {
                     });
                 });
                 $results = Preview::$world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
             }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
+            }
+
             $result = $results[0];
             ok($result->passed());
         });
@@ -89,6 +105,8 @@ describe("bdd[context]", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+
+            $exception_in_sample_code = null;
             $context_tmp = null;
 
             try {
@@ -107,10 +125,16 @@ describe("bdd[context]", function () {
                     });
                 });
                 $results = Preview::$world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
 
             $suite_result = $results[0];
@@ -119,12 +143,11 @@ describe("bdd[context]", function () {
             ok($cases_result[0]->passed());
         });
 
-        it("share the context with subject and let");
-
         it("should extend test suite context", function () {
             // start new env
             Preview::$world = $this->world;
             Preview::$config = $this->config;
+            $exception_in_sample_code = null;
 
             try {
                 describe("context sample", function () {
@@ -145,10 +168,16 @@ describe("bdd[context]", function () {
                     });
                 });
                 $results = Preview::$world->run();
-            } finally {
+            } catch (\Exception $e) {
+                $exception_in_sample_code = $e;
                 // end new env
-                Preview::$world = $this->test_world;
-                Preview::$config = $this->test_config;
+            }
+
+            Preview::$world = $this->test_world;
+            Preview::$config = $this->test_config;
+
+            if ($exception_in_sample_code) {
+                throw $exception_in_sample_code;
             }
 
             $result = $results[0];
