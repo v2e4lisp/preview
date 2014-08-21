@@ -7,8 +7,5 @@ php:
 before_install:
   - composer self-update
   - composer install
-branches:
-  only:
-    - master
 script:
   - php preview ./spec/
