@@ -19,7 +19,7 @@ use \Preview\DSL\Util;
  * start a test suite
  *
  * @param string $title
- * @retrun object TestAPI object.
+ * @return object TestAPI object.
  */
 function suite($title) {
     $desc = new TestSuite($title, function(){});
@@ -57,7 +57,7 @@ function test($title, $fn=null) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function setup($fn) {
     Preview::$world->current()->add_before_each_hook($fn);
@@ -68,7 +68,7 @@ function setup($fn) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function teardown($fn) {
     Preview::$world->current()->add_after_each_hook($fn);

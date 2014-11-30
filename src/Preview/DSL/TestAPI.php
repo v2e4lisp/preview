@@ -27,7 +27,7 @@ class TestAPI {
      * Skip test case/suite.
      *
      * @param null
-     * @retrun $this
+     * @return $this
      */
     public function skip() {
         $this->test->skip();
@@ -38,7 +38,7 @@ class TestAPI {
      * Group test.
      *
      * @param mixed group names (one or more strings)
-     * @retrun $this
+     * @return $this
      */
     public function group() {
         $groups = func_get_args();

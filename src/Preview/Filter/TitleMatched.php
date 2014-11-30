@@ -25,7 +25,7 @@ class TitleMatched extends GroupIncluded {
      * Check if the test object should be filtered out.
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     protected function matched($test) {
         return preg_match($this->regexp, $test->title);

@@ -72,7 +72,7 @@ class TestSuite extends TestBase {
      * Skip this test. recursively mark all its children to be skipped.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function skip() {
         parent::skip();
@@ -89,7 +89,7 @@ class TestSuite extends TestBase {
      * in error state.
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     public function force_error($error) {
         if (!$error) {
@@ -127,7 +127,7 @@ class TestSuite extends TestBase {
      * Add child test suite/case
      *
      * @param object $suite_or_case
-     * @retrun object $this
+     * @return object $this
      */
     public function add($suite_or_case) {
         $suite_or_case->set_parent($this);
@@ -138,7 +138,7 @@ class TestSuite extends TestBase {
      * Remove child test suite/case
      *
      * @param object $suite_or_case TestSuite/TestCase object
-     * @retrun object|null when no such test to delete return null.
+     * @return object|null when no such test to delete return null.
      */
     public function remove($suite_or_case) {
         if ($suite_or_case instanceof self) {
@@ -298,7 +298,7 @@ class TestSuite extends TestBase {
      * add before hooks.
      *
      * @param function $fn
-     * @retrun $this
+     * @return $this
      */
     public function add_before_hook($fn) {
         $this->before_hooks[] = $fn;
@@ -309,7 +309,7 @@ class TestSuite extends TestBase {
      * add after hooks.
      *
      * @param function $fn
-     * @retrun $this
+     * @return $this
      */
     public function add_after_hook($fn) {
         $this->after_hooks[] = $fn;
@@ -320,7 +320,7 @@ class TestSuite extends TestBase {
      * add before_each hooks.
      *
      * @param function $fn
-     * @retrun $this
+     * @return $this
      */
     public function add_before_each_hook($fn) {
         $this->before_each_hooks[] = $fn;
@@ -331,7 +331,7 @@ class TestSuite extends TestBase {
      * add after_each hooks.
      *
      * @param function $fn
-     * @retrun $this
+     * @return $this
      */
     public function add_after_each_hook($fn) {
         $this->after_each_hooks[] = $fn;
@@ -343,7 +343,7 @@ class TestSuite extends TestBase {
      *
      * @param object $suite_or_case TestSuite/TestCase object
      * @param array &$collection $this->suites/$this->cases passed by ref.
-     * @retrun object|null removed case/suite or null
+     * @return object|null removed case/suite or null
      */
     protected function remove_from($suite_or_case, &$collection) {
         $key = array_search($suite_or_case, $collection, true);

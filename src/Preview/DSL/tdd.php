@@ -55,7 +55,7 @@ function test($title, $fn=null) {
  * before any test cases/suites.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function suite_setup($fn) {
     Preview::$world->current()->add_before_hook($fn);
@@ -65,7 +65,7 @@ function suite_setup($fn) {
  * Current test suite run this hook after all test cases/suites.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function suite_teardown($fn) {
     Preview::$world->current()->add_after_hook($fn);
@@ -76,7 +76,7 @@ function suite_teardown($fn) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function setup($fn) {
     Preview::$world->current()->add_before_each_hook($fn);
@@ -87,7 +87,7 @@ function setup($fn) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function teardown($fn) {
     Preview::$world->current()->add_after_each_hook($fn);

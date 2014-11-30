@@ -16,7 +16,7 @@ class Randomized extends Base {
      * Randomize all test suites.
      *
      * @param array $suites an array of TestSuite object
-     * @retrun arrray an array of TestSuite object
+     * @return arrray an array of TestSuite object
      */
     public function run($suites) {
         shuffle($suites);
@@ -31,7 +31,7 @@ class Randomized extends Base {
      * Recursively randomize a TestSuite's children tests
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     protected function randomize($suite) {
         shuffle($suite->cases);

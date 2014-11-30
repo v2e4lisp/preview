@@ -144,7 +144,7 @@ class TestBase {
      * reset test state
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function reset_state() {
         $this->failure = null;
@@ -158,7 +158,7 @@ class TestBase {
      * run test
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function run() {}
 
@@ -166,7 +166,7 @@ class TestBase {
      * set parent suite
      *
      * @param object $suite parent testsuite.
-     * @retrun null
+     * @return null
      */
     public function set_parent($suite) {}
 
@@ -175,7 +175,7 @@ class TestBase {
      * if any parent , also setup its parent failure
      *
      * @param object $error
-     * @retrun null
+     * @return null
      */
     public function set_failure($failure) {
         if ($this->failure) {
@@ -193,7 +193,7 @@ class TestBase {
      * if any parent , also setup its parent error
      *
      * @param object $error
-     * @retrun null
+     * @return null
      */
     public function set_error($error) {
         if ($this->error) {
@@ -210,7 +210,7 @@ class TestBase {
      * make this test as a member of a test group;
      *
      * @param string group name
-     * @retrun object $this
+     * @return object $this
      */
     public function add_to_group($group) {
         if (!in_array($group, $this->groups)) {
@@ -222,7 +222,7 @@ class TestBase {
      * Check if test is in a certain group.
      *
      * @param string $group
-     * @retrun bool
+     * @return bool
      */
     public function in_group($group) {
         return in_array($group, $this->groups);
@@ -232,7 +232,7 @@ class TestBase {
      * Running time of this test case/suite;
      *
      * @param null
-     * @retrun float seconds
+     * @return float seconds
      */
     public function time() {
         return $this->timer->span();
@@ -281,7 +281,7 @@ class TestBase {
      * if it has a parent testsuite.
      *
      * @param null
-     * @retrun stdClass current context;
+     * @return stdClass current context;
      */
     protected function extend_context_with_parent() {
         if ($this->parent) {
@@ -300,7 +300,7 @@ class TestBase {
      *
      * @param function $fn
      * @param object context object (new stdClass)
-     * @retrun mixed
+     * @return mixed
      */
     protected function invoke_closure_with_context($fn, $context) {
         if (Preview::$config->use_implicit_context) {

@@ -58,7 +58,7 @@ class World {
      * Reset the world
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     public function reset() {
         $this->throw_exception_if_running("current");
@@ -137,7 +137,7 @@ class World {
      * Force to exit.
      *
      * @param int $code exit code default is 1.
-     * @retrun null
+     * @return null
      */
     public function force_exit($code=1) {
         $this->running = false;
@@ -149,7 +149,7 @@ class World {
      * Get all test groups
      *
      * @param null
-     * @retrun array an array of test group names(string)
+     * @return array an array of test group names(string)
      */
     public function groups() {
         $this->throw_exception_if_running("run");
@@ -167,7 +167,7 @@ class World {
      *
      * @param string $name shared test name
      * @param function $fn
-     * @retrun null
+     * @return null
      */
     public function add_shared_example($shared) {
         $this->throw_exception_if_running("add_shared_example");
@@ -178,7 +178,7 @@ class World {
      * Get shared test by name
      *
      * @param string $name shared test name.
-     * @retrun object|false shared test
+     * @return object|false shared test
      */
     public function shared_example($name) {
         $this->throw_exception_if_running("shared_example");
@@ -192,7 +192,7 @@ class World {
      * Get suite groups and recursively get all its children's groups
      *
      * @param object $suite TestSuite object
-     * @retrun array array of group
+     * @return array array of group
      */
     private function all_groups_from_suite($suite) {
         $groups = $suite->groups;
@@ -213,7 +213,7 @@ class World {
      * Which means you cannot call any method on the current World.
      *
      * @param string $param
-     * @retrun null
+     * @return null
      */
     private function throw_exception_if_running($name) {
         if ($this->running) {

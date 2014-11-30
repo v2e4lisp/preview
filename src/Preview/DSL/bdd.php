@@ -68,7 +68,7 @@ function it($title, $fn=null) {
  * before any test cases/suites.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function before($fn) {
     Preview::$world->current()->add_before_hook($fn);
@@ -79,7 +79,7 @@ function before($fn) {
  * after all test cases/suites.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function after($fn) {
     Preview::$world->current()->add_after_hook($fn);
@@ -90,7 +90,7 @@ function after($fn) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function before_each($fn) {
     Preview::$world->current()->add_before_each_hook($fn);
@@ -101,7 +101,7 @@ function before_each($fn) {
  * in current test suite.
  *
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function after_each($fn) {
     Preview::$world->current()->add_after_each_hook($fn);
@@ -114,7 +114,7 @@ function after_each($fn) {
  *
  * @param string $name
  * @param function $fn
- * @retrun null
+ * @return null
  */
 function shared_example($name, $fn) {
     Preview::$world->add_shared_example(new TestShared($name, $fn));
@@ -124,7 +124,7 @@ function shared_example($name, $fn) {
  * Invoke a shared test
  *
  * @param string $name name for shared_example.
- * @retrun null
+ * @return null
  */
 function it_behaves_like($name) {
     if (!Preview::$world->current()) {

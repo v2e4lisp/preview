@@ -16,7 +16,7 @@ class Base {
      * A hook to be called before each test case
      *
      * @param object A test case result object.
-     * @retrun null
+     * @return null
      */
     public function before_case($case) {}
 
@@ -24,7 +24,7 @@ class Base {
      * A hook to be called after each test case
      *
      * @param object A test case result object.
-     * @retrun null
+     * @return null
      */
     public function after_case($case) {}
 
@@ -32,7 +32,7 @@ class Base {
      * A hook to be called before each test suite
      *
      * @param object A test suite result object.
-     * @retrun null
+     * @return null
      */
     public function before_suite($suit) {}
 
@@ -40,7 +40,7 @@ class Base {
      * A hook to be called after each test suite
      *
      * @param object A test suite result object.
-     * @retrun null
+     * @return null
      */
     public function after_suite($suite) {}
 
@@ -48,7 +48,7 @@ class Base {
      * A hook to be called before all test suites/cases.
      *
      * @param array array of test suite result objects.
-     * @retrun null
+     * @return null
      */
     public function before_all($results) {}
 
@@ -56,7 +56,7 @@ class Base {
      * A hook to be called after all test suite/cases.
      *
      * @param array array of test suites/cases result objects.
-     * @retrun null
+     * @return null
      */
     public function after_all($results) {}
 
@@ -64,7 +64,7 @@ class Base {
      * Get total time
      *
      * @param array $results array of test results
-     * @retrun float time
+     * @return float time
      */
     public function timespan($results) {
         $time = 0;
@@ -79,7 +79,7 @@ class Base {
      * Filter out trace message from Preview file.
      *
      * @param string orignal trace message ($e->getTraceAsString())
-     * @retrun string
+     * @return string
      */
     protected function trace_message($trace) {
         if (Preview::$config->full_backtrace) {
@@ -101,7 +101,7 @@ class Base {
      * check if string contain Preview file path.
      *
      * @param string $path
-     * @retrun bool
+     * @return bool
      */
     protected function from_preview_file($path) {
         $preview_dir = dirname(dirname(__DIR__));

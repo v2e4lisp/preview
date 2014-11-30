@@ -71,7 +71,7 @@ class Loader {
      * Check if it's a test file by its filename
      *
      * @param string $param
-     * @retrun bool
+     * @return bool
      */
     private function is_spec_file($file) {
         return preg_match(Preview::$config->spec_file_regexp, $file);

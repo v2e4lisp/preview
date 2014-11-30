@@ -16,7 +16,7 @@ class Base {
      * The only api for filter.
      *
      * @param array $suites an array of TestSuite object
-     * @retrun arrray an array of TestSuite object
+     * @return arrray an array of TestSuite object
      */
     public function run($suites) {
         return $suites;

@@ -34,7 +34,7 @@ class Preview {
      * Check if php version is 5.3.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public static function is_php53() {
         return version_compare(phpversion(), '5.4', '<');
@@ -44,7 +44,7 @@ class Preview {
      * Check STDOUT is an tty.
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public static function is_tty() {
         return posix_isatty(STDOUT);

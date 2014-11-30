@@ -163,7 +163,7 @@ class Configuration {
      * Load config from file.
      *
      * @param string $file config file path
-     * @retrun object Configuration object.
+     * @return object Configuration object.
      */
     public function load_from_file ($file) {
         $options = require_once($file);

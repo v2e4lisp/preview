@@ -36,7 +36,7 @@ class Runner {
      * Set start point tests
      *
      * @param array an array of test suite object.
-     * @retrun null
+     * @return null
      */
     public function set_start_points($start_points) {
         $this->start_points = $start_points;
@@ -46,7 +46,7 @@ class Runner {
      * run the test suites/cases and recursively run all test cases.
      *
      * @param null
-     * @retrun array array of test result objects.
+     * @return array array of test result objects.
      */
     public function run() {
         $tests = $this->filter($this->start_points);
@@ -68,7 +68,7 @@ class Runner {
      * Force runner stop running.
      *
      * @param null
-     * @retrun array an array of test results object.
+     * @return array an array of test results object.
      */
     public function force_stop() {
         Preview::$config->reporter->after_all($this->results);
@@ -79,7 +79,7 @@ class Runner {
      * filter out tests
      *
      * @param array array of TestSuite object.
-     * @retrun array array of TestSuite object.
+     * @return array array of TestSuite object.
      */
     private function filter($tests) {
         $filters = Preview::$config->filters();

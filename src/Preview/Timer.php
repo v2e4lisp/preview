@@ -28,7 +28,7 @@ class Timer {
      * start timer if it's not been started yet.
      *
      * @param null
-     * @retrun false|float return current time if success
+     * @return false|float return current time if success
      */
     public function start() {
         if (!$this->started()) {
@@ -42,7 +42,7 @@ class Timer {
      * Stop timer if it's running.
      *
      * @param null
-     * @retrun false|float return current time if success
+     * @return false|float return current time if success
      */
     public function stop() {
         if ($this->running()) {
@@ -56,7 +56,7 @@ class Timer {
      * check if timer is started
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function started() {
         return !empty($this->start_point);
@@ -66,7 +66,7 @@ class Timer {
      * check if timer is stooped
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function stopped() {
         return !empty($this->stop_point);
@@ -76,7 +76,7 @@ class Timer {
      * check timer is running
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function running() {
         return $this->started() and !$this->stopped();
@@ -86,7 +86,7 @@ class Timer {
      * Get time span
      *
      * @param null
-     * @retrun null|float time span
+     * @return null|float time span
      */
     public function span() {
         if ($this->stopped()) {

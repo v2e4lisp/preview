@@ -77,7 +77,7 @@ class TestSuite extends TestBase {
      * Recursively get all cases in this suite
      *
      * @param null
-     * @retrun array array of test case result object.
+     * @return array array of test case result object.
      */
     public function all_cases() {
         if (isset($this->all_cases)) {

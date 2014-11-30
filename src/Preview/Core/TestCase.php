@@ -39,7 +39,7 @@ class TestCase extends TestBase {
      * force test to be in error state
      *
      * @param object $error an exception object
-     * @retrun null
+     * @return null
      */
     public function force_error($error) {
         if (!$error) {
@@ -89,7 +89,7 @@ class TestCase extends TestBase {
      * 3. after each hooks
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     private function run_test() {
         try {
@@ -118,7 +118,7 @@ class TestCase extends TestBase {
      * Exit this test world if error or failure occurred.
      *
      * @param null
-     * @retrun null
+     * @return null
      */
     private function exit_if_error_or_failure() {
         if ($this->error or $this->failure) {

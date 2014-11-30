@@ -45,7 +45,7 @@ class TestShared {
      * Get name
      *
      * @param null
-     * @retrun string
+     * @return string
      */
     public function name() {
         return $this->name;
@@ -55,7 +55,7 @@ class TestShared {
      * Setup the shared test.
      *
      * @param array $args
-     * @retrun null
+     * @return null
      */
     public function setup($args) {
         call_user_func_array($this->fn, $args);

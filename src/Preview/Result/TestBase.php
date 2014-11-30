@@ -120,7 +120,7 @@ class TestBase {
      * Get error exception or failure exception if there's any.
      *
      * @param null
-     * @retrun object|null error/failure exception object
+     * @return object|null error/failure exception object
      */
     public function error_or_failed() {
         if ($this->error()) {
@@ -154,7 +154,7 @@ class TestBase {
      * Check if test is skipped or pending
      *
      * @param null
-     * @retrun bool
+     * @return bool
      */
     public function skipped_or_pending() {
         return $this->skipped() or $this->pending();
@@ -196,7 +196,7 @@ class TestBase {
      * Get groups this test belongs to
      *
      * @param null
-     * @retrun array array of groups' name
+     * @return array array of groups' name
      */
     public function groups() {
         return $this->test->groups;
@@ -206,7 +206,7 @@ class TestBase {
      * get title chain as an array;
      *
      * @param null
-     * @retrun array array of title(string);
+     * @return array array of title(string);
      */
     public function titles() {
         $titles = array($this->title());
@@ -223,7 +223,7 @@ class TestBase {
      * get all titles as an string .
      *
      * @param null
-     * @retrun string
+     * @return string
      */
     public function full_title() {
         return implode($this->titles(), " ");
