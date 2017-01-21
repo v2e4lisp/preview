@@ -4,7 +4,7 @@
 
 BDD test for php.
 
-Heavily inspired by [mocha.js](http://visionmedia.github.io/mocha/)
+Heavily inspired by [mocha.js](http://mochajs.org/)
 and [Rspec](https://github.com/rspec)
 
 ## [Document](./docs)
